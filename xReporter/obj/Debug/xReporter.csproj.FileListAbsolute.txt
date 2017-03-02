@@ -1,0 +1,9 @@
+s:\documents\visual studio 2015\Projects\xReporter\xReporter\bin\Debug\xReporter.exe.config
+s:\documents\visual studio 2015\Projects\xReporter\xReporter\bin\Debug\xReporter.exe
+s:\documents\visual studio 2015\Projects\xReporter\xReporter\bin\Debug\xReporter.pdb
+s:\documents\visual studio 2015\Projects\xReporter\xReporter\obj\Debug\xReporter.csprojResolveAssemblyReference.cache
+s:\documents\visual studio 2015\Projects\xReporter\xReporter\obj\Debug\xReporter.Properties.Resources.resources
+s:\documents\visual studio 2015\Projects\xReporter\xReporter\obj\Debug\xReporter.csproj.GenerateResource.Cache
+s:\documents\visual studio 2015\Projects\xReporter\xReporter\obj\Debug\xReporter.exe
+s:\documents\visual studio 2015\Projects\xReporter\xReporter\obj\Debug\xReporter.pdb
+s:\documents\visual studio 2015\Projects\xReporter\xReporter\obj\Debug\xReporter.xReporter.resources
