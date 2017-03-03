@@ -22,7 +22,9 @@ namespace xReporter
         string localTmp;
         string btnOpenLResultsText = "Open Local Results";
         bool isRunning;
-        int resultsCount;
+        int resultFolderCount;
+        int htmFileCount;
+        List<string> filesFound;
         public xReporter()
         {
             InitializeComponent();
@@ -37,6 +39,7 @@ namespace xReporter
             isRunning = false;
 
             refreshCount();
+            
         }
         private void createFolders() {
             
@@ -66,12 +69,16 @@ namespace xReporter
 
         private void btnEmptyLocalResults_Click(object sender, EventArgs e)
         {
-            if (resultsCount > 0 && MessageBox.Show("Are you sure to empty local results?", "Empty Local Results", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (!isRunning && resultFolderCount > 0 && MessageBox.Show("Are you sure to empty local results?", "Empty Local Results", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
+                isRunning = true;
+                lbInfo.Text = "Info: empty results ...";
                 MyLib.RemoveFolder(localResults);
                 System.Threading.Thread.Sleep(100);
                 MyLib.CreateFolder(localResults);
                 refreshCount();
+                isRunning = false;
+                lbInfo.Text = "Info: results emptied!";
             }
         }
 
@@ -80,7 +87,24 @@ namespace xReporter
             isRunning = true;
             rdVM1.Enabled = false;
             rdVM2.Enabled = false;
-            // do report
+            // step 1 : get full list of local results: 
+            //     s.Name -> show, 
+            //     s.FullName -> shotcut to open
+            //     
+            DirectoryInfo directoryInfo = new DirectoryInfo(@"roof\results");
+            var result = directoryInfo.GetFiles("Result_*.htm", SearchOption.AllDirectories).OrderBy(t => t.LastWriteTime).ToList();
+            htmFileCount = result.Count;
+            lbHtmCount.Text = htmFileCount.ToString();
+
+            foreach (var s in result)
+            {
+                lbxResults.Items.Add(s.Name);
+            }
+            //lbxResults.MouseDoubleClick += LbxResults_MouseDoubleClick;
+
+            // step 2: loop through all file and find info, store in List<data>
+            // data is a class object of parent,child,STATUS,STEPS,PassVal,FailVal,TIME
+            // step 3: generate csv from List<Array>
         }
 
 
@@ -101,10 +125,7 @@ namespace xReporter
             rdVM2.ForeColor = Color.Blue;
         }
 
-        private void btnTest_Click(object sender, EventArgs e)
-        {
-            
-        }
+
 
 
         private void txtRemoteRoof_TextChanged(object sender, EventArgs e)
@@ -113,7 +134,7 @@ namespace xReporter
             TextBox tb = (TextBox)sender;
             bool isOne = (tb == txtRemoteRoof1) ? true : false;
             bool isResultsFound = false;
-            string rootPath = string.Format(@""+tb.Text);
+            string rootPath = string.Format(""+tb.Text);
 
             if (Directory.Exists(rootPath))
             {
@@ -145,11 +166,14 @@ namespace xReporter
                 if (isOne)
                 {
                     // Feature
-                    comFeature1.SelectedIndex=0;
+                    if(comFeature1.Items.Count > 0) comFeature1.SelectedIndex = 0;
+                    else comFeature1.Text = "";
+
                 }
                 else
                 {
-                    comFeature2.SelectedIndex = 0;
+                    if (comFeature2.Items.Count > 0) comFeature2.SelectedIndex = 0;
+                    else comFeature2.Text = "";
                 }
             }
             else  // roof not exists
@@ -173,7 +197,7 @@ namespace xReporter
         private void txt2Open_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             TextBox tb = (TextBox)sender;
-            string path = string.Format(@""+tb.Text);
+            string path = string.Format(""+tb.Text);
             if (Directory.Exists(path))
             {
                 Process.Start(path);
@@ -183,10 +207,11 @@ namespace xReporter
         private void comFeature_Changed(object sender, EventArgs e)
         {
             ComboBox cb = (ComboBox)sender;
-            string featurePath = string.Format(@"" + cb.SelectedItem);
-            string binPath = string.Format(@""+ featurePath + @"\bin");
-            string testsPath = string.Format(@"" + featurePath + @"\tests");
-            
+
+            string featurePath = string.Format("" + cb.SelectedItem);
+            string binPath = featurePath + @"\bin";
+            string testsPath = featurePath + @"\tests";
+
             bool isBinFound = false;
             bool isTestsFound = false;
             bool isOne = (cb == comFeature1) ? true : false;
@@ -221,7 +246,6 @@ namespace xReporter
             }
             else
             {
-
                 if (isOne) txtRemoteBin1.Text = "";
                 else txtRemoteBin2.Text = "";
                 if (isOne) txtRemoteTests1.Text = "";
@@ -231,18 +255,32 @@ namespace xReporter
 
         private void btnDownloadResults_Click(object sender, EventArgs e)
         {
+            int whichResults = cheDownloadResults1.Checked ? 1 : 2;
 
-            if (rdVM1.Checked)
-            {
-                string path = @"" + txtRemoteResults1.Text;
-                if(Directory.Exists(path)) MyLib.CopyAll(@""+path, @""+localResults);
+            if (!isRunning) {
+                isRunning = true;
+                lbInfo.Text = "Info: download results ...";
+
+                if (rdVM1.Checked && whichResults == 1)
+                {
+                    string path = txtRemoteResults1.Text;
+                    if (Directory.Exists(path)) { MyLib.CopyAll(path, localResults); lbInfo.Text = "Info: results downloaded!"; }
+                    else lbInfo.Text = "Error: download failed due to VM results path not valid!";
+                }
+                else if(rdVM2.Checked && whichResults == 2)
+                {
+                    string path = txtRemoteResults2.Text;
+                    if (Directory.Exists(path)) { MyLib.CopyAll(path, localResults); lbInfo.Text = "Info: results downloaded!"; }
+                    else lbInfo.Text = "Error: download failed due to VM results path not valid!";
+                }
+                else
+                {
+                    lbInfo.Text = "Error: download failed due to VM results path not valid!";
+                }
+                refreshCount();
+                isRunning = false;
             }
-            else
-            {
-                string path = @"" + txtRemoteResults2.Text;
-                if (Directory.Exists(path)) MyLib.CopyAll(@"" + path, @"" + localResults);
-            }
-            refreshCount();
+            
 
         }
 
@@ -253,8 +291,75 @@ namespace xReporter
         }
         private void refreshCount()
         {
-            resultsCount = MyLib.FolderCount(localResults);
-            btnOpenLocal.Text = btnOpenLResultsText + "(" + resultsCount + ")";
+            resultFolderCount = MyLib.FolderCount(localResults);
+            btnOpenLocal.Text = btnOpenLResultsText + "(" + resultFolderCount + ")";
+        }
+
+        private void cheDownloadResults_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox cb = (CheckBox)sender;
+            int which = (cb == cheDownloadResults1) ? 1 : 2;
+            bool isEnabled = (cb.Checked) ? true : false;
+            switch(which)
+            {
+                case 1:
+                    txtResultsFrom1.Enabled = isEnabled ? true : false;
+                    txtResultsTo1.Enabled = isEnabled ? true : false;
+                    break;
+                case 2:
+                    txtResultsFrom2.Enabled = isEnabled ? true : false;
+                    txtResultsTo2.Enabled = isEnabled ? true : false;
+                    break;
+                default: break;
+
+            }
+        }
+
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+            /*
+            lbInfo.Text = MyLib.GetTime(txtResultsFrom1.Text).ToString();
+            filesFound = new List<string>();
+            FindAll(@"roof\results");
+            lbInfo.Text = filesFound.Count.ToString();
+            */
+
+            //1 get results .htm recursively and sorted ascending by LastWriteTime
+            DirectoryInfo directoryInfo = new DirectoryInfo(@"roof\results");
+            var result = directoryInfo.GetFiles("Result_*.htm", SearchOption.AllDirectories).OrderBy(t => t.LastWriteTime).ToList();
+            htmFileCount = result.Count;
+            lbHtmCount.Text = htmFileCount.ToString();
+
+            foreach(var s in result)
+            {
+                lbxResults.Items.Add(s.Name);
+            }
+            lbxResults.MouseDoubleClick += LbxResults_MouseDoubleClick;
+            
+        }
+
+        private void LbxResults_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            // easy to open htm
+            ListBox lb = (ListBox)sender;
+            int index = lb.SelectedIndex;
+            MessageBox.Show("select:"+index.ToString());
+
+            //throw new NotImplementedException();
+        }
+
+        private void FindAll(string path)
+        {
+            foreach(string d in Directory.GetDirectories(path))
+            {
+                foreach(string f in Directory.GetFiles(d,"*.htm"))
+                {
+                    filesFound.Add(f);
+                    lbxResults.Items.Add(f);
+                }
+                FindAll(d);
+            }
         }
     }
 }

@@ -85,7 +85,13 @@ namespace xReporter
             return count;
         }
 
-
+        public static long GetTime(string name)
+        {
+            if (name.Length < 17) return 0;
+            long t;
+            bool isOk = long.TryParse(name.Substring(name.Length - 17, 17), out t);
+            return isOk ? t : 0;
+        }
 
 
     }
