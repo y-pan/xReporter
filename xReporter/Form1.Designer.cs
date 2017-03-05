@@ -71,7 +71,8 @@
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.lbxResults = new System.Windows.Forms.ListBox();
-            this.lbHtmCount = new System.Windows.Forms.Label();
+            this.lbStat = new System.Windows.Forms.Label();
+            this.cheFailedOnly = new System.Windows.Forms.CheckBox();
             this.gbVM1.SuspendLayout();
             this.gbVM2.SuspendLayout();
             this.SuspendLayout();
@@ -96,7 +97,7 @@
             // cheDownloadResults1
             // 
             this.cheDownloadResults1.AutoSize = true;
-            this.cheDownloadResults1.Location = new System.Drawing.Point(119, 240);
+            this.cheDownloadResults1.Location = new System.Drawing.Point(119, 218);
             this.cheDownloadResults1.Name = "cheDownloadResults1";
             this.cheDownloadResults1.Size = new System.Drawing.Size(164, 24);
             this.cheDownloadResults1.TabIndex = 4;
@@ -122,7 +123,7 @@
             // 
             // btn_GenerateReports
             // 
-            this.btn_GenerateReports.Location = new System.Drawing.Point(22, 583);
+            this.btn_GenerateReports.Location = new System.Drawing.Point(22, 526);
             this.btn_GenerateReports.Name = "btn_GenerateReports";
             this.btn_GenerateReports.Size = new System.Drawing.Size(202, 45);
             this.btn_GenerateReports.TabIndex = 13;
@@ -132,7 +133,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(267, 457);
+            this.btnTest.Location = new System.Drawing.Point(1069, 516);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(75, 38);
             this.btnTest.TabIndex = 14;
@@ -179,7 +180,7 @@
             // txtResultsFrom1
             // 
             this.txtResultsFrom1.Enabled = false;
-            this.txtResultsFrom1.Location = new System.Drawing.Point(119, 270);
+            this.txtResultsFrom1.Location = new System.Drawing.Point(119, 248);
             this.txtResultsFrom1.Name = "txtResultsFrom1";
             this.txtResultsFrom1.Size = new System.Drawing.Size(439, 26);
             this.txtResultsFrom1.TabIndex = 7;
@@ -187,7 +188,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(2, 277);
+            this.label5.Location = new System.Drawing.Point(2, 255);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(104, 20);
             this.label5.TabIndex = 16;
@@ -196,7 +197,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(21, 327);
+            this.label6.Location = new System.Drawing.Point(21, 305);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(85, 20);
             this.label6.TabIndex = 16;
@@ -205,7 +206,7 @@
             // txtResultsTo1
             // 
             this.txtResultsTo1.Enabled = false;
-            this.txtResultsTo1.Location = new System.Drawing.Point(119, 319);
+            this.txtResultsTo1.Location = new System.Drawing.Point(119, 297);
             this.txtResultsTo1.Name = "txtResultsTo1";
             this.txtResultsTo1.Size = new System.Drawing.Size(439, 26);
             this.txtResultsTo1.TabIndex = 7;
@@ -214,7 +215,7 @@
             // 
             this.btnEmptyLocalResults.BackColor = System.Drawing.Color.Tomato;
             this.btnEmptyLocalResults.ForeColor = System.Drawing.Color.Black;
-            this.btnEmptyLocalResults.Location = new System.Drawing.Point(22, 669);
+            this.btnEmptyLocalResults.Location = new System.Drawing.Point(22, 577);
             this.btnEmptyLocalResults.Name = "btnEmptyLocalResults";
             this.btnEmptyLocalResults.Size = new System.Drawing.Size(202, 45);
             this.btnEmptyLocalResults.TabIndex = 13;
@@ -225,7 +226,7 @@
             // lbInfo
             // 
             this.lbInfo.AutoSize = true;
-            this.lbInfo.Location = new System.Drawing.Point(18, 441);
+            this.lbInfo.Location = new System.Drawing.Point(18, 384);
             this.lbInfo.Name = "lbInfo";
             this.lbInfo.Size = new System.Drawing.Size(45, 20);
             this.lbInfo.TabIndex = 17;
@@ -234,7 +235,7 @@
             // btnDownloadResults
             // 
             this.btnDownloadResults.ForeColor = System.Drawing.Color.Blue;
-            this.btnDownloadResults.Location = new System.Drawing.Point(22, 531);
+            this.btnDownloadResults.Location = new System.Drawing.Point(22, 474);
             this.btnDownloadResults.Name = "btnDownloadResults";
             this.btnDownloadResults.Size = new System.Drawing.Size(202, 45);
             this.btnDownloadResults.TabIndex = 18;
@@ -245,7 +246,7 @@
             // btnOpenLocal
             // 
             this.btnOpenLocal.ForeColor = System.Drawing.Color.DarkGreen;
-            this.btnOpenLocal.Location = new System.Drawing.Point(22, 479);
+            this.btnOpenLocal.Location = new System.Drawing.Point(22, 422);
             this.btnOpenLocal.Name = "btnOpenLocal";
             this.btnOpenLocal.Size = new System.Drawing.Size(202, 45);
             this.btnOpenLocal.TabIndex = 14;
@@ -273,7 +274,7 @@
             this.gbVM1.ForeColor = System.Drawing.Color.Black;
             this.gbVM1.Location = new System.Drawing.Point(16, 41);
             this.gbVM1.Name = "gbVM1";
-            this.gbVM1.Size = new System.Drawing.Size(575, 397);
+            this.gbVM1.Size = new System.Drawing.Size(575, 336);
             this.gbVM1.TabIndex = 19;
             this.gbVM1.TabStop = false;
             this.gbVM1.Text = "VM 1";
@@ -343,7 +344,7 @@
             this.gbVM2.Controls.Add(this.txtResultsTo2);
             this.gbVM2.Location = new System.Drawing.Point(636, 41);
             this.gbVM2.Name = "gbVM2";
-            this.gbVM2.Size = new System.Drawing.Size(575, 397);
+            this.gbVM2.Size = new System.Drawing.Size(575, 336);
             this.gbVM2.TabIndex = 20;
             this.gbVM2.TabStop = false;
             this.gbVM2.Text = "VM 2";
@@ -408,7 +409,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(23, 322);
+            this.label9.Location = new System.Drawing.Point(23, 300);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(85, 20);
             this.label9.TabIndex = 16;
@@ -425,7 +426,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(4, 273);
+            this.label10.Location = new System.Drawing.Point(4, 251);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(104, 20);
             this.label10.TabIndex = 16;
@@ -460,7 +461,7 @@
             // cheDownloadResults2
             // 
             this.cheDownloadResults2.AutoSize = true;
-            this.cheDownloadResults2.Location = new System.Drawing.Point(121, 240);
+            this.cheDownloadResults2.Location = new System.Drawing.Point(121, 218);
             this.cheDownloadResults2.Name = "cheDownloadResults2";
             this.cheDownloadResults2.Size = new System.Drawing.Size(164, 24);
             this.cheDownloadResults2.TabIndex = 4;
@@ -471,7 +472,7 @@
             // txtResultsFrom2
             // 
             this.txtResultsFrom2.Enabled = false;
-            this.txtResultsFrom2.Location = new System.Drawing.Point(121, 270);
+            this.txtResultsFrom2.Location = new System.Drawing.Point(121, 248);
             this.txtResultsFrom2.Name = "txtResultsFrom2";
             this.txtResultsFrom2.Size = new System.Drawing.Size(439, 26);
             this.txtResultsFrom2.TabIndex = 7;
@@ -479,7 +480,7 @@
             // txtResultsTo2
             // 
             this.txtResultsTo2.Enabled = false;
-            this.txtResultsTo2.Location = new System.Drawing.Point(121, 319);
+            this.txtResultsTo2.Location = new System.Drawing.Point(121, 297);
             this.txtResultsTo2.Name = "txtResultsTo2";
             this.txtResultsTo2.Size = new System.Drawing.Size(439, 26);
             this.txtResultsTo2.TabIndex = 7;
@@ -503,27 +504,39 @@
             this.lbxResults.FormattingEnabled = true;
             this.lbxResults.HorizontalScrollbar = true;
             this.lbxResults.ItemHeight = 20;
-            this.lbxResults.Location = new System.Drawing.Point(437, 462);
+            this.lbxResults.Location = new System.Drawing.Point(336, 414);
             this.lbxResults.Name = "lbxResults";
-            this.lbxResults.Size = new System.Drawing.Size(759, 224);
+            this.lbxResults.Size = new System.Drawing.Size(628, 204);
             this.lbxResults.TabIndex = 22;
             this.lbxResults.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LbxResults_MouseDoubleClick);
             // 
-            // lbHtmCount
+            // lbStat
             // 
-            this.lbHtmCount.AutoSize = true;
-            this.lbHtmCount.Location = new System.Drawing.Point(433, 689);
-            this.lbHtmCount.Name = "lbHtmCount";
-            this.lbHtmCount.Size = new System.Drawing.Size(44, 20);
-            this.lbHtmCount.TabIndex = 23;
-            this.lbHtmCount.Text = "htm: ";
+            this.lbStat.AutoSize = true;
+            this.lbStat.Location = new System.Drawing.Point(514, 384);
+            this.lbStat.Name = "lbStat";
+            this.lbStat.Size = new System.Drawing.Size(43, 20);
+            this.lbStat.TabIndex = 23;
+            this.lbStat.Text = "Stat:";
+            // 
+            // cheFailedOnly
+            // 
+            this.cheFailedOnly.AutoSize = true;
+            this.cheFailedOnly.Location = new System.Drawing.Point(336, 384);
+            this.cheFailedOnly.Name = "cheFailedOnly";
+            this.cheFailedOnly.Size = new System.Drawing.Size(157, 24);
+            this.cheFailedOnly.TabIndex = 24;
+            this.cheFailedOnly.Text = "Show Failed Only";
+            this.cheFailedOnly.UseVisualStyleBackColor = true;
+            this.cheFailedOnly.CheckedChanged += new System.EventHandler(this.cheFailedOnly_CheckedChanged);
             // 
             // xReporter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1223, 944);
-            this.Controls.Add(this.lbHtmCount);
+            this.ClientSize = new System.Drawing.Size(1223, 677);
+            this.Controls.Add(this.cheFailedOnly);
+            this.Controls.Add(this.lbStat);
             this.Controls.Add(this.lbxResults);
             this.Controls.Add(this.textBox10);
             this.Controls.Add(this.textBox9);
@@ -593,7 +606,8 @@
         private System.Windows.Forms.ComboBox comFeature2;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ListBox lbxResults;
-        private System.Windows.Forms.Label lbHtmCount;
+        private System.Windows.Forms.Label lbStat;
+        private System.Windows.Forms.CheckBox cheFailedOnly;
     }
 }
 

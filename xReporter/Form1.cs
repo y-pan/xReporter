@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace xReporter
@@ -15,20 +12,20 @@ namespace xReporter
 
     public partial class xReporter : Form
     {
-        string remoteBin;
-        string remoteResults;
-        string remoteTests;
+        string log;
         string localResults;
         string localTmp;
-        string btnOpenLResultsText = "Open Local Results";
+        string btnOpenLResultsText0 = "Open Local Results";
+        string lbStat0 = "Stat: ";
         bool isRunning;
         int resultFolderCount;
         int htmFileCount;
-        List<string> filesFound;
+
+        RecordManager recordMng;
+
         public xReporter()
         {
             InitializeComponent();
-            
         }
         private void xReporter_Load(object sender, EventArgs e)
         {
@@ -37,35 +34,11 @@ namespace xReporter
             createFolders();
             rdVM1.Checked = true;
             isRunning = false;
-
+            log = "xReport.csv";
             refreshCount();
+            recordMng = new RecordManager();
             
         }
-        private void createFolders() {
-            
-            System.IO.Directory.CreateDirectory(localResults);
-            System.IO.Directory.CreateDirectory(localTmp);
-        }
-
-        private void createFile(string pathString) {
-            if (!System.IO.File.Exists(pathString))
-            {
-                using (System.IO.FileStream fs = System.IO.File.Create(pathString))
-                {
-                    for (byte i = 0; i < 100; i++)
-                    {
-                        fs.WriteByte(i);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("File \"{0}\" already exists.", pathString);
-            }
-        }
-
-
-
 
         private void btnEmptyLocalResults_Click(object sender, EventArgs e)
         {
@@ -81,33 +54,50 @@ namespace xReporter
                 lbInfo.Text = "Info: results emptied!";
             }
         }
-
         private void btnGenerateReports_Click(object sender, EventArgs e)
         {
+            if (isRunning) { return; }
+
             isRunning = true;
             rdVM1.Enabled = false;
             rdVM2.Enabled = false;
-            // step 1 : get full list of local results: 
-            //     s.Name -> show, 
-            //     s.FullName -> shotcut to open
-            //     
+            lbxResults.Items.Clear();
+
+            recordMng.Clear();
+
             DirectoryInfo directoryInfo = new DirectoryInfo(@"roof\results");
-            var result = directoryInfo.GetFiles("Result_*.htm", SearchOption.AllDirectories).OrderBy(t => t.LastWriteTime).ToList();
+            var result = directoryInfo.GetFiles("Result_*.htm", SearchOption.AllDirectories).OrderBy(t => t.LastWriteTime).ToList(); //LastWriteTime would be same with file on VM
             htmFileCount = result.Count;
-            lbHtmCount.Text = htmFileCount.ToString();
+            lbStat.Text = htmFileCount.ToString();
 
-            foreach (var s in result)
+            for(int i = 0; i < result.Count; i++)
             {
-                lbxResults.Items.Add(s.Name);
+                Record rec = new Record(result[i].Name, result[i].FullName, i);
+
+                if (cheFailedOnly.Checked)
+                {
+                    if(!rec.isPass) lbxResults.Items.Add(rec.name);
+                }
+                else
+                { lbxResults.Items.Add(rec.name); }
+                recordMng.addRecord(rec);
             }
-            //lbxResults.MouseDoubleClick += LbxResults_MouseDoubleClick;
 
-            // step 2: loop through all file and find info, store in List<data>
-            // data is a class object of parent,child,STATUS,STEPS,PassVal,FailVal,TIME
-            // step 3: generate csv from List<Array>
+            int count = recordMng.getCount();
+            if (count <= 0) { throw new Exception("No result record found!"); }
+
+            // initiate log with header
+            if (File.Exists(log)) { File.Delete(log); }
+            File.WriteAllText(log, "Parent,Child,Status,StepsExecuted,PassVal,FailVal,Time\n");
+            for (int i = 0; i < count; i++)
+            {
+                File.AppendAllText(log, recordMng.getRecord(i).ToString(false) + "\n");
+            }
+
+            lbInfo.Text = "Done!";
+            lbStat.Text = lbStat0 + recordMng.getStat();
         }
-
-
+ 
         // ---------------------------------- EVENTS --------------------------
         private void rdVM1_CheckedChanged(object sender, EventArgs e)
         {
@@ -178,7 +168,6 @@ namespace xReporter
             }
             else  // roof not exists
             {
-                // results
                 if (isOne) {
                     comFeature1.Items.Clear();
                     comFeature1.Text = "";
@@ -280,8 +269,6 @@ namespace xReporter
                 refreshCount();
                 isRunning = false;
             }
-            
-
         }
 
         private void btnOpenLocal_Click(object sender, EventArgs e)
@@ -292,7 +279,7 @@ namespace xReporter
         private void refreshCount()
         {
             resultFolderCount = MyLib.FolderCount(localResults);
-            btnOpenLocal.Text = btnOpenLResultsText + "(" + resultFolderCount + ")";
+            btnOpenLocal.Text = btnOpenLResultsText0 + "(" + resultFolderCount + ")";
         }
 
         private void cheDownloadResults_CheckedChanged(object sender, EventArgs e)
@@ -318,25 +305,15 @@ namespace xReporter
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            /*
-            lbInfo.Text = MyLib.GetTime(txtResultsFrom1.Text).ToString();
-            filesFound = new List<string>();
-            FindAll(@"roof\results");
-            lbInfo.Text = filesFound.Count.ToString();
-            */
-
-            //1 get results .htm recursively and sorted ascending by LastWriteTime
             DirectoryInfo directoryInfo = new DirectoryInfo(@"roof\results");
             var result = directoryInfo.GetFiles("Result_*.htm", SearchOption.AllDirectories).OrderBy(t => t.LastWriteTime).ToList();
             htmFileCount = result.Count;
-            lbHtmCount.Text = htmFileCount.ToString();
+            lbStat.Text = htmFileCount.ToString();
 
             foreach(var s in result)
             {
-                lbxResults.Items.Add(s.Name);
+                lbxResults.Items.Add(MyLib.FixResultName(s.Name));
             }
-            lbxResults.MouseDoubleClick += LbxResults_MouseDoubleClick;
-            
         }
 
         private void LbxResults_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -344,22 +321,55 @@ namespace xReporter
             // easy to open htm
             ListBox lb = (ListBox)sender;
             int index = lb.SelectedIndex;
-            MessageBox.Show("select:"+index.ToString());
-
-            //throw new NotImplementedException();
-        }
-
-        private void FindAll(string path)
-        {
-            foreach(string d in Directory.GetDirectories(path))
+            if(lb.Items.Count >0)
             {
-                foreach(string f in Directory.GetFiles(d,"*.htm"))
-                {
-                    filesFound.Add(f);
-                    lbxResults.Items.Add(f);
-                }
-                FindAll(d);
+                Process.Start(recordMng.getPathByIndex(lb.SelectedIndex, cheFailedOnly.Checked));
             }
         }
+
+
+        private void cheFailedOnly_CheckedChanged(object sender, EventArgs e)
+        {
+            lbxResults.Items.Clear();
+            if (cheFailedOnly.Checked)
+            {
+                foreach( Record rec in recordMng.eRecords)
+                {
+                    if (!rec.isPass) { lbxResults.Items.Add(rec.name); }
+                }
+            }
+            else
+            {
+                foreach (Record rec in recordMng.records)
+                {
+                    lbxResults.Items.Add(rec.name);
+                }
+            }
+        }
+        public void createFolders()
+        {
+            System.IO.Directory.CreateDirectory(localResults);
+            System.IO.Directory.CreateDirectory(localTmp);
+        }
+
+        private void createFile(string pathString)
+        {
+            if (!System.IO.File.Exists(pathString))
+            {
+                using (System.IO.FileStream fs = System.IO.File.Create(pathString))
+                {
+                    for (byte i = 0; i < 100; i++)
+                    {
+                        fs.WriteByte(i);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("File \"{0}\" already exists.", pathString);
+            }
+        }
+
+
     }
 }
