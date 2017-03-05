@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,28 +12,25 @@ namespace xReporter
         public bool isPass;
         public string name;
         public string path;
-        public string parent = "";
-        public int index;
-        public int eIndex;
+        public string parent;
         public string[] data;
 
-        public Record(string name, string path, int index)
+        public Record(string resultName, string resultPath, string binFolderPath)
         {
-            this.name = MyLib.FixResultName(name);
-            this.path = path;
-            this.index = index;
-            
-
+            this.name = MyLib.FixResultName(resultName);
+            this.path = resultPath;
+            this.parent = "";
             this.parseData(); // will get this.data
             this.setIsPass();
-            this.setParent();
+            this.setParent(binFolderPath);
         }
-        public void setParent() {
+        public void setParent(string binFolderPath) {
             // to do
+            
+
+            //Parallel.ForEach(Directory.EnumerateFiles(bin, "*.bat"), MyLib.search);
         }
-        public void setEIndex(int eIndex) {
-            this.eIndex = eIndex;
-        }
+        
 
         public void parseData()
         {

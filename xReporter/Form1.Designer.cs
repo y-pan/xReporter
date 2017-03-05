@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtRemoteRoof1 = new System.Windows.Forms.TextBox();
             this.txtRemoteBin1 = new System.Windows.Forms.TextBox();
             this.cheDownloadResults1 = new System.Windows.Forms.CheckBox();
@@ -73,6 +74,8 @@
             this.lbxResults = new System.Windows.Forms.ListBox();
             this.lbStat = new System.Windows.Forms.Label();
             this.cheFailedOnly = new System.Windows.Forms.CheckBox();
+            this.cheFindParent = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.gbVM1.SuspendLayout();
             this.gbVM2.SuspendLayout();
             this.SuspendLayout();
@@ -123,7 +126,7 @@
             // 
             // btn_GenerateReports
             // 
-            this.btn_GenerateReports.Location = new System.Drawing.Point(22, 526);
+            this.btn_GenerateReports.Location = new System.Drawing.Point(145, 526);
             this.btn_GenerateReports.Name = "btn_GenerateReports";
             this.btn_GenerateReports.Size = new System.Drawing.Size(202, 45);
             this.btn_GenerateReports.TabIndex = 13;
@@ -133,7 +136,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(1069, 516);
+            this.btnTest.Location = new System.Drawing.Point(1121, 509);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(75, 38);
             this.btnTest.TabIndex = 14;
@@ -217,7 +220,7 @@
             this.btnEmptyLocalResults.ForeColor = System.Drawing.Color.Black;
             this.btnEmptyLocalResults.Location = new System.Drawing.Point(22, 577);
             this.btnEmptyLocalResults.Name = "btnEmptyLocalResults";
-            this.btnEmptyLocalResults.Size = new System.Drawing.Size(202, 45);
+            this.btnEmptyLocalResults.Size = new System.Drawing.Size(325, 45);
             this.btnEmptyLocalResults.TabIndex = 13;
             this.btnEmptyLocalResults.Text = "Clear Local Results";
             this.btnEmptyLocalResults.UseVisualStyleBackColor = false;
@@ -237,7 +240,7 @@
             this.btnDownloadResults.ForeColor = System.Drawing.Color.Blue;
             this.btnDownloadResults.Location = new System.Drawing.Point(22, 474);
             this.btnDownloadResults.Name = "btnDownloadResults";
-            this.btnDownloadResults.Size = new System.Drawing.Size(202, 45);
+            this.btnDownloadResults.Size = new System.Drawing.Size(325, 45);
             this.btnDownloadResults.TabIndex = 18;
             this.btnDownloadResults.Text = "Download Results";
             this.btnDownloadResults.UseVisualStyleBackColor = true;
@@ -248,7 +251,7 @@
             this.btnOpenLocal.ForeColor = System.Drawing.Color.DarkGreen;
             this.btnOpenLocal.Location = new System.Drawing.Point(22, 422);
             this.btnOpenLocal.Name = "btnOpenLocal";
-            this.btnOpenLocal.Size = new System.Drawing.Size(202, 45);
+            this.btnOpenLocal.Size = new System.Drawing.Size(325, 45);
             this.btnOpenLocal.TabIndex = 14;
             this.btnOpenLocal.Text = "Open Local Results";
             this.btnOpenLocal.UseVisualStyleBackColor = true;
@@ -504,16 +507,16 @@
             this.lbxResults.FormattingEnabled = true;
             this.lbxResults.HorizontalScrollbar = true;
             this.lbxResults.ItemHeight = 20;
-            this.lbxResults.Location = new System.Drawing.Point(336, 414);
+            this.lbxResults.Location = new System.Drawing.Point(384, 414);
             this.lbxResults.Name = "lbxResults";
-            this.lbxResults.Size = new System.Drawing.Size(628, 204);
+            this.lbxResults.Size = new System.Drawing.Size(731, 204);
             this.lbxResults.TabIndex = 22;
             this.lbxResults.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LbxResults_MouseDoubleClick);
             // 
             // lbStat
             // 
             this.lbStat.AutoSize = true;
-            this.lbStat.Location = new System.Drawing.Point(514, 384);
+            this.lbStat.Location = new System.Drawing.Point(832, 388);
             this.lbStat.Name = "lbStat";
             this.lbStat.Size = new System.Drawing.Size(43, 20);
             this.lbStat.TabIndex = 23;
@@ -522,19 +525,34 @@
             // cheFailedOnly
             // 
             this.cheFailedOnly.AutoSize = true;
-            this.cheFailedOnly.Location = new System.Drawing.Point(336, 384);
+            this.cheFailedOnly.Location = new System.Drawing.Point(384, 383);
             this.cheFailedOnly.Name = "cheFailedOnly";
-            this.cheFailedOnly.Size = new System.Drawing.Size(157, 24);
+            this.cheFailedOnly.Size = new System.Drawing.Size(116, 24);
             this.cheFailedOnly.TabIndex = 24;
-            this.cheFailedOnly.Text = "Show Failed Only";
+            this.cheFailedOnly.Text = "View Failed";
             this.cheFailedOnly.UseVisualStyleBackColor = true;
             this.cheFailedOnly.CheckedChanged += new System.EventHandler(this.cheFailedOnly_CheckedChanged);
+            // 
+            // cheFindParent
+            // 
+            this.cheFindParent.AutoSize = true;
+            this.cheFindParent.Location = new System.Drawing.Point(22, 537);
+            this.cheFindParent.Name = "cheFindParent";
+            this.cheFindParent.Size = new System.Drawing.Size(117, 24);
+            this.cheFindParent.TabIndex = 25;
+            this.cheFindParent.Text = "Find Parent";
+            this.cheFindParent.UseVisualStyleBackColor = true;
+            // 
+            // toolTip1
+            // 
+            this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
             // xReporter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1223, 677);
+            this.Controls.Add(this.cheFindParent);
             this.Controls.Add(this.cheFailedOnly);
             this.Controls.Add(this.lbStat);
             this.Controls.Add(this.lbxResults);
@@ -608,6 +626,8 @@
         private System.Windows.Forms.ListBox lbxResults;
         private System.Windows.Forms.Label lbStat;
         private System.Windows.Forms.CheckBox cheFailedOnly;
+        private System.Windows.Forms.CheckBox cheFindParent;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

@@ -205,7 +205,9 @@ namespace xReporter
             }
             return isPass;
         }
-
+        public void search()
+        {
+        }
 
     }
 }

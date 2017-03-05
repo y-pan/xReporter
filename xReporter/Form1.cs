@@ -37,65 +37,90 @@ namespace xReporter
             log = "xReport.csv";
             refreshCount();
             recordMng = new RecordManager();
-            
+            toolTip1.SetToolTip(this.cheFindParent, "Check it if you need to see parent name of each test in the report");
+            toolTip1.SetToolTip(this.cheFailedOnly, "Check it to view Failed test only, doesn't affect the report");
         }
 
         private void btnEmptyLocalResults_Click(object sender, EventArgs e)
         {
-            if (!isRunning && resultFolderCount > 0 && MessageBox.Show("Are you sure to empty local results?", "Empty Local Results", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            try
             {
-                isRunning = true;
-                lbInfo.Text = "Info: empty results ...";
-                MyLib.RemoveFolder(localResults);
-                System.Threading.Thread.Sleep(100);
-                MyLib.CreateFolder(localResults);
-                refreshCount();
-                isRunning = false;
-                lbInfo.Text = "Info: results emptied!";
+                if (resultFolderCount <= 0) throw new Exception("Already emptied.");
+                if (!isRunning && MessageBox.Show("Are you sure to empty local results?", "Empty Local Results", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    isRunning = true;
+                    lbInfo.Text = "Info: empty results ...";
+                    MyLib.RemoveFolder(localResults);
+                    System.Threading.Thread.Sleep(100);
+                    MyLib.CreateFolder(localResults);
+                    refreshCount();
+                    isRunning = false;
+                    lbInfo.Text = "Info: results emptied!";
+                }
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            
+            
         }
         private void btnGenerateReports_Click(object sender, EventArgs e)
         {
             if (isRunning) { return; }
 
-            isRunning = true;
-            rdVM1.Enabled = false;
-            rdVM2.Enabled = false;
-            lbxResults.Items.Clear();
+            try {
+                isRunning = true;
+                rdVM1.Enabled = false;
+                rdVM2.Enabled = false;
+                lbxResults.Items.Clear();
 
-            recordMng.Clear();
+                recordMng.Clear();
+                string remoteBin = cheFindParent.Checked ? getRemoteBin() : "";
 
-            DirectoryInfo directoryInfo = new DirectoryInfo(@"roof\results");
-            var result = directoryInfo.GetFiles("Result_*.htm", SearchOption.AllDirectories).OrderBy(t => t.LastWriteTime).ToList(); //LastWriteTime would be same with file on VM
-            htmFileCount = result.Count;
-            lbStat.Text = htmFileCount.ToString();
+                DirectoryInfo directoryInfo = new DirectoryInfo(@"roof\results");
+                var result = directoryInfo.GetFiles("Result_*.htm", SearchOption.AllDirectories).OrderBy(t => t.LastWriteTime).ToList(); //LastWriteTime would be same with file on VM
+                htmFileCount = result.Count;
+                lbStat.Text = htmFileCount.ToString();
 
-            for(int i = 0; i < result.Count; i++)
-            {
-                Record rec = new Record(result[i].Name, result[i].FullName, i);
-
-                if (cheFailedOnly.Checked)
+                for (int i = 0; i < result.Count; i++)
                 {
-                    if(!rec.isPass) lbxResults.Items.Add(rec.name);
+                    Record rec = new Record(result[i].Name, result[i].FullName, remoteBin);
+
+                    if (cheFailedOnly.Checked)
+                    {
+                        if (!rec.isPass) lbxResults.Items.Add(rec.name);
+                    }
+                    else
+                    { lbxResults.Items.Add(rec.name); }
+                    recordMng.addRecord(rec);
                 }
-                else
-                { lbxResults.Items.Add(rec.name); }
-                recordMng.addRecord(rec);
+
+                int count = recordMng.getCount();
+                if (count <= 0) { throw new Exception("No result record found!"); }
+
+                // initiate log with header
+                if (File.Exists(log)) { File.Delete(log); }
+                File.WriteAllText(log, "Parent,Child,Status,StepsExecuted,PassVal,FailVal,Time\n");
+                for (int i = 0; i < count; i++)
+                {
+                    File.AppendAllText(log, recordMng.getRecord(i).ToString(false) + "\n");
+                }
+
+                lbInfo.Text = "Done!";
+                lbStat.Text = lbStat0 + recordMng.getStat();
             }
-
-            int count = recordMng.getCount();
-            if (count <= 0) { throw new Exception("No result record found!"); }
-
-            // initiate log with header
-            if (File.Exists(log)) { File.Delete(log); }
-            File.WriteAllText(log, "Parent,Child,Status,StepsExecuted,PassVal,FailVal,Time\n");
-            for (int i = 0; i < count; i++)
+            catch(Exception ex) {
+                lbInfo.Text = "Error!";
+                MessageBox.Show(ex.Message);
+            }
+            finally
             {
-                File.AppendAllText(log, recordMng.getRecord(i).ToString(false) + "\n");
+                isRunning = false;
+                rdVM1.Enabled = true;
+                rdVM2.Enabled = true;
             }
-
-            lbInfo.Text = "Done!";
-            lbStat.Text = lbStat0 + recordMng.getStat();
+            
         }
  
         // ---------------------------------- EVENTS --------------------------
@@ -245,30 +270,43 @@ namespace xReporter
         private void btnDownloadResults_Click(object sender, EventArgs e)
         {
             int whichResults = cheDownloadResults1.Checked ? 1 : 2;
+            try
+            {
+                if (!isRunning)
+                {
+                    isRunning = true;
+                    lbInfo.Text = "Info: download results ...";
 
-            if (!isRunning) {
-                isRunning = true;
-                lbInfo.Text = "Info: download results ...";
-
-                if (rdVM1.Checked && whichResults == 1)
-                {
-                    string path = txtRemoteResults1.Text;
-                    if (Directory.Exists(path)) { MyLib.CopyAll(path, localResults); lbInfo.Text = "Info: results downloaded!"; }
-                    else lbInfo.Text = "Error: download failed due to VM results path not valid!";
+                    if (rdVM1.Checked && whichResults == 1)
+                    {
+                        string path = txtRemoteResults1.Text;
+                        if (Directory.Exists(path)) { MyLib.CopyAll(path, localResults); lbInfo.Text = "Info: results downloaded!"; }
+                        else throw new Exception("Error: download failed due to VM results path not valid!");
+                    }
+                    else if (rdVM2.Checked && whichResults == 2)
+                    {
+                        string path = txtRemoteResults2.Text;
+                        if (Directory.Exists(path)) { MyLib.CopyAll(path, localResults); lbInfo.Text = "Info: results downloaded!"; }
+                        else throw new Exception("Error: download failed due to VM results path not valid!");
+                    }
+                    else
+                    {
+                        throw new Exception("Error: download failed due to VM results path not valid!");
+                    }
+                    refreshCount();
+                    isRunning = false;
                 }
-                else if(rdVM2.Checked && whichResults == 2)
-                {
-                    string path = txtRemoteResults2.Text;
-                    if (Directory.Exists(path)) { MyLib.CopyAll(path, localResults); lbInfo.Text = "Info: results downloaded!"; }
-                    else lbInfo.Text = "Error: download failed due to VM results path not valid!";
-                }
-                else
-                {
-                    lbInfo.Text = "Error: download failed due to VM results path not valid!";
-                }
-                refreshCount();
+            }
+            catch(Exception ex)
+            {
+                lbInfo.Text = "Error!";
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
                 isRunning = false;
             }
+            
         }
 
         private void btnOpenLocal_Click(object sender, EventArgs e)
@@ -276,11 +314,7 @@ namespace xReporter
             Process.Start(localResults);
             refreshCount();
         }
-        private void refreshCount()
-        {
-            resultFolderCount = MyLib.FolderCount(localResults);
-            btnOpenLocal.Text = btnOpenLResultsText0 + "(" + resultFolderCount + ")";
-        }
+
 
         private void cheDownloadResults_CheckedChanged(object sender, EventArgs e)
         {
@@ -302,19 +336,6 @@ namespace xReporter
             }
         }
 
-
-        private void btnTest_Click(object sender, EventArgs e)
-        {
-            DirectoryInfo directoryInfo = new DirectoryInfo(@"roof\results");
-            var result = directoryInfo.GetFiles("Result_*.htm", SearchOption.AllDirectories).OrderBy(t => t.LastWriteTime).ToList();
-            htmFileCount = result.Count;
-            lbStat.Text = htmFileCount.ToString();
-
-            foreach(var s in result)
-            {
-                lbxResults.Items.Add(MyLib.FixResultName(s.Name));
-            }
-        }
 
         private void LbxResults_MouseDoubleClick(object sender, MouseEventArgs e)
         {
@@ -368,6 +389,25 @@ namespace xReporter
             {
                 MessageBox.Show("File \"{0}\" already exists.", pathString);
             }
+        }
+
+        private void refreshCount()
+        {
+            resultFolderCount = MyLib.FolderCount(localResults);
+            btnOpenLocal.Text = btnOpenLResultsText0 + "(" + resultFolderCount + ")";
+        }
+
+        private void btnTest_Click(object sender, EventArgs e)
+        {
+           
+        }
+        private string getRemoteBin() {
+            string path="";
+            if (rdVM1.Checked) path = txtRemoteBin1.Text;
+            else path = txtRemoteBin2.Text;
+
+            if (Directory.Exists(path)) return path;
+            else throw new Exception("Error: invalid remote bin path");
         }
 
 
