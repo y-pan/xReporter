@@ -504,6 +504,7 @@
             // 
             // lbxResults
             // 
+            this.lbxResults.BackColor = System.Drawing.SystemColors.Info;
             this.lbxResults.FormattingEnabled = true;
             this.lbxResults.HorizontalScrollbar = true;
             this.lbxResults.ItemHeight = 20;
@@ -525,6 +526,8 @@
             // cheFailedOnly
             // 
             this.cheFailedOnly.AutoSize = true;
+            this.cheFailedOnly.Checked = true;
+            this.cheFailedOnly.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cheFailedOnly.Location = new System.Drawing.Point(384, 383);
             this.cheFailedOnly.Name = "cheFailedOnly";
             this.cheFailedOnly.Size = new System.Drawing.Size(116, 24);
@@ -536,6 +539,8 @@
             // cheFindParent
             // 
             this.cheFindParent.AutoSize = true;
+            this.cheFindParent.Checked = true;
+            this.cheFindParent.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cheFindParent.Location = new System.Drawing.Point(22, 537);
             this.cheFindParent.Name = "cheFindParent";
             this.cheFindParent.Size = new System.Drawing.Size(117, 24);

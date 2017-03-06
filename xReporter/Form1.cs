@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace xReporter
@@ -37,7 +39,7 @@ namespace xReporter
             log = "xReport.csv";
             refreshCount();
             recordMng = new RecordManager();
-            toolTip1.SetToolTip(this.cheFindParent, "Check it if you need to see parent name of each test in the report");
+            toolTip1.SetToolTip(this.cheFindParent, "Check it if you need to see parent name of test in the report");
             toolTip1.SetToolTip(this.cheFailedOnly, "Check it to view Failed test only, doesn't affect the report");
         }
 
@@ -71,13 +73,14 @@ namespace xReporter
 
             try {
                 isRunning = true;
+                btn_GenerateReports.BackColor = Color.Yellow;
                 rdVM1.Enabled = false;
                 rdVM2.Enabled = false;
                 lbxResults.Items.Clear();
 
                 recordMng.Clear();
                 string remoteBin = cheFindParent.Checked ? getRemoteBin() : "";
-
+                
                 DirectoryInfo directoryInfo = new DirectoryInfo(@"roof\results");
                 var result = directoryInfo.GetFiles("Result_*.htm", SearchOption.AllDirectories).OrderBy(t => t.LastWriteTime).ToList(); //LastWriteTime would be same with file on VM
                 htmFileCount = result.Count;
@@ -86,7 +89,7 @@ namespace xReporter
                 for (int i = 0; i < result.Count; i++)
                 {
                     Record rec = new Record(result[i].Name, result[i].FullName, remoteBin);
-
+                    if(i<5) MessageBox.Show(rec.parent);
                     if (cheFailedOnly.Checked)
                     {
                         if (!rec.isPass) lbxResults.Items.Add(rec.name);
@@ -98,15 +101,15 @@ namespace xReporter
 
                 int count = recordMng.getCount();
                 if (count <= 0) { throw new Exception("No result record found!"); }
-
-                // initiate log with header
+                MessageBox.Show( "1st: "+recordMng.getRecord(0).ToString());
+                // write to log using data from recordMng
                 if (File.Exists(log)) { File.Delete(log); }
                 File.WriteAllText(log, "Parent,Child,Status,StepsExecuted,PassVal,FailVal,Time\n");
                 for (int i = 0; i < count; i++)
                 {
-                    File.AppendAllText(log, recordMng.getRecord(i).ToString(false) + "\n");
+                    File.AppendAllText(log, recordMng.getRecord(i).ToString() + "\n");
                 }
-
+                
                 lbInfo.Text = "Done!";
                 lbStat.Text = lbStat0 + recordMng.getStat();
             }
@@ -119,6 +122,8 @@ namespace xReporter
                 isRunning = false;
                 rdVM1.Enabled = true;
                 rdVM2.Enabled = true;
+                btn_GenerateReports.BackColor = SystemColors.Control;
+
             }
             
         }
@@ -354,13 +359,15 @@ namespace xReporter
             lbxResults.Items.Clear();
             if (cheFailedOnly.Checked)
             {
-                foreach( Record rec in recordMng.eRecords)
+                lbxResults.ForeColor = Color.Red;
+                foreach ( Record rec in recordMng.eRecords)
                 {
                     if (!rec.isPass) { lbxResults.Items.Add(rec.name); }
                 }
             }
             else
             {
+                lbxResults.ForeColor = Color.Black;
                 foreach (Record rec in recordMng.records)
                 {
                     lbxResults.Items.Add(rec.name);
@@ -399,8 +406,39 @@ namespace xReporter
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-           
+            string remoteBin = @"s:\Documents\rlogger\Roof\RDM\bin";
+            string target = "RDM3642_CompoundKeys_RDM798.htm";
+
+            //1. goto bin folder, find target line from bat files
+            string[] batPath = Directory.GetFiles(remoteBin, "*.bat");
+            string targetLine = "";
+            foreach (var b in batPath)
+            {
+                string[] all = File.ReadAllLines(b);
+                foreach( string line in all)
+                {
+                    string str = MyLib.dumpBatComment(line);
+                    if (str.ToLower().Contains(target.ToLower()) && MyLib.isBatFormat(str))
+                    {
+                        targetLine = str;
+                        break;
+                    }
+                }
+            }
+
+            // 2. extra from targetLine: CALL ..\..\Roof.bat "-DseleniumTestCases=%ROOF_LOCAL%\RDM\SetUIVars_RDM.htm;RDM\tests\FVT\Administration\RDM3642_CompoundKeys\RDM3642_CompoundKeys_RDM799.htm"
+            targetLine = targetLine.Replace('/', '\\').Replace(".htm\"",".htm").Replace(".htm\'", ".htm").Trim();
+            string[] targetLineArray = targetLine.Replace('/', '\\').Split('\\');
+            string parent = "";
+            for(int i = targetLineArray.Length-1; i > 0; i--) // if i=0 then parent not valid
+            {
+                if(targetLineArray[i] == target) { parent = targetLineArray[--i]; break; }
+            }
+            MessageBox.Show(parent);
+
         }
+
+        
         private string getRemoteBin() {
             string path="";
             if (rdVM1.Checked) path = txtRemoteBin1.Text;

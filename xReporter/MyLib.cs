@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace xReporter
@@ -205,9 +206,16 @@ namespace xReporter
             }
             return isPass;
         }
-        public void search()
+        public static string dumpBatComment(string target)
         {
+            string[] dumpPtns = new string[] { @"^\s*rem\s+.*$", @"\s+rem\s+.*$", @"^\s*::.*$", @"\s+::.*$" };
+            string str = Regex.Replace(target, string.Join("|", dumpPtns), "");
+            return str;
         }
-
+        public static bool isBatFormat(string target)
+        {
+            string batFormat = @"^\s*CALL.*Roof[.]bat\s+.*";
+            return Regex.IsMatch(target, batFormat, RegexOptions.IgnoreCase);
+        }
     }
 }
