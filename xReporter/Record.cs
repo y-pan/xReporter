@@ -28,9 +28,10 @@ namespace xReporter
             if(binFolderPath.Length > 0 && Directory.Exists(binFolderPath))
             {
                 //1. goto bin folder, find target line from bat files
-                string[] batPath = Directory.GetFiles(binFolderPath, "*.bat");
+                string[] batPaths = Directory.GetFiles(binFolderPath, "*.bat");
                 string targetLine = "";
-                foreach (var b in batPath)
+                string bat = "";
+                foreach (var b in batPaths)
                 {
                     string[] all = File.ReadAllLines(b);
                     foreach (string line in all)
@@ -39,23 +40,53 @@ namespace xReporter
                         if (str.ToLower().Contains(this.name.ToLower()) && MyLib.isBatFormat(str))
                         {
                             targetLine = str;
-                            
+                            bat = b;
                             break;
                         }
                     }
                 }
 
                 // 2. extra from targetLine: CALL ..\..\Roof.bat "-DseleniumTestCases=%ROOF_LOCAL%\RDM\SetUIVars_RDM.htm;RDM\tests\FVT\Administration\RDM3642_CompoundKeys\RDM3642_CompoundKeys_RDM799.htm"
-                targetLine = targetLine.Replace('/', '\\').Replace("\"", "|").Replace("\'", "|").Trim();
+                //targetLine = targetLine.Replace('/', '\\').Replace("\"", "|").Replace("\'", "|").Trim();
+                targetLine = targetLine.Replace('/', '\\').Replace("\"", "|").Replace("\'", "|").Replace(".htm","|").Replace(";", "").Trim();
+
                 string[] targetLineArray = targetLine.Replace('/', '\\').Split('\\','|');
                 for (int i = targetLineArray.Length - 1; i > 0; i--) // if i=0 then parent not valid
                 {
-                    if (targetLineArray[i] == this.name+".htm") { this.parent = targetLineArray[i-1]; break; }
+                    //if (targetLineArray[i] == this.name+".htm") { this.parent = targetLineArray[i-1]; break; }
+                    if (targetLineArray[i] == this.name) { this.parent = targetLineArray[i - 1]; break; }
                 }
                 // need to deal with parent=SetUIVars_RDM.htm;%RDM50169_PATH%
+                if (this.parent.Contains("%")) this.parent = this.findParentValue(bat);
             }
         }
         
+        private string findParentValue(string batFilePath)
+        {
+            string parentVar = this.parent.Replace("%", "");
+            string[] all = File.ReadAllLines(batFilePath);
+            string varDefinitionLine = "";
+            foreach (string line in all)
+            {
+                string str = MyLib.dumpBatComment(line);
+                if (str.ToLower().Contains(parentVar.ToLower()) && str.Contains("="))
+                {
+                    varDefinitionLine = str.Replace("\"","").Replace("'","").Replace("/","\\").Trim();
+                    string[] strs = varDefinitionLine.Split('=',' '); // space in line would be trouble
+                    if (strs.Length > 1) {
+                        for (int i = 0; i < strs.Length; i++)
+                        {
+                            if(strs[i] == parentVar && i < strs.Length -1)
+                            {
+                                return MyLib.getLastPartInPath(strs[i + 1]);
+                            }
+                        }
+                    }
+                }
+            }
+            return "";
+            
+        }
 
         public void parseData()
         {

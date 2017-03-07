@@ -217,5 +217,12 @@ namespace xReporter
             string batFormat = @"^\s*CALL.*Roof[.]bat\s+.*";
             return Regex.IsMatch(target, batFormat, RegexOptions.IgnoreCase);
         }
+
+        public static string getLastPartInPath(string path)
+        {
+            path = path.Replace("\"", "").Replace("'","").Trim();
+            string[] parts = path.Split('\\','/');
+            return parts.Last();
+        }
     }
 }

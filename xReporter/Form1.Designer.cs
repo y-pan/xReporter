@@ -34,7 +34,7 @@
             this.cheDownloadResults1 = new System.Windows.Forms.CheckBox();
             this.txtRemoteResults1 = new System.Windows.Forms.TextBox();
             this.txtRemoteTests1 = new System.Windows.Forms.TextBox();
-            this.btn_GenerateReports = new System.Windows.Forms.Button();
+            this.btnGenerateReports = new System.Windows.Forms.Button();
             this.btnTest = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -86,6 +86,7 @@
             this.txtRemoteRoof1.Name = "txtRemoteRoof1";
             this.txtRemoteRoof1.Size = new System.Drawing.Size(439, 26);
             this.txtRemoteRoof1.TabIndex = 3;
+            this.txtRemoteRoof1.Text = "s:\\Documents\\rlogger\\Roof";
             this.txtRemoteRoof1.TextChanged += new System.EventHandler(this.txtRemoteRoof_TextChanged);
             this.txtRemoteRoof1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txt2Open_MouseDoubleClick);
             // 
@@ -126,13 +127,13 @@
             // 
             // btn_GenerateReports
             // 
-            this.btn_GenerateReports.Location = new System.Drawing.Point(145, 526);
-            this.btn_GenerateReports.Name = "btn_GenerateReports";
-            this.btn_GenerateReports.Size = new System.Drawing.Size(202, 45);
-            this.btn_GenerateReports.TabIndex = 13;
-            this.btn_GenerateReports.Text = "Generate Reports";
-            this.btn_GenerateReports.UseVisualStyleBackColor = true;
-            this.btn_GenerateReports.Click += new System.EventHandler(this.btnGenerateReports_Click);
+            this.btnGenerateReports.Location = new System.Drawing.Point(145, 526);
+            this.btnGenerateReports.Name = "btn_GenerateReports";
+            this.btnGenerateReports.Size = new System.Drawing.Size(202, 45);
+            this.btnGenerateReports.TabIndex = 13;
+            this.btnGenerateReports.Text = "Generate Report";
+            this.btnGenerateReports.UseVisualStyleBackColor = true;
+            this.btnGenerateReports.Click += new System.EventHandler(this.btnGenerateReports_Click);
             // 
             // btnTest
             // 
@@ -572,7 +573,7 @@
             this.Controls.Add(this.lbInfo);
             this.Controls.Add(this.btnOpenLocal);
             this.Controls.Add(this.btnEmptyLocalResults);
-            this.Controls.Add(this.btn_GenerateReports);
+            this.Controls.Add(this.btnGenerateReports);
             this.Name = "xReporter";
             this.Text = "xReporter";
             this.Load += new System.EventHandler(this.xReporter_Load);
@@ -591,7 +592,7 @@
         private System.Windows.Forms.CheckBox cheDownloadResults1;
         private System.Windows.Forms.TextBox txtRemoteResults1;
         private System.Windows.Forms.TextBox txtRemoteTests1;
-        private System.Windows.Forms.Button btn_GenerateReports;
+        private System.Windows.Forms.Button btnGenerateReports;
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;

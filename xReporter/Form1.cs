@@ -18,7 +18,10 @@ namespace xReporter
         string localResults;
         string localTmp;
         string btnOpenLResultsText0 = "Open Local Results";
-        string lbStat0 = "Stat: ";
+        string lbStatText0 = "Stat: ";
+        string lbInfoText0 = "Info: ";
+        string btnGenerateReportsText0 = "Generate Report";
+
         bool isRunning;
         int resultFolderCount;
         int htmFileCount;
@@ -69,11 +72,15 @@ namespace xReporter
         }
         private void btnGenerateReports_Click(object sender, EventArgs e)
         {
-            if (isRunning) { return; }
+            
 
+            if (isRunning) { return; }
+            
             try {
                 isRunning = true;
-                btn_GenerateReports.BackColor = Color.Yellow;
+                btnGenerateReports.BackColor = Color.OrangeRed;
+                lbInfo.Text = "busy ...";
+                //btnGenerateReports.Text = "busy ...";
                 rdVM1.Enabled = false;
                 rdVM2.Enabled = false;
                 lbxResults.Items.Clear();
@@ -81,15 +88,16 @@ namespace xReporter
                 recordMng.Clear();
                 string remoteBin = cheFindParent.Checked ? getRemoteBin() : "";
                 
-                DirectoryInfo directoryInfo = new DirectoryInfo(@"roof\results");
+                DirectoryInfo directoryInfo = new DirectoryInfo(localResults);
                 var result = directoryInfo.GetFiles("Result_*.htm", SearchOption.AllDirectories).OrderBy(t => t.LastWriteTime).ToList(); //LastWriteTime would be same with file on VM
                 htmFileCount = result.Count;
                 lbStat.Text = htmFileCount.ToString();
 
                 for (int i = 0; i < result.Count; i++)
                 {
+                    //lbInfo.Text = lbInfoText0 + "busy ... " + i.ToString();
                     Record rec = new Record(result[i].Name, result[i].FullName, remoteBin);
-                    if(i<5) MessageBox.Show(rec.parent);
+                    //if(i<5) MessageBox.Show(rec.parent);
                     if (cheFailedOnly.Checked)
                     {
                         if (!rec.isPass) lbxResults.Items.Add(rec.name);
@@ -101,17 +109,25 @@ namespace xReporter
 
                 int count = recordMng.getCount();
                 if (count <= 0) { throw new Exception("No result record found!"); }
-                MessageBox.Show( "1st: "+recordMng.getRecord(0).ToString());
+                //MessageBox.Show( "1st: "+recordMng.getRecord(0).ToString());
                 // write to log using data from recordMng
                 if (File.Exists(log)) { File.Delete(log); }
                 File.WriteAllText(log, "Parent,Child,Status,StepsExecuted,PassVal,FailVal,Time\n");
+                string oldParent = "";
                 for (int i = 0; i < count; i++)
                 {
-                    File.AppendAllText(log, recordMng.getRecord(i).ToString() + "\n");
+                    Record rec = recordMng.getRecord(i);
+                    bool isIncludeParent = false;
+                    if ( oldParent != rec.parent)
+                    {
+                        oldParent = rec.parent;
+                        isIncludeParent = true;
+                    }
+                    File.AppendAllText(log, rec.ToString(isIncludeParent) + "\n");
                 }
-                
-                lbInfo.Text = "Done!";
-                lbStat.Text = lbStat0 + recordMng.getStat();
+
+                lbInfo.Text = lbInfoText0 + "done report!";
+                lbStat.Text = lbStatText0 + recordMng.getStat();
             }
             catch(Exception ex) {
                 lbInfo.Text = "Error!";
@@ -122,8 +138,8 @@ namespace xReporter
                 isRunning = false;
                 rdVM1.Enabled = true;
                 rdVM2.Enabled = true;
-                btn_GenerateReports.BackColor = SystemColors.Control;
-
+                btnGenerateReports.BackColor = SystemColors.Control;
+                //btnGenerateReports.Text = btnGenerateReportsText0;
             }
             
         }
