@@ -16,12 +16,13 @@ namespace xReporter
     {
 
         string log;
+        string complexLog;
         string localResults;
-        string localTmp;
+        //string localTmp;
         string btnOpenLResultsText0 = "Open Local Results";
         string lbStatText0 = "Stat: ";
         string lbInfoText0 = "Info: ";
-        string btnGenerateReportsText0 = "Generate Report";
+        //string btnGenerateReportsText0 = "Generate Report";
         
         bool isRunning;
         int resultFolderCount;
@@ -35,12 +36,14 @@ namespace xReporter
         }
         private void xReporter_Load(object sender, EventArgs e)
         {
-            localResults = @".\roof\results";
-            localTmp = @".\roof\tmp";
+            //localResults = @".\roof\results";
+            localResults = @".\results";
+            //localTmp = @".\roof\tmp";
             createFolders();
             rdVM1.Checked = true;
             isRunning = false;
             log = "xReport.csv";
+            complexLog = "xReport2.csv";
             refreshCount();
             recordMng = new RecordManager();
             toolTip1.SetToolTip(this.cheFindParent, "Check it if you need to see parent name of test in the report");
@@ -72,17 +75,15 @@ namespace xReporter
             {
                 isRunning = false;
             }
-            
-            
         }
         private void btnGenerateReports_Click(object sender, EventArgs e)
         {
-            if (isRunning) { return; }
+            if (isRunning || !btnGenerateReports.Enabled) { return; }
             btnGenerateReports.Enabled = false;
             try {
                 isRunning = true;
                 if (File.Exists(log)) { File.Delete(log); }
-                
+                if (File.Exists(complexLog)) { File.Delete(complexLog); }
                 btnGenerateReports.BackColor = Color.OrangeRed;
                 System.Threading.Thread.Sleep(500);
                 lbInfo.Text = "busy ...";
@@ -105,7 +106,7 @@ namespace xReporter
                 for (int i = 0; i < result.Count; i++)
                 {
                     //lbInfo.Text = lbInfoText0 + "busy ... " + i.ToString();
-                    Record rec = new Record(result[i].Name, result[i].FullName, remoteBin);
+                    Record rec = new Record(result[i].Name, result[i].FullName, remoteBin,i);
                     if (cheFailedOnly.Checked)
                     {
                         if (!rec.isPass) lbxResults.Items.Add((++ei) + " | "+rec.name);
@@ -118,12 +119,15 @@ namespace xReporter
                 int count = recordMng.getCount();
                 if (count <= 0) { throw new Exception("No result record found!"); }
                 
+                // write to simple csv, and prepare outRecStrings list for complex csv (complexLog)
                 File.WriteAllText(log, "Parent,Child,Status,StepsExecuted,PassVal,FailVal,Time\n");
                 string oldParent = "";
-
+                List<string> outRecStrings = new List<string>();
+                List<string> outNames = new List<string>();
                 for (int j = 0; j < count; j++)
                 {
-                    Record rec = recordMng.getRecord(j);                    
+                    Record rec = recordMng.getRecord(j);
+                    // for simple csv
                     bool isIncludeParent = false;
                     if ( oldParent != rec.parent)
                     {
@@ -131,6 +135,27 @@ namespace xReporter
                         isIncludeParent = true;
                     }
                     File.AppendAllText(log, rec.ToString(isIncludeParent) + "\n");
+
+                    // for complex csv
+                    if (outNames.Contains(rec.name))
+                    {
+                        int index = outNames.IndexOf(rec.name);
+                        outRecStrings[index] += ",,||,"+rec.ToString(isIncludeParent);
+                    }
+                    else
+                    {
+                        outRecStrings.Add(rec.ToString(isIncludeParent));
+                        outNames.Add(rec.name);
+                    }
+                }
+                // write to complexLog
+                if(outRecStrings.Count >0)
+                {
+                    File.WriteAllText(complexLog, "Parent,Child,Status,StepsExecuted,PassVal,FailVal,Time,,||,Parent,Child,Status,StepsExecuted,PassVal,FailVal,Time\n");
+                    foreach(string s in outRecStrings)
+                    {
+                        File.AppendAllText(complexLog, s + "\n");
+                    }
                 }
 
                 lbInfo.Text = lbInfoText0 + "done report!";
@@ -402,7 +427,7 @@ namespace xReporter
         public void createFolders()
         {
             System.IO.Directory.CreateDirectory(localResults);
-            System.IO.Directory.CreateDirectory(localTmp);
+            //System.IO.Directory.CreateDirectory(localTmp);
         }
 
         private void createFile(string pathString)

@@ -14,8 +14,9 @@ namespace xReporter
         public string path;
         public string parent;
         public string[] data;
+        public int index;
 
-        public Record(string resultName, string resultPath, string binFolderPath)
+        public Record(string resultName, string resultPath, string binFolderPath, int index)
         {
             this.name = MyLib.FixResultName(resultName);
             this.path = resultPath;
@@ -23,6 +24,7 @@ namespace xReporter
             this.parseData(); // will get this.data
             this.setIsPass();
             this.setParent(binFolderPath);
+            this.index = index;
         }
         public void setParent(string binFolderPath) {
             if(binFolderPath.Length > 0 && Directory.Exists(binFolderPath))
@@ -104,7 +106,8 @@ namespace xReporter
                 this.isPass = false;
                 if(this.data.Length < 5)
                 {
-                    this.data[0] = "ERROR";
+                    //this.data[0] = "ERROR";
+                    this.data = new string[] { "ERROR", "", "", "", "" };
                 }
             }
         }
