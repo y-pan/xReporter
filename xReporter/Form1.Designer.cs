@@ -45,7 +45,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtResultsTo1 = new System.Windows.Forms.TextBox();
             this.btnEmptyLocalResults = new System.Windows.Forms.Button();
-            this.lbInfo = new System.Windows.Forms.Label();
             this.btnDownloadResults = new System.Windows.Forms.Button();
             this.btnOpenLocal = new System.Windows.Forms.Button();
             this.gbVM1 = new System.Windows.Forms.GroupBox();
@@ -76,6 +75,7 @@
             this.cheFailedOnly = new System.Windows.Forms.CheckBox();
             this.cheFindParent = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.lbInfo = new System.Windows.Forms.Label();
             this.gbVM1.SuspendLayout();
             this.gbVM2.SuspendLayout();
             this.SuspendLayout();
@@ -125,11 +125,11 @@
             this.txtRemoteTests1.TabIndex = 9;
             this.txtRemoteTests1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txt2Open_MouseDoubleClick);
             // 
-            // btn_GenerateReports
+            // btnGenerateReports
             // 
-            this.btnGenerateReports.Location = new System.Drawing.Point(145, 526);
-            this.btnGenerateReports.Name = "btn_GenerateReports";
-            this.btnGenerateReports.Size = new System.Drawing.Size(202, 45);
+            this.btnGenerateReports.Location = new System.Drawing.Point(139, 491);
+            this.btnGenerateReports.Name = "btnGenerateReports";
+            this.btnGenerateReports.Size = new System.Drawing.Size(173, 45);
             this.btnGenerateReports.TabIndex = 13;
             this.btnGenerateReports.Text = "Generate Report";
             this.btnGenerateReports.UseVisualStyleBackColor = true;
@@ -137,7 +137,7 @@
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(1121, 509);
+            this.btnTest.Location = new System.Drawing.Point(1121, 463);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(75, 38);
             this.btnTest.TabIndex = 14;
@@ -219,29 +219,20 @@
             // 
             this.btnEmptyLocalResults.BackColor = System.Drawing.Color.Tomato;
             this.btnEmptyLocalResults.ForeColor = System.Drawing.Color.Black;
-            this.btnEmptyLocalResults.Location = new System.Drawing.Point(22, 577);
+            this.btnEmptyLocalResults.Location = new System.Drawing.Point(16, 542);
             this.btnEmptyLocalResults.Name = "btnEmptyLocalResults";
-            this.btnEmptyLocalResults.Size = new System.Drawing.Size(325, 45);
+            this.btnEmptyLocalResults.Size = new System.Drawing.Size(296, 45);
             this.btnEmptyLocalResults.TabIndex = 13;
             this.btnEmptyLocalResults.Text = "Clear Local Results";
             this.btnEmptyLocalResults.UseVisualStyleBackColor = false;
             this.btnEmptyLocalResults.Click += new System.EventHandler(this.btnEmptyLocalResults_Click);
             // 
-            // lbInfo
-            // 
-            this.lbInfo.AutoSize = true;
-            this.lbInfo.Location = new System.Drawing.Point(18, 384);
-            this.lbInfo.Name = "lbInfo";
-            this.lbInfo.Size = new System.Drawing.Size(45, 20);
-            this.lbInfo.TabIndex = 17;
-            this.lbInfo.Text = "Info :";
-            // 
             // btnDownloadResults
             // 
             this.btnDownloadResults.ForeColor = System.Drawing.Color.Blue;
-            this.btnDownloadResults.Location = new System.Drawing.Point(22, 474);
+            this.btnDownloadResults.Location = new System.Drawing.Point(16, 439);
             this.btnDownloadResults.Name = "btnDownloadResults";
-            this.btnDownloadResults.Size = new System.Drawing.Size(325, 45);
+            this.btnDownloadResults.Size = new System.Drawing.Size(296, 45);
             this.btnDownloadResults.TabIndex = 18;
             this.btnDownloadResults.Text = "Download Results";
             this.btnDownloadResults.UseVisualStyleBackColor = true;
@@ -250,9 +241,9 @@
             // btnOpenLocal
             // 
             this.btnOpenLocal.ForeColor = System.Drawing.Color.DarkGreen;
-            this.btnOpenLocal.Location = new System.Drawing.Point(22, 422);
+            this.btnOpenLocal.Location = new System.Drawing.Point(16, 387);
             this.btnOpenLocal.Name = "btnOpenLocal";
-            this.btnOpenLocal.Size = new System.Drawing.Size(325, 45);
+            this.btnOpenLocal.Size = new System.Drawing.Size(296, 45);
             this.btnOpenLocal.TabIndex = 14;
             this.btnOpenLocal.Text = "Open Local Results";
             this.btnOpenLocal.UseVisualStyleBackColor = true;
@@ -509,7 +500,7 @@
             this.lbxResults.FormattingEnabled = true;
             this.lbxResults.HorizontalScrollbar = true;
             this.lbxResults.ItemHeight = 20;
-            this.lbxResults.Location = new System.Drawing.Point(384, 414);
+            this.lbxResults.Location = new System.Drawing.Point(320, 387);
             this.lbxResults.Name = "lbxResults";
             this.lbxResults.Size = new System.Drawing.Size(731, 204);
             this.lbxResults.TabIndex = 22;
@@ -518,7 +509,7 @@
             // lbStat
             // 
             this.lbStat.AutoSize = true;
-            this.lbStat.Location = new System.Drawing.Point(832, 388);
+            this.lbStat.Location = new System.Drawing.Point(469, 601);
             this.lbStat.Name = "lbStat";
             this.lbStat.Size = new System.Drawing.Size(43, 20);
             this.lbStat.TabIndex = 23;
@@ -529,7 +520,7 @@
             this.cheFailedOnly.AutoSize = true;
             this.cheFailedOnly.Checked = true;
             this.cheFailedOnly.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cheFailedOnly.Location = new System.Drawing.Point(384, 383);
+            this.cheFailedOnly.Location = new System.Drawing.Point(320, 597);
             this.cheFailedOnly.Name = "cheFailedOnly";
             this.cheFailedOnly.Size = new System.Drawing.Size(116, 24);
             this.cheFailedOnly.TabIndex = 24;
@@ -542,7 +533,7 @@
             this.cheFindParent.AutoSize = true;
             this.cheFindParent.Checked = true;
             this.cheFindParent.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cheFindParent.Location = new System.Drawing.Point(22, 537);
+            this.cheFindParent.Location = new System.Drawing.Point(16, 502);
             this.cheFindParent.Name = "cheFindParent";
             this.cheFindParent.Size = new System.Drawing.Size(117, 24);
             this.cheFindParent.TabIndex = 25;
@@ -552,6 +543,15 @@
             // toolTip1
             // 
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            // 
+            // lbInfo
+            // 
+            this.lbInfo.AutoSize = true;
+            this.lbInfo.Location = new System.Drawing.Point(18, 597);
+            this.lbInfo.Name = "lbInfo";
+            this.lbInfo.Size = new System.Drawing.Size(45, 20);
+            this.lbInfo.TabIndex = 17;
+            this.lbInfo.Text = "Info :";
             // 
             // xReporter
             // 
@@ -603,7 +603,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtResultsTo1;
         private System.Windows.Forms.Button btnEmptyLocalResults;
-        private System.Windows.Forms.Label lbInfo;
         private System.Windows.Forms.Button btnDownloadResults;
         private System.Windows.Forms.Button btnOpenLocal;
         private System.Windows.Forms.GroupBox gbVM1;
@@ -634,6 +633,7 @@
         private System.Windows.Forms.CheckBox cheFailedOnly;
         private System.Windows.Forms.CheckBox cheFindParent;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Label lbInfo;
     }
 }
 

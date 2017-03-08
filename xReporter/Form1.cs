@@ -14,6 +14,7 @@ namespace xReporter
 
     public partial class xReporter : Form
     {
+
         string log;
         string localResults;
         string localTmp;
@@ -21,7 +22,7 @@ namespace xReporter
         string lbStatText0 = "Stat: ";
         string lbInfoText0 = "Info: ";
         string btnGenerateReportsText0 = "Generate Report";
-
+        
         bool isRunning;
         int resultFolderCount;
         int htmFileCount;
@@ -48,10 +49,11 @@ namespace xReporter
 
         private void btnEmptyLocalResults_Click(object sender, EventArgs e)
         {
+            if (isRunning) return;
             try
             {
                 if (resultFolderCount <= 0) throw new Exception("Already emptied.");
-                if (!isRunning && MessageBox.Show("Are you sure to empty local results?", "Empty Local Results", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Are you sure to empty local results?", "Empty Local Results", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     isRunning = true;
                     lbInfo.Text = "Info: empty results ...";
@@ -59,7 +61,6 @@ namespace xReporter
                     System.Threading.Thread.Sleep(100);
                     MyLib.CreateFolder(localResults);
                     refreshCount();
-                    isRunning = false;
                     lbInfo.Text = "Info: results emptied!";
                 }
             }
@@ -67,19 +68,25 @@ namespace xReporter
             {
                 MessageBox.Show(ex.Message);
             }
+            finally
+            {
+                isRunning = false;
+            }
             
             
         }
         private void btnGenerateReports_Click(object sender, EventArgs e)
         {
-            
-
             if (isRunning) { return; }
-            
+            btnGenerateReports.Enabled = false;
             try {
                 isRunning = true;
+                if (File.Exists(log)) { File.Delete(log); }
+                
                 btnGenerateReports.BackColor = Color.OrangeRed;
+                System.Threading.Thread.Sleep(500);
                 lbInfo.Text = "busy ...";
+                System.Threading.Thread.Sleep(500);
                 //btnGenerateReports.Text = "busy ...";
                 rdVM1.Enabled = false;
                 rdVM2.Enabled = false;
@@ -89,34 +96,34 @@ namespace xReporter
                 string remoteBin = cheFindParent.Checked ? getRemoteBin() : "";
                 
                 DirectoryInfo directoryInfo = new DirectoryInfo(localResults);
-                var result = directoryInfo.GetFiles("Result_*.htm", SearchOption.AllDirectories).OrderBy(t => t.LastWriteTime).ToList(); //LastWriteTime would be same with file on VM
+                var result = directoryInfo.GetFiles("Result_*.htm", SearchOption.AllDirectories).Where(file => !file.Name.StartsWith("Result_SetUIVars_")).OrderBy(t => t.LastWriteTime).ToList(); //LastWriteTime would be same with file on VM
                 htmFileCount = result.Count;
                 lbStat.Text = htmFileCount.ToString();
-
+      
+                lbxResults.ForeColor = (cheFailedOnly.Checked) ? Color.Red : Color.Black;
+                int ei = 0;
                 for (int i = 0; i < result.Count; i++)
                 {
                     //lbInfo.Text = lbInfoText0 + "busy ... " + i.ToString();
                     Record rec = new Record(result[i].Name, result[i].FullName, remoteBin);
-                    //if(i<5) MessageBox.Show(rec.parent);
                     if (cheFailedOnly.Checked)
                     {
-                        if (!rec.isPass) lbxResults.Items.Add(rec.name);
+                        if (!rec.isPass) lbxResults.Items.Add((++ei) + " | "+rec.name);
                     }
                     else
-                    { lbxResults.Items.Add(rec.name); }
+                    { lbxResults.Items.Add((i + 1) + " | "+rec.name); }
                     recordMng.addRecord(rec);
                 }
 
                 int count = recordMng.getCount();
                 if (count <= 0) { throw new Exception("No result record found!"); }
-                //MessageBox.Show( "1st: "+recordMng.getRecord(0).ToString());
-                // write to log using data from recordMng
-                if (File.Exists(log)) { File.Delete(log); }
+                
                 File.WriteAllText(log, "Parent,Child,Status,StepsExecuted,PassVal,FailVal,Time\n");
                 string oldParent = "";
-                for (int i = 0; i < count; i++)
+
+                for (int j = 0; j < count; j++)
                 {
-                    Record rec = recordMng.getRecord(i);
+                    Record rec = recordMng.getRecord(j);                    
                     bool isIncludeParent = false;
                     if ( oldParent != rec.parent)
                     {
@@ -139,7 +146,7 @@ namespace xReporter
                 rdVM1.Enabled = true;
                 rdVM2.Enabled = true;
                 btnGenerateReports.BackColor = SystemColors.Control;
-                //btnGenerateReports.Text = btnGenerateReportsText0;
+                btnGenerateReports.Enabled = true;
             }
             
         }
@@ -290,33 +297,33 @@ namespace xReporter
 
         private void btnDownloadResults_Click(object sender, EventArgs e)
         {
+            if (isRunning) { return; }
+            
             int whichResults = cheDownloadResults1.Checked ? 1 : 2;
             try
             {
-                if (!isRunning)
-                {
-                    isRunning = true;
-                    lbInfo.Text = "Info: download results ...";
+                isRunning = true;
+                lbInfo.Text = "Info: download results ...";
 
-                    if (rdVM1.Checked && whichResults == 1)
-                    {
-                        string path = txtRemoteResults1.Text;
-                        if (Directory.Exists(path)) { MyLib.CopyAll(path, localResults); lbInfo.Text = "Info: results downloaded!"; }
-                        else throw new Exception("Error: download failed due to VM results path not valid!");
-                    }
-                    else if (rdVM2.Checked && whichResults == 2)
-                    {
-                        string path = txtRemoteResults2.Text;
-                        if (Directory.Exists(path)) { MyLib.CopyAll(path, localResults); lbInfo.Text = "Info: results downloaded!"; }
-                        else throw new Exception("Error: download failed due to VM results path not valid!");
-                    }
-                    else
-                    {
-                        throw new Exception("Error: download failed due to VM results path not valid!");
-                    }
-                    refreshCount();
-                    isRunning = false;
+                if (rdVM1.Checked && whichResults == 1)
+                {
+                    string path = txtRemoteResults1.Text;
+                    if (Directory.Exists(path)) { MyLib.CopyAll(path, localResults); lbInfo.Text = "Info: results downloaded!"; }
+                    else throw new Exception("Error: download failed due to VM results path not valid!");
                 }
+                else if (rdVM2.Checked && whichResults == 2)
+                {
+                    string path = txtRemoteResults2.Text;
+                    if (Directory.Exists(path)) { MyLib.CopyAll(path, localResults); lbInfo.Text = "Info: results downloaded!"; }
+                    else throw new Exception("Error: download failed due to VM results path not valid!");
+                }
+                else
+                {
+                    throw new Exception("Error: download failed due to VM results path not valid!");
+                }
+                refreshCount();
+                    
+              
             }
             catch(Exception ex)
             {
@@ -376,17 +383,19 @@ namespace xReporter
             if (cheFailedOnly.Checked)
             {
                 lbxResults.ForeColor = Color.Red;
+                int i = 0;
                 foreach ( Record rec in recordMng.eRecords)
                 {
-                    if (!rec.isPass) { lbxResults.Items.Add(rec.name); }
+                    if (!rec.isPass) { lbxResults.Items.Add((++i) +" | "+rec.name); }
                 }
             }
             else
             {
                 lbxResults.ForeColor = Color.Black;
+                int i = 0;
                 foreach (Record rec in recordMng.records)
                 {
-                    lbxResults.Items.Add(rec.name);
+                    lbxResults.Items.Add((++i) + " | " + rec.name);
                 }
             }
         }

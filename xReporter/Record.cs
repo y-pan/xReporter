@@ -110,7 +110,15 @@ namespace xReporter
         }
         public string getDataStr()
         {
-            return string.Format("{0},{1},{2},{3},{4}", this.data[0], this.data[1], this.data[2], this.data[3], this.data[4]);
+            string str="";
+            int len = this.data.Length;
+            for(int i= 0; i< this.data.Length; i++ )
+            {
+                str += this.data[i];
+                if (i < this.data.Length - 1) { str += ","; }
+            }
+            return str;
+            //return string.Format("{0},{1},{2},{3},{4}", this.data[0], this.data[1], this.data[2], this.data[3], this.data[4]);
         }
         public string ToString(bool includeParent=true) {
             //Parent,Child,Status,StepsExecuted,PassVal,FailVal,Time\n"
