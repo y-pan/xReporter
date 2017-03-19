@@ -21,11 +21,17 @@ namespace xReporter
             if(array.Last() == folder) { return true; }
             else { return false; }
         }
+        public static bool PathIsFolder(string path, string folder, string parentFolderName)
+        {
+            string[] array = path.Split('\\');
+            if (array.Last() == folder && array[array.Length - 2] == parentFolderName) { return true; }
+            else { return false; }
+        }
         public static bool PathHasSubFolder(string path, string subfolder) {
 
             return false;
         }
-        public static void DirectoryCopy(string sourceDirName, string destDirName, bool copySubDirs)
+        public static void DirectoryCopy(string sourceDirName, string destDirName)
         {
             // Get the subdirectories for the specified directory.
             DirectoryInfo dir = new DirectoryInfo(sourceDirName);
@@ -53,27 +59,27 @@ namespace xReporter
             }
 
             // If copying subdirectories, copy them and their contents to new location.
-            if (copySubDirs)
+
+            foreach (DirectoryInfo subdir in dirs)
             {
-                foreach (DirectoryInfo subdir in dirs)
-                {
-                    string temppath = Path.Combine(destDirName, subdir.Name);
-                    DirectoryCopy(subdir.FullName, temppath, copySubDirs);
-                }
+                string temppath = Path.Combine(destDirName, subdir.Name);
+                DirectoryCopy(subdir.FullName, temppath);
             }
+
         }
 
 
         public static void CopyAll(string sourcePath, string destPath) { 
             //Now Create all of the directories
-            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", 
-                SearchOption.AllDirectories))
-                Directory.CreateDirectory(dirPath.Replace(sourcePath, destPath));
 
+            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            {
+                Directory.CreateDirectory(dirPath.Replace(sourcePath, destPath));
+            }
+                
             //Copy all the files & Replaces any files with the same name
-            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", 
-                SearchOption.AllDirectories))
-                File.Copy(newPath, newPath.Replace(sourcePath, destPath), true);
+            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+            { File.Copy(newPath, newPath.Replace(sourcePath, destPath), true); }
 
         }
         public static int FolderCount(string path) {
@@ -210,6 +216,7 @@ namespace xReporter
         {
             string[] dumpPtns = new string[] { @"^\s*rem\s+.*$", @"\s+rem\s+.*$", @"^\s*::.*$", @"\s+::.*$" };
             string str = Regex.Replace(target, string.Join("|", dumpPtns), "");
+            str = str.Replace("/", "\\");
             return str;
         }
         public static bool isBatFormat(string target)
@@ -223,6 +230,68 @@ namespace xReporter
             path = path.Replace("\"", "").Replace("'","").Trim();
             string[] parts = path.Split('\\','/');
             return parts.Last();
+        }
+        public static bool PathIsFile(string path, string fileName, string parentName)
+        {
+            if (!File.Exists(path)) { return false; }
+            path = path.Replace("\"", "").Replace("'", "").Trim();
+            string[] parts = path.Split('\\', '/');
+            int len = parts.Length;
+            if (fileName == parts[len - 1] && parentName == parts[len - 2]) { return true; }
+            else { return false; }
+        }
+
+        public static string replaceVarsInLine(string line, string sourcePath)
+        {
+            // pass in: "%VAR1%\%VAR3%%VAR4%\%VAR2%\dummydummy\file.htm"  ".\test.bat"
+            if (!line.Contains("%")) return line;
+
+            string str1 = line;
+
+            // know vars
+            MatchCollection matches = Regex.Matches(str1, "%[^%]*%");
+            List<KeyValue> kvs = new List<KeyValue>();
+            foreach (var m in matches)
+            {
+                KeyValue kv = new KeyValue(m.ToString().Replace("%", ""));
+                kvs.Add(kv);
+            }
+
+            // know values
+
+            string[] allLines = File.ReadAllLines(sourcePath);
+
+            foreach (var kv in kvs)
+            {
+                foreach (string l in allLines)
+                {
+                    string s = MyLib.dumpBatComment(l);
+                    if (s.ToLower().Contains(kv.key.ToLower()) && s.Contains("="))
+                    {
+                        s = s.Replace("\"", "").Replace("'", "").Replace("/", "\\").Trim(); // reformat
+                        string[] arr = s.Split('=', ' '); // space in line would be trouble
+                        if (arr.Length > 1)
+                        {
+                            for (int i = 0; i < arr.Length; i++)
+                            {
+                                if (arr[i] == kv.key.ToString() && i < arr.Length - 1)
+                                {
+                                    kv.value = arr[i + 1];
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (var kv in kvs)
+            {
+                if (kv.value != "") str1 = str1.Replace("%" + kv.key + "%", kv.value);
+            }
+
+            return str1;
+
         }
     }
 }

@@ -38,11 +38,23 @@ namespace xReporter
             if (index < 0) { throw new Exception("Error: Record index not found!"); }
             if (!forFailed)
             {
-                return this.records[index].path;
+                return this.records[index].resultPath;
             }
             else
             {
-                return this.eRecords[index].path;
+                return this.eRecords[index].resultPath;
+            }
+        }
+        public string getFolderPathByIndex(int index, bool forFailed = false)
+        {
+            if (index < 0) { throw new Exception("Error: Record index not found!"); }
+            if (!forFailed)
+            {
+                return this.records[index].resultFolderPath;
+            }
+            else
+            {
+                return this.eRecords[index].resultFolderPath;
             }
         }
         public string getNameByIndex(int index, bool forFailed = false)
@@ -59,10 +71,18 @@ namespace xReporter
         }
         public Record getRecord(int index)
         {
-            return this.records[index];
+            if (index < this.count && index >= 0) { return this.records[index]; }
+            else { return null; }
+            
+        }
+        public Record getERecord(int index)
+        {
+            if (index < this.ecount && index >= 0) { return this.eRecords[index]; }
+            else { return null; }
         }
         public string getStat(bool isFailStat=true)
         {
+            if (this.count <= 0) return "";
             if (isFailStat)
             {
                 int percentage = this.ecount * 100 / this.count;
