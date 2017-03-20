@@ -52,7 +52,7 @@
             this.bw_emptyResults = new System.ComponentModel.BackgroundWorker();
             this.bw_generateReport = new System.ComponentModel.BackgroundWorker();
             this.btnCopyTestFolderPath = new System.Windows.Forms.Button();
-            this.bw_showTestFolderPathCopied = new System.ComponentModel.BackgroundWorker();
+            this.bw_showHide = new System.ComponentModel.BackgroundWorker();
             this.lbCopied = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.btnSetUIVarsFolder2 = new System.Windows.Forms.Button();
@@ -114,12 +114,27 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tabVMs = new System.Windows.Forms.TabControl();
             this.btnOpenRemoteBin = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnOpenReport = new System.Windows.Forms.Button();
             this.bw_mapFeature = new System.ComponentModel.BackgroundWorker();
             this.tabLists = new System.Windows.Forms.TabControl();
             this.tabList1 = new System.Windows.Forms.TabPage();
+            this.lbFilterFound1 = new System.Windows.Forms.Label();
+            this.lbFilterNotFound1 = new System.Windows.Forms.Label();
+            this.btnFilterPrevious1 = new System.Windows.Forms.Button();
+            this.btnFilterNext1 = new System.Windows.Forms.Button();
+            this.btnFilterGo1 = new System.Windows.Forms.Button();
+            this.txtFilter1 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabList2 = new System.Windows.Forms.TabPage();
+            this.lbFilterFound2 = new System.Windows.Forms.Label();
+            this.lbFilterNotFound2 = new System.Windows.Forms.Label();
+            this.btnFilterPrevious2 = new System.Windows.Forms.Button();
+            this.btnFilterNext2 = new System.Windows.Forms.Button();
+            this.btnFilterGo2 = new System.Windows.Forms.Button();
+            this.txtFilter2 = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.lbxResults2 = new System.Windows.Forms.ListBox();
+            this.btnCopyStat = new System.Windows.Forms.Button();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabVMs.SuspendLayout();
@@ -189,20 +204,20 @@
             // lbxResults1
             // 
             this.lbxResults1.BackColor = System.Drawing.Color.LightCyan;
-            this.lbxResults1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbxResults1.Dock = System.Windows.Forms.DockStyle.Top;
             this.lbxResults1.FormattingEnabled = true;
             this.lbxResults1.HorizontalScrollbar = true;
             this.lbxResults1.ItemHeight = 20;
             this.lbxResults1.Location = new System.Drawing.Point(3, 3);
             this.lbxResults1.Name = "lbxResults1";
-            this.lbxResults1.Size = new System.Drawing.Size(628, 251);
+            this.lbxResults1.Size = new System.Drawing.Size(657, 244);
             this.lbxResults1.TabIndex = 22;
             this.lbxResults1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LbxResults_MouseDoubleClick);
             // 
             // lbStat
             // 
             this.lbStat.AutoSize = true;
-            this.lbStat.Location = new System.Drawing.Point(956, 566);
+            this.lbStat.Location = new System.Drawing.Point(1014, 576);
             this.lbStat.Name = "lbStat";
             this.lbStat.Size = new System.Drawing.Size(43, 20);
             this.lbStat.TabIndex = 23;
@@ -213,9 +228,10 @@
             this.cheFailedOnly.AutoSize = true;
             this.cheFailedOnly.Checked = true;
             this.cheFailedOnly.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cheFailedOnly.Location = new System.Drawing.Point(955, 342);
+            this.cheFailedOnly.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cheFailedOnly.Location = new System.Drawing.Point(983, 342);
             this.cheFailedOnly.Name = "cheFailedOnly";
-            this.cheFailedOnly.Size = new System.Drawing.Size(116, 24);
+            this.cheFailedOnly.Size = new System.Drawing.Size(105, 21);
             this.cheFailedOnly.TabIndex = 24;
             this.cheFailedOnly.Text = "View Failed";
             this.cheFailedOnly.UseVisualStyleBackColor = true;
@@ -252,7 +268,7 @@
             this.btnOpenBat.ForeColor = System.Drawing.Color.Black;
             this.btnOpenBat.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenBat.Image")));
             this.btnOpenBat.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOpenBat.Location = new System.Drawing.Point(955, 390);
+            this.btnOpenBat.Location = new System.Drawing.Point(980, 375);
             this.btnOpenBat.Name = "btnOpenBat";
             this.btnOpenBat.Size = new System.Drawing.Size(125, 45);
             this.btnOpenBat.TabIndex = 27;
@@ -266,9 +282,10 @@
             this.cheNotepadpp.AutoSize = true;
             this.cheNotepadpp.Checked = true;
             this.cheNotepadpp.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cheNotepadpp.Location = new System.Drawing.Point(1086, 342);
+            this.cheNotepadpp.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cheNotepadpp.Location = new System.Drawing.Point(1092, 342);
             this.cheNotepadpp.Name = "cheNotepadpp";
-            this.cheNotepadpp.Size = new System.Drawing.Size(114, 24);
+            this.cheNotepadpp.Size = new System.Drawing.Size(104, 21);
             this.cheNotepadpp.TabIndex = 28;
             this.cheNotepadpp.Text = "Notepad++";
             this.cheNotepadpp.UseVisualStyleBackColor = true;
@@ -277,7 +294,7 @@
             // 
             this.btnOpenSelectedResultFolder.BackColor = System.Drawing.Color.Transparent;
             this.btnOpenSelectedResultFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenSelectedResultFolder.Image")));
-            this.btnOpenSelectedResultFolder.Location = new System.Drawing.Point(1079, 441);
+            this.btnOpenSelectedResultFolder.Location = new System.Drawing.Point(1104, 426);
             this.btnOpenSelectedResultFolder.Name = "btnOpenSelectedResultFolder";
             this.btnOpenSelectedResultFolder.Size = new System.Drawing.Size(52, 45);
             this.btnOpenSelectedResultFolder.TabIndex = 29;
@@ -290,7 +307,7 @@
             this.btnOpenTest.ForeColor = System.Drawing.Color.Black;
             this.btnOpenTest.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenTest.Image")));
             this.btnOpenTest.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOpenTest.Location = new System.Drawing.Point(955, 492);
+            this.btnOpenTest.Location = new System.Drawing.Point(980, 477);
             this.btnOpenTest.Name = "btnOpenTest";
             this.btnOpenTest.Size = new System.Drawing.Size(125, 45);
             this.btnOpenTest.TabIndex = 30;
@@ -303,7 +320,7 @@
             // 
             this.btnOpenTestFolder.BackColor = System.Drawing.Color.Transparent;
             this.btnOpenTestFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenTestFolder.Image")));
-            this.btnOpenTestFolder.Location = new System.Drawing.Point(1079, 492);
+            this.btnOpenTestFolder.Location = new System.Drawing.Point(1104, 477);
             this.btnOpenTestFolder.Name = "btnOpenTestFolder";
             this.btnOpenTestFolder.Size = new System.Drawing.Size(52, 45);
             this.btnOpenTestFolder.TabIndex = 31;
@@ -317,7 +334,7 @@
             this.btnOpenResult.ForeColor = System.Drawing.Color.Black;
             this.btnOpenResult.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenResult.Image")));
             this.btnOpenResult.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOpenResult.Location = new System.Drawing.Point(955, 441);
+            this.btnOpenResult.Location = new System.Drawing.Point(980, 426);
             this.btnOpenResult.Name = "btnOpenResult";
             this.btnOpenResult.Size = new System.Drawing.Size(125, 45);
             this.btnOpenResult.TabIndex = 33;
@@ -367,23 +384,23 @@
             // btnCopyTestFolderPath
             // 
             this.btnCopyTestFolderPath.Image = ((System.Drawing.Image)(resources.GetObject("btnCopyTestFolderPath.Image")));
-            this.btnCopyTestFolderPath.Location = new System.Drawing.Point(1130, 492);
+            this.btnCopyTestFolderPath.Location = new System.Drawing.Point(1155, 477);
             this.btnCopyTestFolderPath.Name = "btnCopyTestFolderPath";
             this.btnCopyTestFolderPath.Size = new System.Drawing.Size(40, 45);
             this.btnCopyTestFolderPath.TabIndex = 36;
             this.btnCopyTestFolderPath.UseVisualStyleBackColor = true;
             this.btnCopyTestFolderPath.Click += new System.EventHandler(this.btnCopyTestFolderPath_Click);
             // 
-            // bw_showTestFolderPathCopied
+            // bw_showHide
             // 
-            this.bw_showTestFolderPathCopied.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bw_showTestFolderPathCopied_DoWork);
-            this.bw_showTestFolderPathCopied.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bw_showTestFolderPathCopied_RunWorkerCompleted);
+            this.bw_showHide.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bw_showHide_DoWork);
+            this.bw_showHide.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bw_showHide_RunWorkerCompleted);
             // 
             // lbCopied
             // 
             this.lbCopied.AutoSize = true;
             this.lbCopied.ForeColor = System.Drawing.Color.Blue;
-            this.lbCopied.Location = new System.Drawing.Point(1107, 540);
+            this.lbCopied.Location = new System.Drawing.Point(1067, 541);
             this.lbCopied.Name = "lbCopied";
             this.lbCopied.Size = new System.Drawing.Size(63, 20);
             this.lbCopied.TabIndex = 37;
@@ -1096,7 +1113,7 @@
             // 
             this.btnOpenRemoteBin.BackColor = System.Drawing.Color.Transparent;
             this.btnOpenRemoteBin.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenRemoteBin.Image")));
-            this.btnOpenRemoteBin.Location = new System.Drawing.Point(1079, 390);
+            this.btnOpenRemoteBin.Location = new System.Drawing.Point(1104, 375);
             this.btnOpenRemoteBin.Name = "btnOpenRemoteBin";
             this.btnOpenRemoteBin.Size = new System.Drawing.Size(52, 45);
             this.btnOpenRemoteBin.TabIndex = 42;
@@ -1104,18 +1121,18 @@
             this.btnOpenRemoteBin.UseVisualStyleBackColor = false;
             this.btnOpenRemoteBin.Click += new System.EventHandler(this.btnOpenRemoteBin_Click);
             // 
-            // button1
+            // btnOpenReport
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.button1.ForeColor = System.Drawing.Color.Black;
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.Location = new System.Drawing.Point(199, 397);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(52, 45);
-            this.button1.TabIndex = 43;
-            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.btnOpenReport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.btnOpenReport.ForeColor = System.Drawing.Color.Black;
+            this.btnOpenReport.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenReport.Image")));
+            this.btnOpenReport.Location = new System.Drawing.Point(199, 397);
+            this.btnOpenReport.Name = "btnOpenReport";
+            this.btnOpenReport.Size = new System.Drawing.Size(52, 45);
+            this.btnOpenReport.TabIndex = 43;
+            this.btnOpenReport.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnOpenReport.UseVisualStyleBackColor = false;
+            this.btnOpenReport.Click += new System.EventHandler(this.btnOpenReport_Click);
             // 
             // bw_mapFeature
             // 
@@ -1126,59 +1143,228 @@
             // 
             this.tabLists.Controls.Add(this.tabList1);
             this.tabLists.Controls.Add(this.tabList2);
-            this.tabLists.Location = new System.Drawing.Point(308, 321);
+            this.tabLists.Location = new System.Drawing.Point(306, 321);
             this.tabLists.Name = "tabLists";
             this.tabLists.SelectedIndex = 0;
-            this.tabLists.Size = new System.Drawing.Size(642, 290);
+            this.tabLists.Size = new System.Drawing.Size(671, 334);
             this.tabLists.TabIndex = 44;
             this.tabLists.SelectedIndexChanged += new System.EventHandler(this.tabVMs_SelectedIndexChanged);
             // 
             // tabList1
             // 
+            this.tabList1.Controls.Add(this.lbFilterFound1);
+            this.tabList1.Controls.Add(this.lbFilterNotFound1);
+            this.tabList1.Controls.Add(this.btnFilterPrevious1);
+            this.tabList1.Controls.Add(this.btnFilterNext1);
+            this.tabList1.Controls.Add(this.btnFilterGo1);
             this.tabList1.Controls.Add(this.lbxResults1);
+            this.tabList1.Controls.Add(this.txtFilter1);
+            this.tabList1.Controls.Add(this.label1);
             this.tabList1.Location = new System.Drawing.Point(4, 29);
             this.tabList1.Name = "tabList1";
             this.tabList1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabList1.Size = new System.Drawing.Size(634, 257);
+            this.tabList1.Size = new System.Drawing.Size(663, 301);
             this.tabList1.TabIndex = 0;
             this.tabList1.Text = "List1";
             this.tabList1.UseVisualStyleBackColor = true;
             // 
+            // lbFilterFound1
+            // 
+            this.lbFilterFound1.AutoSize = true;
+            this.lbFilterFound1.ForeColor = System.Drawing.Color.Blue;
+            this.lbFilterFound1.Location = new System.Drawing.Point(378, 265);
+            this.lbFilterFound1.Name = "lbFilterFound1";
+            this.lbFilterFound1.Size = new System.Drawing.Size(48, 20);
+            this.lbFilterFound1.TabIndex = 60;
+            this.lbFilterFound1.Text = "Got it";
+            this.lbFilterFound1.Visible = false;
+            // 
+            // lbFilterNotFound1
+            // 
+            this.lbFilterNotFound1.AutoSize = true;
+            this.lbFilterNotFound1.ForeColor = System.Drawing.Color.Red;
+            this.lbFilterNotFound1.Location = new System.Drawing.Point(378, 265);
+            this.lbFilterNotFound1.Name = "lbFilterNotFound1";
+            this.lbFilterNotFound1.Size = new System.Drawing.Size(81, 20);
+            this.lbFilterNotFound1.TabIndex = 59;
+            this.lbFilterNotFound1.Text = "No match!";
+            this.lbFilterNotFound1.Visible = false;
+            // 
+            // btnFilterPrevious1
+            // 
+            this.btnFilterPrevious1.BackColor = System.Drawing.Color.Transparent;
+            this.btnFilterPrevious1.Location = new System.Drawing.Point(508, 257);
+            this.btnFilterPrevious1.Name = "btnFilterPrevious1";
+            this.btnFilterPrevious1.Size = new System.Drawing.Size(40, 36);
+            this.btnFilterPrevious1.TabIndex = 50;
+            this.btnFilterPrevious1.Text = "<";
+            this.btnFilterPrevious1.UseVisualStyleBackColor = false;
+            this.btnFilterPrevious1.Click += new System.EventHandler(this.btnFilterPrevious_Click);
+            // 
+            // btnFilterNext1
+            // 
+            this.btnFilterNext1.BackColor = System.Drawing.Color.Transparent;
+            this.btnFilterNext1.Location = new System.Drawing.Point(464, 257);
+            this.btnFilterNext1.Name = "btnFilterNext1";
+            this.btnFilterNext1.Size = new System.Drawing.Size(40, 36);
+            this.btnFilterNext1.TabIndex = 49;
+            this.btnFilterNext1.Text = ">";
+            this.btnFilterNext1.UseVisualStyleBackColor = false;
+            this.btnFilterNext1.Click += new System.EventHandler(this.btnFilterNext_Click);
+            // 
+            // btnFilterGo1
+            // 
+            this.btnFilterGo1.BackColor = System.Drawing.Color.Transparent;
+            this.btnFilterGo1.Location = new System.Drawing.Point(323, 257);
+            this.btnFilterGo1.Name = "btnFilterGo1";
+            this.btnFilterGo1.Size = new System.Drawing.Size(52, 36);
+            this.btnFilterGo1.TabIndex = 48;
+            this.btnFilterGo1.Text = "Go";
+            this.btnFilterGo1.UseVisualStyleBackColor = false;
+            this.btnFilterGo1.Click += new System.EventHandler(this.btnFilterGo_Click);
+            // 
+            // txtFilter1
+            // 
+            this.txtFilter1.Location = new System.Drawing.Point(49, 262);
+            this.txtFilter1.Name = "txtFilter1";
+            this.txtFilter1.Size = new System.Drawing.Size(270, 26);
+            this.txtFilter1.TabIndex = 47;
+            this.txtFilter1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(0, 265);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(48, 20);
+            this.label1.TabIndex = 46;
+            this.label1.Text = "Filter:";
+            // 
             // tabList2
             // 
+            this.tabList2.Controls.Add(this.lbFilterFound2);
+            this.tabList2.Controls.Add(this.lbFilterNotFound2);
+            this.tabList2.Controls.Add(this.btnFilterPrevious2);
+            this.tabList2.Controls.Add(this.btnFilterNext2);
+            this.tabList2.Controls.Add(this.btnFilterGo2);
+            this.tabList2.Controls.Add(this.txtFilter2);
+            this.tabList2.Controls.Add(this.label16);
             this.tabList2.Controls.Add(this.lbxResults2);
             this.tabList2.Location = new System.Drawing.Point(4, 29);
             this.tabList2.Name = "tabList2";
             this.tabList2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabList2.Size = new System.Drawing.Size(634, 257);
+            this.tabList2.Size = new System.Drawing.Size(663, 301);
             this.tabList2.TabIndex = 1;
             this.tabList2.Text = "List2";
             this.tabList2.UseVisualStyleBackColor = true;
             // 
+            // lbFilterFound2
+            // 
+            this.lbFilterFound2.AutoSize = true;
+            this.lbFilterFound2.ForeColor = System.Drawing.Color.Blue;
+            this.lbFilterFound2.Location = new System.Drawing.Point(377, 267);
+            this.lbFilterFound2.Name = "lbFilterFound2";
+            this.lbFilterFound2.Size = new System.Drawing.Size(48, 20);
+            this.lbFilterFound2.TabIndex = 58;
+            this.lbFilterFound2.Text = "Got it";
+            this.lbFilterFound2.Visible = false;
+            // 
+            // lbFilterNotFound2
+            // 
+            this.lbFilterNotFound2.AutoSize = true;
+            this.lbFilterNotFound2.ForeColor = System.Drawing.Color.Red;
+            this.lbFilterNotFound2.Location = new System.Drawing.Point(377, 267);
+            this.lbFilterNotFound2.Name = "lbFilterNotFound2";
+            this.lbFilterNotFound2.Size = new System.Drawing.Size(81, 20);
+            this.lbFilterNotFound2.TabIndex = 46;
+            this.lbFilterNotFound2.Text = "No match!";
+            this.lbFilterNotFound2.Visible = false;
+            // 
+            // btnFilterPrevious2
+            // 
+            this.btnFilterPrevious2.BackColor = System.Drawing.Color.Transparent;
+            this.btnFilterPrevious2.Location = new System.Drawing.Point(507, 257);
+            this.btnFilterPrevious2.Name = "btnFilterPrevious2";
+            this.btnFilterPrevious2.Size = new System.Drawing.Size(40, 36);
+            this.btnFilterPrevious2.TabIndex = 56;
+            this.btnFilterPrevious2.Text = "<";
+            this.btnFilterPrevious2.UseVisualStyleBackColor = false;
+            this.btnFilterPrevious2.Click += new System.EventHandler(this.btnFilterPrevious_Click);
+            // 
+            // btnFilterNext2
+            // 
+            this.btnFilterNext2.BackColor = System.Drawing.Color.Transparent;
+            this.btnFilterNext2.Location = new System.Drawing.Point(463, 257);
+            this.btnFilterNext2.Name = "btnFilterNext2";
+            this.btnFilterNext2.Size = new System.Drawing.Size(40, 36);
+            this.btnFilterNext2.TabIndex = 55;
+            this.btnFilterNext2.Text = ">";
+            this.btnFilterNext2.UseVisualStyleBackColor = false;
+            this.btnFilterNext2.Click += new System.EventHandler(this.btnFilterNext_Click);
+            // 
+            // btnFilterGo2
+            // 
+            this.btnFilterGo2.BackColor = System.Drawing.Color.Transparent;
+            this.btnFilterGo2.Location = new System.Drawing.Point(323, 257);
+            this.btnFilterGo2.Name = "btnFilterGo2";
+            this.btnFilterGo2.Size = new System.Drawing.Size(52, 36);
+            this.btnFilterGo2.TabIndex = 54;
+            this.btnFilterGo2.Text = "Go";
+            this.btnFilterGo2.UseVisualStyleBackColor = false;
+            this.btnFilterGo2.Click += new System.EventHandler(this.btnFilterGo_Click);
+            // 
+            // txtFilter2
+            // 
+            this.txtFilter2.Location = new System.Drawing.Point(49, 262);
+            this.txtFilter2.Name = "txtFilter2";
+            this.txtFilter2.Size = new System.Drawing.Size(270, 26);
+            this.txtFilter2.TabIndex = 53;
+            this.txtFilter2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(0, 265);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(48, 20);
+            this.label16.TabIndex = 52;
+            this.label16.Text = "Filter:";
+            // 
             // lbxResults2
             // 
             this.lbxResults2.BackColor = System.Drawing.Color.LightCyan;
-            this.lbxResults2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbxResults2.Dock = System.Windows.Forms.DockStyle.Top;
             this.lbxResults2.FormattingEnabled = true;
             this.lbxResults2.HorizontalScrollbar = true;
             this.lbxResults2.ItemHeight = 20;
             this.lbxResults2.Location = new System.Drawing.Point(3, 3);
             this.lbxResults2.Name = "lbxResults2";
-            this.lbxResults2.Size = new System.Drawing.Size(628, 251);
+            this.lbxResults2.Size = new System.Drawing.Size(657, 244);
             this.lbxResults2.TabIndex = 23;
             this.lbxResults2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LbxResults_MouseDoubleClick);
+            // 
+            // btnCopyStat
+            // 
+            this.btnCopyStat.Image = ((System.Drawing.Image)(resources.GetObject("btnCopyStat.Image")));
+            this.btnCopyStat.Location = new System.Drawing.Point(981, 566);
+            this.btnCopyStat.Name = "btnCopyStat";
+            this.btnCopyStat.Size = new System.Drawing.Size(34, 40);
+            this.btnCopyStat.TabIndex = 45;
+            this.btnCopyStat.UseVisualStyleBackColor = true;
+            this.btnCopyStat.Click += new System.EventHandler(this.btnCopyStat_Click);
             // 
             // xReporter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1206, 620);
+            this.ClientSize = new System.Drawing.Size(1206, 663);
+            this.Controls.Add(this.btnCopyStat);
+            this.Controls.Add(this.lbCopied);
             this.Controls.Add(this.tabLists);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnOpenReport);
             this.Controls.Add(this.btnOpenRemoteBin);
             this.Controls.Add(this.tabVMs);
-            this.Controls.Add(this.lbCopied);
             this.Controls.Add(this.btnCopyTestFolderPath);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.btnOpenRoot);
@@ -1206,7 +1392,9 @@
             this.tabVMs.ResumeLayout(false);
             this.tabLists.ResumeLayout(false);
             this.tabList1.ResumeLayout(false);
+            this.tabList1.PerformLayout();
             this.tabList2.ResumeLayout(false);
+            this.tabList2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1236,7 +1424,7 @@
         private System.ComponentModel.BackgroundWorker bw_emptyResults;
         private System.ComponentModel.BackgroundWorker bw_generateReport;
         private System.Windows.Forms.Button btnCopyTestFolderPath;
-        private System.ComponentModel.BackgroundWorker bw_showTestFolderPathCopied;
+        private System.ComponentModel.BackgroundWorker bw_showHide;
         private System.Windows.Forms.Label lbCopied;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ComboBox comFeature2;
@@ -1298,12 +1486,27 @@
         private System.Windows.Forms.Button btnData2;
         private System.Windows.Forms.TextBox txtJustALabel2;
         private System.Windows.Forms.Button btnOpenRemoteBin;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnOpenReport;
         private System.ComponentModel.BackgroundWorker bw_mapFeature;
         private System.Windows.Forms.TabControl tabLists;
         private System.Windows.Forms.TabPage tabList1;
         private System.Windows.Forms.TabPage tabList2;
         private System.Windows.Forms.ListBox lbxResults2;
+        private System.Windows.Forms.Button btnCopyStat;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtFilter1;
+        private System.Windows.Forms.Button btnFilterGo1;
+        private System.Windows.Forms.Button btnFilterNext1;
+        private System.Windows.Forms.Button btnFilterPrevious1;
+        private System.Windows.Forms.Button btnFilterPrevious2;
+        private System.Windows.Forms.Button btnFilterNext2;
+        private System.Windows.Forms.Button btnFilterGo2;
+        private System.Windows.Forms.TextBox txtFilter2;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label lbFilterNotFound2;
+        private System.Windows.Forms.Label lbFilterFound1;
+        private System.Windows.Forms.Label lbFilterNotFound1;
+        private System.Windows.Forms.Label lbFilterFound2;
     }
 }
 

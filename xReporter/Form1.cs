@@ -28,13 +28,12 @@ namespace xReporter
         string reportVM1x, reportVM2x;
         string localResults1,localResults2;
         int resultCount1, resutCount2;
+        int bwShowHideSignal = 0; // 1 : copied, 2 : Found, -2 : not found
         string remoteBin1,remoteBin2;
-        
-        
-        
+
         int resultFolderCount1, resultFolderCount2;
         int htmFileCount1, htmFileCount2;
-
+        int currentFiltedIndex1, currentFiltedIndex2;
         RecordManager recordMng1, recordMng2;
 
         public xReporter()
@@ -1217,7 +1216,8 @@ namespace xReporter
 
                 System.Windows.Forms.Clipboard.SetText(fullPath);
                 lbCopied.Visible = true;
-                bw_showTestFolderPathCopied.RunWorkerAsync();
+                bwShowHideSignal = 1;
+                bw_showHide.RunWorkerAsync();
 
             }
             catch (Exception ex)
@@ -1226,14 +1226,30 @@ namespace xReporter
             }
         }
 
-        private void bw_showTestFolderPathCopied_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        private void bw_showHide_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            Thread.Sleep(1000);
+            isRunning = true;
+            Thread.Sleep(400);
         }
 
-        private void bw_showTestFolderPathCopied_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        private void bw_showHide_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            lbCopied.Visible = false;
+            switch(bwShowHideSignal)
+            {
+                case 1: lbCopied.Visible = false; break;
+                case 2: 
+                    if (tabIndex == 0) lbFilterFound1.Visible = false;
+                    else if (tabIndex == 1) lbFilterFound2.Visible = false;
+                    break;
+
+                case -2:
+                    if (tabIndex == 0) lbFilterNotFound1.Visible = false;
+                    else if (tabIndex == 1) lbFilterNotFound2.Visible = false;
+                    break;
+                default: break;
+            }
+            isRunning = false;
+            
         }
 
         private void btnOpenFolderByTag_Click(object sender, EventArgs e)
@@ -1257,11 +1273,6 @@ namespace xReporter
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            string tag = btnSetUIVars1.Tag.ToString();
-            MessageBox.Show(tag);
-        }
 
         private void btnOpenRemoteBin_Click(object sender, EventArgs e)
         {
@@ -1293,27 +1304,17 @@ namespace xReporter
             {
                 case 0:
                     lbStat.Text = lbStatText0 + recordMng1.getStat();
+                    
                     break;
                 case 1:
                     lbStat.Text = lbStatText0 + recordMng2.getStat();
                     break;
                 default: break;
             }
-            /*
-            switch (tabIndex)
-            {
-                case 0:
-                    resultFolderCount1 = MyLib.FolderCount(localResults1);
-                    btnOpenLocalResultContainer.Text = resultFolderCount1.ToString();
-                    break;
-                case 1:
-                    resultFolderCount2 = MyLib.FolderCount(localResults2);
-                    btnOpenLocalResultContainer.Text = resultFolderCount2.ToString();
-                    break;
-            }*/
+            
         }
 
-        private void button1_Click_1(object sender, EventArgs e)
+        private void btnOpenReport_Click(object sender, EventArgs e)
         {
             if(isRunning) return;
             try
@@ -1338,6 +1339,296 @@ namespace xReporter
             }
             
         }
+
+        private void btnCopyStat_Click(object sender, EventArgs e)
+        {
+            if (isRunning) return;
+            System.Windows.Forms.Clipboard.SetText(lbStat.Text);
+            lbCopied.Visible = true;
+            bw_showHide.RunWorkerAsync();
+        }
+
+        private void btnFilterNext_Click(object sender, EventArgs e)
+        {
+            if (isRunning) return;
+            string tname = "";
+            int prevFiltedIndex = -1;
+            int listCount= 0;
+            try
+            {
+                switch (tabIndex)
+                {
+                    case 0:
+                        listCount = lbxResults1.Items.Count;
+                        if (currentFiltedIndex1 < 0 || currentFiltedIndex1 >= listCount) return;
+                        tname = txtFilter1.Text;
+                        if (tname.Length <= 0) return;
+                        
+                        if (listCount <= 0) return;
+                        if (currentFiltedIndex1 >= listCount - 1) { MessageBox.Show("Reached the end of list"); return; }
+                        prevFiltedIndex = currentFiltedIndex1;
+                        for (int i = currentFiltedIndex1 + 1; i < listCount ; i++)
+                        {
+                            if (lbxResults1.Items[i].ToString().EndsWith(" | " + tname)) { currentFiltedIndex1 = i; break; }
+                        }
+                        if (currentFiltedIndex1 == prevFiltedIndex) return;
+                        if (currentFiltedIndex1 >= 0)
+                        {
+                            lbxResults1.SelectedIndex = currentFiltedIndex1;
+                            lbFilterFound1.Visible = true;
+                            bwShowHideSignal = 2; // 2 for found
+                            bw_showHide.RunWorkerAsync();
+                        }
+                        
+                        break;
+                    case 1:
+                        listCount = lbxResults2.Items.Count;
+                        if (currentFiltedIndex2 < 0 || currentFiltedIndex2 >= listCount) return;
+                        tname = txtFilter2.Text;
+                        if (tname.Length <= 0) return;
+                        
+                        if (listCount <= 0) return;
+                        if (currentFiltedIndex2 >= listCount - 1) { MessageBox.Show("Reached the end of list"); return; }
+                        prevFiltedIndex = currentFiltedIndex2;
+                        for (int i = currentFiltedIndex2 + 1; i < listCount ; i++)
+                        {
+                            if (lbxResults2.Items[i].ToString().EndsWith(" | " + tname)) { currentFiltedIndex2 = i; break; }
+                        }
+                        if (currentFiltedIndex2 == prevFiltedIndex) return;
+                        if (currentFiltedIndex2 >= 0)
+                        {
+                            lbxResults2.SelectedIndex = currentFiltedIndex2;
+                            lbFilterFound2.Visible = true;
+                            bwShowHideSignal = 2; // 2 for found
+                            bw_showHide.RunWorkerAsync();
+                        }
+                        break;
+                    default: break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnFilterPrevious_Click(object sender, EventArgs e)
+        {
+            if (isRunning) return;
+            string tname = "";
+            int prevFiltedIndex = -1;
+            int listCount = 0;
+            try
+            {
+                switch (tabIndex)
+                {
+                    case 0:
+                        listCount = lbxResults1.Items.Count;
+                        if (currentFiltedIndex1 < 0 || currentFiltedIndex1 >= listCount) return;
+                        tname = txtFilter1.Text;
+                        if (tname.Length <= 0) return;
+                        
+                        if (listCount <= 0) return;
+                        if (currentFiltedIndex1 >= listCount - 1 || currentFiltedIndex1 < 1) { MessageBox.Show("Reached the beginning of list"); return; }
+                        prevFiltedIndex = currentFiltedIndex1;
+                        for (int i = currentFiltedIndex1 -1; i >= 0; i--)
+                        {
+                            if (lbxResults1.Items[i].ToString().EndsWith(" | " + tname)) { currentFiltedIndex1 = i; break; }
+                        }
+                        if (currentFiltedIndex1 == prevFiltedIndex) return;
+                        if (currentFiltedIndex1 >= 0)
+                        {
+                            lbxResults1.SelectedIndex = currentFiltedIndex1;
+                            lbFilterFound1.Visible = true;
+                            bwShowHideSignal = 2; // 2 for found
+                            bw_showHide.RunWorkerAsync();
+                        }
+
+                        break;
+                    case 1:
+                        listCount = lbxResults2.Items.Count;
+                        if (currentFiltedIndex2 < 0 || currentFiltedIndex2 >= listCount) return;
+                        tname = txtFilter2.Text;
+                        if (tname.Length <= 0) return;
+                        
+                        if (listCount <= 0) return;
+                        if (currentFiltedIndex2 >= listCount - 1 || currentFiltedIndex2 < 1) { MessageBox.Show("Reached the beginning of list"); return; }
+                        prevFiltedIndex = currentFiltedIndex2;
+                        for (int i = currentFiltedIndex2 -1; i >= 0; i--)
+                        {
+                            if (lbxResults2.Items[i].ToString().EndsWith(" | " + tname)) { currentFiltedIndex2 = i; break; }
+                        }
+                        if (currentFiltedIndex2 == prevFiltedIndex) return;
+                        if (currentFiltedIndex2 >= 0)
+                        {
+                            lbxResults2.SelectedIndex = currentFiltedIndex2;
+                            lbFilterFound2.Visible = true;
+                            bwShowHideSignal = 2; // 2 for found
+                            bw_showHide.RunWorkerAsync();
+                        }
+                        break;
+                    default: break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+
+        private void txtFilter_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (isRunning) return;
+            if (e.KeyCode != Keys.Enter) return;
+            switch (tabIndex)
+            {
+                case 0: btnFilterGo1.PerformClick(); break;
+                case 1: btnFilterGo2.PerformClick(); break;
+                default: break;
+            }
+            
+            /*
+            string tname = "";
+            
+            try
+            {
+                switch (tabIndex)
+                {
+                    case 0:
+                        currentFiltedIndex1 = -1;
+                        tname = txtFilter1.Text;
+                        if(tname.Length <= 0) throw new Exception("Error: name is empty");
+                        if(lbxResults1.Items.Count <=0 ) throw new Exception("Error: list is empty");
+                        
+                        for (int i = 0; i < lbxResults1.Items.Count; i++ )
+                        {
+                            if (i == 0) MessageBox.Show(lbxResults1.Items[i].ToString());
+                            if (lbxResults1.Items[i].ToString().EndsWith(" | "+tname)) { currentFiltedIndex1 = i; break; }
+                        }
+
+                        if (currentFiltedIndex1 >= 0)
+                        {
+                            lbxResults1.SelectedIndex = currentFiltedIndex1;
+                            lbFilterFound1.Visible = true;
+                            bwShowHideSignal = 2; // 2 for found
+                            bw_showHide.RunWorkerAsync();
+                        }
+                        else
+                        {
+                            lbFilterNotFound1.Visible = true;
+                            bwShowHideSignal = -2; // -2 for not_found
+                            bw_showHide.RunWorkerAsync();
+                        }
+                        break;
+                    case 1:
+                        currentFiltedIndex2 = -1;
+                        tname = txtFilter2.Text;
+                        if(tname.Length <= 0) throw new Exception("Error: name is empty");
+                        if(lbxResults2.Items.Count <=0 ) throw new Exception("Error: list is empty");
+             
+                        for (int i = 0; i < lbxResults2.Items.Count; i++ )
+                        {
+                            if (lbxResults2.Items[i].ToString() == tname) { currentFiltedIndex2 = i; break; }
+                        }
+
+                        if (currentFiltedIndex2 >= 0)
+                        {
+                            lbFilterFound2.Visible = true;
+                            lbxResults2.SelectedIndex = currentFiltedIndex2;
+                            bwShowHideSignal = 2; // 2 for found
+                            bw_showHide.RunWorkerAsync();
+                        }
+                        else
+                        {
+                            lbFilterNotFound2.Visible = true;
+                            bwShowHideSignal = -2; // -2 for not_found
+                            bw_showHide.RunWorkerAsync();
+                        }
+                        break;
+                        
+                    default: break;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }*/
+        }
+
+        private void btnFilterGo_Click(object sender, EventArgs e)
+        {
+
+            if (isRunning) return;
+            string tname = "";
+
+            try
+            {
+                switch (tabIndex)
+                {
+                    case 0:
+                        currentFiltedIndex1 = -1;
+                        tname = txtFilter1.Text;
+                        if (tname.Length <= 0) throw new Exception("Error: name is empty");
+                        if (lbxResults1.Items.Count <= 0) throw new Exception("Error: list is empty");
+
+                        for (int i = 0; i < lbxResults1.Items.Count; i++)
+                        {
+                            if (lbxResults1.Items[i].ToString().EndsWith(" | " + tname)) { currentFiltedIndex1 = i; break; }
+                        }
+
+                        if (currentFiltedIndex1 >= 0)
+                        {
+                            lbxResults1.SelectedIndex = currentFiltedIndex1;
+                            lbFilterFound1.Visible = true;
+                            bwShowHideSignal = 2; // 2 for found
+                            bw_showHide.RunWorkerAsync();
+                        }
+                        else
+                        {
+                            lbFilterNotFound1.Visible = true;
+                            bwShowHideSignal = -2; // -2 for not_found
+                            bw_showHide.RunWorkerAsync();
+                        }
+                        break;
+                    case 1:
+                        currentFiltedIndex2 = -1;
+                        tname = txtFilter2.Text;
+                        if (tname.Length <= 0) throw new Exception("Error: name is empty");
+                        if (lbxResults2.Items.Count <= 0) throw new Exception("Error: list is empty");
+
+                        for (int i = 0; i < lbxResults2.Items.Count; i++)
+                        {
+                            if (lbxResults2.Items[i].ToString().EndsWith(" | " + tname)) { currentFiltedIndex2 = i; break; }
+                        }
+
+                        if (currentFiltedIndex2 >= 0)
+                        {
+                            lbxResults2.SelectedIndex = currentFiltedIndex2;
+                            lbFilterFound2.Visible = true;
+                            bwShowHideSignal = 2; // 2 for found
+                            bw_showHide.RunWorkerAsync();
+                        }
+                        else
+                        {
+                            lbFilterNotFound2.Visible = true;
+                            bwShowHideSignal = -2; // -2 for not_found
+                            bw_showHide.RunWorkerAsync();
+                        }
+                        break;
+
+                    default: break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            //txtFilter.KeyDown
+
+        }
+
 
 
 
