@@ -23,7 +23,7 @@ namespace xReporter
         Color busyBgColor = Color.OrangeRed;
         Color normalBgColor = SystemColors.Control;
         bool isRunning;
-
+        
         string reportVM1,reportVM2;
         string reportVM1x, reportVM2x;
         string localResults1,localResults2;
@@ -34,6 +34,8 @@ namespace xReporter
         int resultFolderCount1, resultFolderCount2;
         int htmFileCount1, htmFileCount2;
         int currentFiltedIndex1, currentFiltedIndex2;
+
+        FromToDT[] fts = new FromToDT[2] { new FromToDT(), new FromToDT()};
         RecordManager recordMng1, recordMng2;
 
         public xReporter()
@@ -358,10 +360,35 @@ namespace xReporter
             
             try
             {
+                string rpath="", lpath="", fromFolderName="", toFolderName="";
+                switch(tabIndex)
+                {
+                    case 0:
+                        rpath = txtRemoteResults1.Text;
+                        lpath = localResults1;
+                        fromFolderName = txtRemoteResultsFrom1.Text;
+                        toFolderName = txtRemoteResultsTo1.Text;
+                        
+                        break;
+                    case 1:
+                        rpath = txtRemoteResults2.Text;
+                        lpath = localResults2;
+                        fromFolderName = txtRemoteResultsFrom2.Text;
+                        toFolderName = txtRemoteResultsTo2.Text;
+                        
+                        break;
+                    default: break;
+                }
+
+                if (fromFolderName != "" && !Directory.Exists(rpath + "\\" + fromFolderName)) throw new Exception("Invalid input for \"Result From\": " + fromFolderName);
+                if (toFolderName != "" && !Directory.Exists(rpath + "\\" + toFolderName)) throw new Exception("Invalid input for \"Result To\": "+ toFolderName);
+
+                fts[tabIndex].init();
+                if (fromFolderName != "") fts[tabIndex].setFrom(MyLib.getFileTime(rpath, fromFolderName, true));
+                if (toFolderName != "") fts[tabIndex].setTo(MyLib.getFileTime(rpath, toFolderName,false));
+                if (fts[tabIndex].hasFrom && fts[tabIndex].hasTo && fts[tabIndex].to.CompareTo(fts[tabIndex].from) < 0) { throw new Exception("Time of \"To\" shouldn't be earlier than \"From\""); }
                 
-                //string path = rdVM1.Checked? txtRemoteResults1.Text:txtRemoteResults2.Text ;
-                string rpath = (tabIndex == 0) ? txtRemoteResults1.Text : txtRemoteResults2.Text;
-                string lpath = (tabIndex == 0) ? localResults1 : localResults2;
+
                 if (!Directory.Exists(lpath)) { createLocalResultFolder(tabIndex); Thread.Sleep(100); }
                 if (Directory.Exists(rpath))
                 {
@@ -372,8 +399,7 @@ namespace xReporter
                     string[] args = new string[] { rpath, lpath };
 
                     bw_download.RunWorkerAsync(args);
-                    //MyLib.CopyAll(path, localResults);
-                    //lbInfo.Text = "Info: results downloaded!"; 
+
                 }
                 else throw new Exception("Error: download failed due to VM results path not valid!");
                
@@ -548,12 +574,6 @@ namespace xReporter
                     btnOpenLocalResultContainer.Text = resultFolderCount2.ToString();
                     break;
             }
-        }
-
-        private void btnTest_Click(object sender, EventArgs e)
-        {
-          
-
         }
 
         
@@ -799,7 +819,8 @@ namespace xReporter
         {
             //isRunning = true;
             string[] args = (string[])e.Argument;
-            MyLib.CopyAll(args[0], args[1]);
+            if (!fts[tabIndex].hasTo && !fts[tabIndex].hasFrom) { MyLib.CopyAll(args[0], args[1]); }
+            else { MyLib.CopyAll(args[0], args[1], fts[tabIndex]); }
         }
         private void bw_emptyResults_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
@@ -1360,31 +1381,46 @@ namespace xReporter
                 {
                     case 0:
                         listCount = lbxResults1.Items.Count;
-                        if (currentFiltedIndex1 < 0 || currentFiltedIndex1 >= listCount) return;
-                        tname = txtFilter1.Text;
+                        if (currentFiltedIndex1 < 0 || currentFiltedIndex1 >= listCount-1) return;
+                        tname = txtFilter1.Text.ToLower();
                         if (tname.Length <= 0) return;
                         
                         if (listCount <= 0) return;
-                        if (currentFiltedIndex1 >= listCount - 1) { MessageBox.Show("Reached the end of list"); return; }
+
                         prevFiltedIndex = currentFiltedIndex1;
                         for (int i = currentFiltedIndex1 + 1; i < listCount ; i++)
                         {
-                            if (lbxResults1.Items[i].ToString().EndsWith(" | " + tname)) { currentFiltedIndex1 = i; break; }
+                            if (cheExact1.Checked)
+                            {
+                                if (lbxResults1.Items[i].ToString().ToLower().EndsWith(" | " + tname)) { currentFiltedIndex1 = i; break; }
+                            }
+                            else
+                            {
+                                if (lbxResults1.Items[i].ToString().ToLower().Contains(tname)) { currentFiltedIndex1 = i; break; }
+                            }
+                            
                         }
-                        if (currentFiltedIndex1 == prevFiltedIndex) return;
+                        if (currentFiltedIndex1 == prevFiltedIndex)
+                        {
+                            lbFilterNotFound1.Visible = true;
+                            bwShowHideSignal = -2; // -2 for not_found
+                            bw_showHide.RunWorkerAsync();
+                            return;
+                        }
+                        
                         if (currentFiltedIndex1 >= 0)
                         {
                             lbxResults1.SelectedIndex = currentFiltedIndex1;
-                            lbFilterFound1.Visible = true;
-                            bwShowHideSignal = 2; // 2 for found
-                            bw_showHide.RunWorkerAsync();
+                            //lbFilterFound1.Visible = true;
+                            //bwShowHideSignal = 2; // 2 for found
+                            //bw_showHide.RunWorkerAsync();
                         }
                         
                         break;
                     case 1:
                         listCount = lbxResults2.Items.Count;
-                        if (currentFiltedIndex2 < 0 || currentFiltedIndex2 >= listCount) return;
-                        tname = txtFilter2.Text;
+                        if (currentFiltedIndex2 < 0 || currentFiltedIndex2 >= listCount-1) return;
+                        tname = txtFilter2.Text.ToLower();
                         if (tname.Length <= 0) return;
                         
                         if (listCount <= 0) return;
@@ -1392,15 +1428,30 @@ namespace xReporter
                         prevFiltedIndex = currentFiltedIndex2;
                         for (int i = currentFiltedIndex2 + 1; i < listCount ; i++)
                         {
-                            if (lbxResults2.Items[i].ToString().EndsWith(" | " + tname)) { currentFiltedIndex2 = i; break; }
+                            if (cheExact2.Checked)
+                            {
+                                if (lbxResults2.Items[i].ToString().ToLower().EndsWith(" | " + tname)) { currentFiltedIndex2 = i; break; }
+                            }
+                            else
+                            {
+                                if (lbxResults2.Items[i].ToString().ToLower().Contains(tname)) { currentFiltedIndex2 = i; break; }
+                            }
+
+                            
                         }
-                        if (currentFiltedIndex2 == prevFiltedIndex) return;
+                        if (currentFiltedIndex2 == prevFiltedIndex)
+                        {
+                            lbFilterNotFound2.Visible = true;
+                            bwShowHideSignal = -2; // -2 for not_found
+                            bw_showHide.RunWorkerAsync();
+                            return;
+                        }
                         if (currentFiltedIndex2 >= 0)
                         {
                             lbxResults2.SelectedIndex = currentFiltedIndex2;
-                            lbFilterFound2.Visible = true;
-                            bwShowHideSignal = 2; // 2 for found
-                            bw_showHide.RunWorkerAsync();
+                            //lbFilterFound2.Visible = true;
+                            //bwShowHideSignal = 2; // 2 for found
+                            //bw_showHide.RunWorkerAsync();
                         }
                         break;
                     default: break;
@@ -1424,16 +1475,24 @@ namespace xReporter
                 {
                     case 0:
                         listCount = lbxResults1.Items.Count;
-                        if (currentFiltedIndex1 < 0 || currentFiltedIndex1 >= listCount) return;
-                        tname = txtFilter1.Text;
+                        if (currentFiltedIndex1 <= 0 || currentFiltedIndex1 > listCount - 1) return;
+                        tname = txtFilter1.Text.ToLower();
                         if (tname.Length <= 0) return;
                         
                         if (listCount <= 0) return;
-                        if (currentFiltedIndex1 >= listCount - 1 || currentFiltedIndex1 < 1) { MessageBox.Show("Reached the beginning of list"); return; }
+
                         prevFiltedIndex = currentFiltedIndex1;
                         for (int i = currentFiltedIndex1 -1; i >= 0; i--)
                         {
-                            if (lbxResults1.Items[i].ToString().EndsWith(" | " + tname)) { currentFiltedIndex1 = i; break; }
+                            if (cheExact1.Checked)
+                            {
+                                if (lbxResults1.Items[i].ToString().ToLower().EndsWith(" | " + tname)) { currentFiltedIndex1 = i; break; }
+                            }
+                            else
+                            {
+                                if (lbxResults1.Items[i].ToString().ToLower().Contains(tname)) { currentFiltedIndex1 = i; break; }
+                            }
+                            
                         }
                         if (currentFiltedIndex1 == prevFiltedIndex) return;
                         if (currentFiltedIndex1 >= 0)
@@ -1441,14 +1500,14 @@ namespace xReporter
                             lbxResults1.SelectedIndex = currentFiltedIndex1;
                             lbFilterFound1.Visible = true;
                             bwShowHideSignal = 2; // 2 for found
-                            bw_showHide.RunWorkerAsync();
+                            //bw_showHide.RunWorkerAsync();
                         }
 
                         break;
                     case 1:
                         listCount = lbxResults2.Items.Count;
-                        if (currentFiltedIndex2 < 0 || currentFiltedIndex2 >= listCount) return;
-                        tname = txtFilter2.Text;
+                        if (currentFiltedIndex2 <= 0 || currentFiltedIndex2 > listCount-1) return;
+                        tname = txtFilter2.Text.ToLower();
                         if (tname.Length <= 0) return;
                         
                         if (listCount <= 0) return;
@@ -1456,15 +1515,23 @@ namespace xReporter
                         prevFiltedIndex = currentFiltedIndex2;
                         for (int i = currentFiltedIndex2 -1; i >= 0; i--)
                         {
-                            if (lbxResults2.Items[i].ToString().EndsWith(" | " + tname)) { currentFiltedIndex2 = i; break; }
+                            if (cheExact2.Checked)
+                            {
+                                if (lbxResults2.Items[i].ToString().ToLower().EndsWith(" | " + tname)) { currentFiltedIndex2 = i; break; }
+                            }
+                            else
+                            {
+                                if (lbxResults2.Items[i].ToString().ToLower().Contains(tname)) { currentFiltedIndex2 = i; break; }
+                            }
+                            
                         }
                         if (currentFiltedIndex2 == prevFiltedIndex) return;
                         if (currentFiltedIndex2 >= 0)
                         {
                             lbxResults2.SelectedIndex = currentFiltedIndex2;
-                            lbFilterFound2.Visible = true;
-                            bwShowHideSignal = 2; // 2 for found
-                            bw_showHide.RunWorkerAsync();
+                            //lbFilterFound2.Visible = true;
+                            //bwShowHideSignal = 2; // 2 for found
+                            //bw_showHide.RunWorkerAsync();
                         }
                         break;
                     default: break;
@@ -1562,20 +1629,28 @@ namespace xReporter
 
             if (isRunning) return;
             string tname = "";
-
+            
             try
             {
                 switch (tabIndex)
                 {
                     case 0:
                         currentFiltedIndex1 = -1;
-                        tname = txtFilter1.Text;
+                        tname = txtFilter1.Text.ToLower();
                         if (tname.Length <= 0) throw new Exception("Error: name is empty");
                         if (lbxResults1.Items.Count <= 0) throw new Exception("Error: list is empty");
 
                         for (int i = 0; i < lbxResults1.Items.Count; i++)
                         {
-                            if (lbxResults1.Items[i].ToString().EndsWith(" | " + tname)) { currentFiltedIndex1 = i; break; }
+                            if (cheExact1.Checked)
+                            {
+                                if (lbxResults1.Items[i].ToString().ToLower().EndsWith(" | " + tname)) { currentFiltedIndex1 = i; break; }
+                            }
+                            else
+                            {
+                                if (lbxResults1.Items[i].ToString().ToLower().Contains(tname)) { currentFiltedIndex1 = i; break; }
+                            }
+                            
                         }
 
                         if (currentFiltedIndex1 >= 0)
@@ -1584,6 +1659,8 @@ namespace xReporter
                             lbFilterFound1.Visible = true;
                             bwShowHideSignal = 2; // 2 for found
                             bw_showHide.RunWorkerAsync();
+                            btnFilterNext1.Enabled = true;
+                            btnFilterPrevious1.Enabled = true;
                         }
                         else
                         {
@@ -1594,13 +1671,21 @@ namespace xReporter
                         break;
                     case 1:
                         currentFiltedIndex2 = -1;
-                        tname = txtFilter2.Text;
+                        tname = txtFilter2.Text.ToLower();
                         if (tname.Length <= 0) throw new Exception("Error: name is empty");
                         if (lbxResults2.Items.Count <= 0) throw new Exception("Error: list is empty");
 
                         for (int i = 0; i < lbxResults2.Items.Count; i++)
                         {
-                            if (lbxResults2.Items[i].ToString().EndsWith(" | " + tname)) { currentFiltedIndex2 = i; break; }
+                            if (cheExact2.Checked)
+                            {
+                                if (lbxResults2.Items[i].ToString().ToLower().EndsWith(" | " + tname)) { currentFiltedIndex2 = i; break; }
+                            }
+                            else
+                            {
+                                if (lbxResults2.Items[i].ToString().ToLower().Contains(tname)) { currentFiltedIndex2 = i; break; }
+                            }
+                            
                         }
 
                         if (currentFiltedIndex2 >= 0)
@@ -1609,6 +1694,8 @@ namespace xReporter
                             lbFilterFound2.Visible = true;
                             bwShowHideSignal = 2; // 2 for found
                             bw_showHide.RunWorkerAsync();
+                            btnFilterNext2.Enabled = true;
+                            btnFilterPrevious2.Enabled = true;
                         }
                         else
                         {
@@ -1625,7 +1712,50 @@ namespace xReporter
             {
                 MessageBox.Show(ex.Message);
             }
-            //txtFilter.KeyDown
+            
+
+        }
+
+        private void txtFilter_TextChanged(object sender, EventArgs e)
+        {
+            switch(tabIndex)
+            {
+                case 0: btnFilterNext1.Enabled = false; btnFilterPrevious1.Enabled = false; break;
+                case 1: btnFilterNext2.Enabled = false; btnFilterPrevious2.Enabled = false; break;
+                default: break;
+
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //FileInfo fi = new FileInfo(@"s:\Documents\Visual Studio 2015\Projects\xReporter-master\xReporter\bin\Debug\results1\RDM47739_PR00_CreateFolder_20170224231159021\Result_RDM47739_PR00_CreateFolder.htm");
+            //  20170224231159021
+            //  20170224231236
+            //MessageBox.Show("ToString:" + fi.LastWriteTime.ToString("yyyyMMddHHmmss"));
+
+            //string ts = MyLib.getTimeStampFrom(@"s:\Documents\Visual Studio 2015\Projects\xReporter-master\xReporter\bin\Debug\results1\RDM47739_PR00_CreateFolder_20170224231159021\Result_RDM47739_PR00_CreateFolder.htm", false);
+            //MessageBox.Show("ts:" + ts);
+
+            //string ts2 = MyLib.getTimeStampFrom(@"f", true);
+            //MessageBox.Show("ts2:" + ts2);
+            // now use getTimeStampFrom to get lastWriteTime, and use lastWriteTime for downloading results
+
+            // from/to both have inputs 
+            /*
+            string from = MyLib.getTimeStampFrom(txtResultsFrom1.Text, true);
+            string to = MyLib.getTimeStampFrom(txtResultsTo1.Text, true);
+            MessageBox.Show("from=" + from + " , to=" + to);
+
+            long lFrom = 0; long.TryParse(from,out lFrom);
+            long lTo=0; long.TryParse(to,out lTo);
+            MessageBox.Show("lfrom=" + lFrom.ToString() + " , lto=" + lTo.ToString()+" ,  is lFrom < lTo " + (lTo > lFrom));
+            */
+            // containerPath is remote results folder path, like: x:\Roof\results
+            // targetFolderName is like: RDM72831_PR00_CreateFolder_20170307112524043
+            DateTime fromTime = MyLib.getFileTime(txtRemoteResults1.Text, txtRemoteResultsFrom1.Text, true);
+            DateTime toTime = MyLib.getFileTime(txtRemoteResults1.Text, txtRemoteResultsTo1.Text, false);
+            MessageBox.Show(toTime.CompareTo(fromTime).ToString());
 
         }
 

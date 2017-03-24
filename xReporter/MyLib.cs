@@ -11,8 +11,25 @@ namespace xReporter
     class MyLib
     {
         public static void RemoveFolder(string path) {
-            if (Directory.Exists(path)) Directory.Delete(path, true);
+            //if (Directory.Exists(path)) Directory.Delete(path, true);  // may throw folder not empty exception
+
+            string[] files = Directory.GetFiles(path);
+            string[] dirs = Directory.GetDirectories(path);
+
+            foreach (string file in files)
+            {
+                File.SetAttributes(file, FileAttributes.Normal);
+                File.Delete(file);
+            }
+
+            foreach (string dir in dirs)
+            {
+                RemoveFolder(dir);
+            }
+
+            Directory.Delete(path, false);
         }
+
         public static void CreateFolder(string path) {
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
         }
@@ -78,10 +95,67 @@ namespace xReporter
             }
                 
             //Copy all the files & Replaces any files with the same name
-            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+            foreach (string newPath in Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories))
             { File.Copy(newPath, newPath.Replace(sourcePath, destPath), true); }
 
         }
+
+
+        public static void CopyAll(string sourcePath, string destPath, FromToDT ft)
+        {
+            //Now Create all of the directories
+            bool isOk = false;
+            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            {
+                Directory.CreateDirectory(dirPath.Replace(sourcePath, destPath));
+            }
+
+            DirectoryInfo di = new DirectoryInfo(sourcePath);
+
+            if (ft.hasFrom && !ft.hasTo)
+            {                
+                foreach (var f in di.GetFiles("*", SearchOption.AllDirectories))
+                {
+                    if (f.CreationTime.CompareTo(ft.from) >= 0) { File.Copy(f.FullName, f.FullName.Replace(sourcePath, destPath), true); }
+                }
+
+                //foreach (string newPath in Directory.GetFiles(sourcePath, "*.htm", SearchOption.AllDirectories))
+                //{ File.Copy(newPath, newPath.Replace(sourcePath, destPath), true); }
+            }
+            else if (!ft.hasFrom && ft.hasTo)
+            {
+                foreach (var f in di.GetFiles("*", SearchOption.AllDirectories))
+                {
+                    if (f.LastWriteTime.CompareTo(ft.to) <= 0) { File.Copy(f.FullName, f.FullName.Replace(sourcePath, destPath), true); }
+                }
+            }
+            else if (ft.hasFrom && ft.hasTo)
+            {
+                foreach (var f in di.GetFiles("*", SearchOption.AllDirectories))
+                {
+                    DateTime to = ft.to;
+                    DateTime fr = ft.from;
+                    DateTime now = f.LastWriteTime;
+                    isOk = (f.CreationTime.CompareTo(ft.from) >= 0 && f.LastWriteTime.CompareTo(ft.to) <= 0);
+                    if (f.CreationTime.CompareTo(ft.from) >= 0 && f.LastWriteTime.CompareTo(ft.to) <= 0) { File.Copy(f.FullName, f.FullName.Replace(sourcePath, destPath), true); }
+                }
+            }
+            //Copy all the files & Replaces any files with the same name
+            
+        }
+
+        public static DateTime getFileTime(string containerPath, string targetFolderName, bool isFrom)
+        {
+            // containerPath is remote results folder path, like: x:\Roof\results
+            // targetFolderName is like: RDM72831_PR00_CreateFolder_20170307112524043
+            string targetFolderPath = containerPath + "\\" + targetFolderName;
+            if (!Directory.Exists(containerPath) || !Directory.Exists(targetFolderPath)) return DateTime.MinValue;
+
+            DirectoryInfo di = new DirectoryInfo(targetFolderPath);
+            var f= di.GetFiles().Where(file => file.Name.StartsWith("Result_" + targetFolderName.Substring(0, targetFolderName.Length - 18))).First();
+            return isFrom ? f.CreationTime : f.LastWriteTime;
+        }
+
         public static int FolderCount(string path) {
             int count = 0;
             if (Directory.Exists(path))
@@ -122,6 +196,10 @@ namespace xReporter
 
         public static string[] GetDataArray(string path)
         {
+            //will return result like: [PASSED,112,15,0,198.15]
+
+            // this is for situation that no steps executed
+            if (!(File.ReadAllText(path).Contains(@"</td></tr>"))) return new string[] {"ERROR","0","0","0","0"};
             string data = "";
             
             if (File.Exists(path))
@@ -231,6 +309,31 @@ namespace xReporter
             string[] parts = path.Split('\\','/');
             return parts.Last();
         }
+        public static string getSecondLastPartInPath(string path)
+        {
+            path = path.Replace("\"", "").Replace("'", "").Trim();
+            string[] parts = path.Split('\\', '/');
+            if (parts.Length >= 2) return parts[parts.Length - 2];
+            else return "";
+            
+        }
+        public static string getTimeStampFrom(string name, bool isName=true)
+        {
+
+            string ts;
+            string _name;
+            if (!isName) _name = MyLib.getSecondLastPartInPath(name);
+            else _name = name;
+
+            if (_name.Length <= 17) return "0";
+            //ts = _name.Substring(_name.Length - 17,14);
+            ts = _name.Substring(_name.Length - 17);
+
+            return ts;
+
+        }
+        
+        
         public static bool PathIsFile(string path, string fileName, string parentName)
         {
             if (!File.Exists(path)) { return false; }

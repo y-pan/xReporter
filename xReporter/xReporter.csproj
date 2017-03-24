@@ -52,6 +52,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FromToDT.cs" />
     <Compile Include="KeyValue.cs" />
     <Compile Include="MyLib.cs" />
     <Compile Include="Program.cs" />

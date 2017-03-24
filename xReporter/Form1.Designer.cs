@@ -71,9 +71,9 @@
             this.txtJustALabel2 = new System.Windows.Forms.TextBox();
             this.comFeature2 = new System.Windows.Forms.ComboBox();
             this.txtRemoteTests2 = new System.Windows.Forms.TextBox();
-            this.txtResultsTo2 = new System.Windows.Forms.TextBox();
+            this.txtRemoteResultsTo2 = new System.Windows.Forms.TextBox();
             this.txtRemoteRoof2 = new System.Windows.Forms.TextBox();
-            this.txtResultsFrom2 = new System.Windows.Forms.TextBox();
+            this.txtRemoteResultsFrom2 = new System.Windows.Forms.TextBox();
             this.txtRemoteBin2 = new System.Windows.Forms.TextBox();
             this.txtRemoteResults2 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -99,9 +99,9 @@
             this.btnData1 = new System.Windows.Forms.Button();
             this.comFeature1 = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.txtResultsTo1 = new System.Windows.Forms.TextBox();
+            this.txtRemoteResultsTo1 = new System.Windows.Forms.TextBox();
             this.txtRemoteRoof1 = new System.Windows.Forms.TextBox();
-            this.txtResultsFrom1 = new System.Windows.Forms.TextBox();
+            this.txtRemoteResultsFrom1 = new System.Windows.Forms.TextBox();
             this.txtRemoteBin1 = new System.Windows.Forms.TextBox();
             this.txtRemoteTests1 = new System.Windows.Forms.TextBox();
             this.txtRemoteResults1 = new System.Windows.Forms.TextBox();
@@ -118,6 +118,7 @@
             this.bw_mapFeature = new System.ComponentModel.BackgroundWorker();
             this.tabLists = new System.Windows.Forms.TabControl();
             this.tabList1 = new System.Windows.Forms.TabPage();
+            this.cheExact1 = new System.Windows.Forms.CheckBox();
             this.lbFilterFound1 = new System.Windows.Forms.Label();
             this.lbFilterNotFound1 = new System.Windows.Forms.Label();
             this.btnFilterPrevious1 = new System.Windows.Forms.Button();
@@ -126,6 +127,7 @@
             this.txtFilter1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tabList2 = new System.Windows.Forms.TabPage();
+            this.cheExact2 = new System.Windows.Forms.CheckBox();
             this.lbFilterFound2 = new System.Windows.Forms.Label();
             this.lbFilterNotFound2 = new System.Windows.Forms.Label();
             this.btnFilterPrevious2 = new System.Windows.Forms.Button();
@@ -135,6 +137,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.lbxResults2 = new System.Windows.Forms.ListBox();
             this.btnCopyStat = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabVMs.SuspendLayout();
@@ -178,7 +181,7 @@
             this.btnDownloadResults.ForeColor = System.Drawing.Color.Black;
             this.btnDownloadResults.Image = ((System.Drawing.Image)(resources.GetObject("btnDownloadResults.Image")));
             this.btnDownloadResults.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDownloadResults.Location = new System.Drawing.Point(12, 342);
+            this.btnDownloadResults.Location = new System.Drawing.Point(12, 343);
             this.btnDownloadResults.Name = "btnDownloadResults";
             this.btnDownloadResults.Size = new System.Drawing.Size(187, 45);
             this.btnDownloadResults.TabIndex = 18;
@@ -425,9 +428,9 @@
             this.tabPage2.Controls.Add(this.txtJustALabel2);
             this.tabPage2.Controls.Add(this.comFeature2);
             this.tabPage2.Controls.Add(this.txtRemoteTests2);
-            this.tabPage2.Controls.Add(this.txtResultsTo2);
+            this.tabPage2.Controls.Add(this.txtRemoteResultsTo2);
             this.tabPage2.Controls.Add(this.txtRemoteRoof2);
-            this.tabPage2.Controls.Add(this.txtResultsFrom2);
+            this.tabPage2.Controls.Add(this.txtRemoteResultsFrom2);
             this.tabPage2.Controls.Add(this.txtRemoteBin2);
             this.tabPage2.Controls.Add(this.txtRemoteResults2);
             this.tabPage2.Controls.Add(this.label13);
@@ -650,12 +653,12 @@
             this.txtRemoteTests2.TabIndex = 9;
             this.txtRemoteTests2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txt2Open_MouseDoubleClick);
             // 
-            // txtResultsTo2
+            // txtRemoteResultsTo2
             // 
-            this.txtResultsTo2.Location = new System.Drawing.Point(122, 229);
-            this.txtResultsTo2.Name = "txtResultsTo2";
-            this.txtResultsTo2.Size = new System.Drawing.Size(439, 26);
-            this.txtResultsTo2.TabIndex = 7;
+            this.txtRemoteResultsTo2.Location = new System.Drawing.Point(122, 229);
+            this.txtRemoteResultsTo2.Name = "txtRemoteResultsTo2";
+            this.txtRemoteResultsTo2.Size = new System.Drawing.Size(439, 26);
+            this.txtRemoteResultsTo2.TabIndex = 7;
             // 
             // txtRemoteRoof2
             // 
@@ -666,12 +669,12 @@
             this.txtRemoteRoof2.TextChanged += new System.EventHandler(this.txtRemoteRoof_TextChanged);
             this.txtRemoteRoof2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txt2Open_MouseDoubleClick);
             // 
-            // txtResultsFrom2
+            // txtRemoteResultsFrom2
             // 
-            this.txtResultsFrom2.Location = new System.Drawing.Point(122, 193);
-            this.txtResultsFrom2.Name = "txtResultsFrom2";
-            this.txtResultsFrom2.Size = new System.Drawing.Size(439, 26);
-            this.txtResultsFrom2.TabIndex = 7;
+            this.txtRemoteResultsFrom2.Location = new System.Drawing.Point(122, 193);
+            this.txtRemoteResultsFrom2.Name = "txtRemoteResultsFrom2";
+            this.txtRemoteResultsFrom2.Size = new System.Drawing.Size(439, 26);
+            this.txtRemoteResultsFrom2.TabIndex = 7;
             // 
             // txtRemoteBin2
             // 
@@ -769,9 +772,9 @@
             this.tabPage1.Controls.Add(this.btnData1);
             this.tabPage1.Controls.Add(this.comFeature1);
             this.tabPage1.Controls.Add(this.label14);
-            this.tabPage1.Controls.Add(this.txtResultsTo1);
+            this.tabPage1.Controls.Add(this.txtRemoteResultsTo1);
             this.tabPage1.Controls.Add(this.txtRemoteRoof1);
-            this.tabPage1.Controls.Add(this.txtResultsFrom1);
+            this.tabPage1.Controls.Add(this.txtRemoteResultsFrom1);
             this.tabPage1.Controls.Add(this.txtRemoteBin1);
             this.tabPage1.Controls.Add(this.txtRemoteTests1);
             this.tabPage1.Controls.Add(this.txtRemoteResults1);
@@ -989,12 +992,12 @@
             this.label14.TabIndex = 20;
             this.label14.Text = "Feature :";
             // 
-            // txtResultsTo1
+            // txtRemoteResultsTo1
             // 
-            this.txtResultsTo1.Location = new System.Drawing.Point(122, 229);
-            this.txtResultsTo1.Name = "txtResultsTo1";
-            this.txtResultsTo1.Size = new System.Drawing.Size(439, 26);
-            this.txtResultsTo1.TabIndex = 7;
+            this.txtRemoteResultsTo1.Location = new System.Drawing.Point(122, 229);
+            this.txtRemoteResultsTo1.Name = "txtRemoteResultsTo1";
+            this.txtRemoteResultsTo1.Size = new System.Drawing.Size(439, 26);
+            this.txtRemoteResultsTo1.TabIndex = 7;
             // 
             // txtRemoteRoof1
             // 
@@ -1006,12 +1009,12 @@
             this.txtRemoteRoof1.TextChanged += new System.EventHandler(this.txtRemoteRoof_TextChanged);
             this.txtRemoteRoof1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txt2Open_MouseDoubleClick);
             // 
-            // txtResultsFrom1
+            // txtRemoteResultsFrom1
             // 
-            this.txtResultsFrom1.Location = new System.Drawing.Point(122, 193);
-            this.txtResultsFrom1.Name = "txtResultsFrom1";
-            this.txtResultsFrom1.Size = new System.Drawing.Size(439, 26);
-            this.txtResultsFrom1.TabIndex = 7;
+            this.txtRemoteResultsFrom1.Location = new System.Drawing.Point(122, 193);
+            this.txtRemoteResultsFrom1.Name = "txtRemoteResultsFrom1";
+            this.txtRemoteResultsFrom1.Size = new System.Drawing.Size(439, 26);
+            this.txtRemoteResultsFrom1.TabIndex = 7;
             // 
             // txtRemoteBin1
             // 
@@ -1152,6 +1155,7 @@
             // 
             // tabList1
             // 
+            this.tabList1.Controls.Add(this.cheExact1);
             this.tabList1.Controls.Add(this.lbFilterFound1);
             this.tabList1.Controls.Add(this.lbFilterNotFound1);
             this.tabList1.Controls.Add(this.btnFilterPrevious1);
@@ -1167,6 +1171,17 @@
             this.tabList1.TabIndex = 0;
             this.tabList1.Text = "List1";
             this.tabList1.UseVisualStyleBackColor = true;
+            // 
+            // cheExact1
+            // 
+            this.cheExact1.AutoSize = true;
+            this.cheExact1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cheExact1.Location = new System.Drawing.Point(567, 267);
+            this.cheExact1.Name = "cheExact1";
+            this.cheExact1.Size = new System.Drawing.Size(68, 21);
+            this.cheExact1.TabIndex = 46;
+            this.cheExact1.Text = "Exact";
+            this.cheExact1.UseVisualStyleBackColor = true;
             // 
             // lbFilterFound1
             // 
@@ -1193,7 +1208,8 @@
             // btnFilterPrevious1
             // 
             this.btnFilterPrevious1.BackColor = System.Drawing.Color.Transparent;
-            this.btnFilterPrevious1.Location = new System.Drawing.Point(508, 257);
+            this.btnFilterPrevious1.Enabled = false;
+            this.btnFilterPrevious1.Location = new System.Drawing.Point(465, 258);
             this.btnFilterPrevious1.Name = "btnFilterPrevious1";
             this.btnFilterPrevious1.Size = new System.Drawing.Size(40, 36);
             this.btnFilterPrevious1.TabIndex = 50;
@@ -1204,7 +1220,8 @@
             // btnFilterNext1
             // 
             this.btnFilterNext1.BackColor = System.Drawing.Color.Transparent;
-            this.btnFilterNext1.Location = new System.Drawing.Point(464, 257);
+            this.btnFilterNext1.Enabled = false;
+            this.btnFilterNext1.Location = new System.Drawing.Point(511, 258);
             this.btnFilterNext1.Name = "btnFilterNext1";
             this.btnFilterNext1.Size = new System.Drawing.Size(40, 36);
             this.btnFilterNext1.TabIndex = 49;
@@ -1229,6 +1246,7 @@
             this.txtFilter1.Name = "txtFilter1";
             this.txtFilter1.Size = new System.Drawing.Size(270, 26);
             this.txtFilter1.TabIndex = 47;
+            this.txtFilter1.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
             this.txtFilter1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
             // 
             // label1
@@ -1242,6 +1260,7 @@
             // 
             // tabList2
             // 
+            this.tabList2.Controls.Add(this.cheExact2);
             this.tabList2.Controls.Add(this.lbFilterFound2);
             this.tabList2.Controls.Add(this.lbFilterNotFound2);
             this.tabList2.Controls.Add(this.btnFilterPrevious2);
@@ -1257,6 +1276,17 @@
             this.tabList2.TabIndex = 1;
             this.tabList2.Text = "List2";
             this.tabList2.UseVisualStyleBackColor = true;
+            // 
+            // cheExact2
+            // 
+            this.cheExact2.AutoSize = true;
+            this.cheExact2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cheExact2.Location = new System.Drawing.Point(567, 266);
+            this.cheExact2.Name = "cheExact2";
+            this.cheExact2.Size = new System.Drawing.Size(68, 21);
+            this.cheExact2.TabIndex = 59;
+            this.cheExact2.Text = "Exact";
+            this.cheExact2.UseVisualStyleBackColor = true;
             // 
             // lbFilterFound2
             // 
@@ -1283,7 +1313,8 @@
             // btnFilterPrevious2
             // 
             this.btnFilterPrevious2.BackColor = System.Drawing.Color.Transparent;
-            this.btnFilterPrevious2.Location = new System.Drawing.Point(507, 257);
+            this.btnFilterPrevious2.Enabled = false;
+            this.btnFilterPrevious2.Location = new System.Drawing.Point(473, 257);
             this.btnFilterPrevious2.Name = "btnFilterPrevious2";
             this.btnFilterPrevious2.Size = new System.Drawing.Size(40, 36);
             this.btnFilterPrevious2.TabIndex = 56;
@@ -1294,7 +1325,8 @@
             // btnFilterNext2
             // 
             this.btnFilterNext2.BackColor = System.Drawing.Color.Transparent;
-            this.btnFilterNext2.Location = new System.Drawing.Point(463, 257);
+            this.btnFilterNext2.Enabled = false;
+            this.btnFilterNext2.Location = new System.Drawing.Point(519, 257);
             this.btnFilterNext2.Name = "btnFilterNext2";
             this.btnFilterNext2.Size = new System.Drawing.Size(40, 36);
             this.btnFilterNext2.TabIndex = 55;
@@ -1319,6 +1351,7 @@
             this.txtFilter2.Name = "txtFilter2";
             this.txtFilter2.Size = new System.Drawing.Size(270, 26);
             this.txtFilter2.TabIndex = 53;
+            this.txtFilter2.TextChanged += new System.EventHandler(this.txtFilter_TextChanged);
             this.txtFilter2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFilter_KeyDown);
             // 
             // label16
@@ -1353,12 +1386,23 @@
             this.btnCopyStat.UseVisualStyleBackColor = true;
             this.btnCopyStat.Click += new System.EventHandler(this.btnCopyStat_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1128, 617);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 45);
+            this.button1.TabIndex = 46;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // xReporter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1206, 663);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnCopyStat);
             this.Controls.Add(this.lbCopied);
             this.Controls.Add(this.tabLists);
@@ -1429,9 +1473,9 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ComboBox comFeature2;
         private System.Windows.Forms.TextBox txtRemoteTests2;
-        private System.Windows.Forms.TextBox txtResultsTo2;
+        private System.Windows.Forms.TextBox txtRemoteResultsTo2;
         private System.Windows.Forms.TextBox txtRemoteRoof2;
-        private System.Windows.Forms.TextBox txtResultsFrom2;
+        private System.Windows.Forms.TextBox txtRemoteResultsFrom2;
         private System.Windows.Forms.TextBox txtRemoteBin2;
         private System.Windows.Forms.TextBox txtRemoteResults2;
         private System.Windows.Forms.Label label13;
@@ -1445,9 +1489,9 @@
         private System.Windows.Forms.Button btnData1;
         private System.Windows.Forms.ComboBox comFeature1;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox txtResultsTo1;
+        private System.Windows.Forms.TextBox txtRemoteResultsTo1;
         private System.Windows.Forms.TextBox txtRemoteRoof1;
-        private System.Windows.Forms.TextBox txtResultsFrom1;
+        private System.Windows.Forms.TextBox txtRemoteResultsFrom1;
         private System.Windows.Forms.TextBox txtRemoteBin1;
         private System.Windows.Forms.TextBox txtRemoteTests1;
         private System.Windows.Forms.TextBox txtRemoteResults1;
@@ -1507,6 +1551,9 @@
         private System.Windows.Forms.Label lbFilterFound1;
         private System.Windows.Forms.Label lbFilterNotFound1;
         private System.Windows.Forms.Label lbFilterFound2;
+        private System.Windows.Forms.CheckBox cheExact1;
+        private System.Windows.Forms.CheckBox cheExact2;
+        private System.Windows.Forms.Button button1;
     }
 }
 
