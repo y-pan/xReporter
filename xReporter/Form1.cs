@@ -12,10 +12,13 @@ using System.Windows.Forms;
 
 namespace xReporter
 {
-
+    /*
+     * Author: panyunkui@gmail.com
+     * Description: Tool to generate reports, and quickly access files/folders(result, bat, test, ... ).
+     * Date: 2017-03-25
+     */
     public partial class xReporter : Form
     {
-
         int tabIndex;
         string featurePath, featureName, binFP, testsFP, dataFP, sqlFP,
             exportFP, csvGoldFP, xmlGoldFP, DownloadsFP, importFP, csvFP, xmlFP, setUIVarsP;
@@ -27,7 +30,6 @@ namespace xReporter
         string reportVM1,reportVM2;
         string reportVM1x, reportVM2x;
         string localResults1,localResults2;
-        int resultCount1, resutCount2;
         int bwShowHideSignal = 0; // 1 : copied, 2 : Found, -2 : not found
         string remoteBin1,remoteBin2;
 
@@ -35,7 +37,6 @@ namespace xReporter
         int htmFileCount1, htmFileCount2;
         int currentFiltedIndex1, currentFiltedIndex2;
 
-        FromToDT[] fts = new FromToDT[2] { new FromToDT(), new FromToDT()};
         RecordManager recordMng1, recordMng2;
 
         public xReporter()
@@ -45,8 +46,8 @@ namespace xReporter
 
         private void xReporter_Load(object sender, EventArgs e)
         {
-            localResults1 = @".\results1";
-            localResults2 = @".\results2";
+            localResults1 = @".\r1";
+            localResults2 = @".\r2";
             createLocalResultFolder(0);
             createLocalResultFolder(1);
             
@@ -72,23 +73,50 @@ namespace xReporter
             toolTip1.SetToolTip(this.cheFailedOnly, "Check it to view Failed tests only, doesn't affect the report");
             toolTip1.SetToolTip(this.btnOpenLocalResultContainer, "To open local result folder, the number is for folder count, might not be the same with number in stat");
             toolTip1.SetToolTip(this.cheNotepadpp, "Check it, will use notepad++ to open bat file, otherwise use notepad");
-            toolTip1.SetToolTip(this.txtJustALabel1, "I don't care whatever you type here~");
-            toolTip1.SetToolTip(this.txtJustALabel2, "I don't care whatever you type here~");
-            toolTip1.SetToolTip(this.btnDownloadResults, @"Download result from selected VM's result, into local .\results");
-            toolTip1.SetToolTip(this.btnOpenRoot, @"Open root directory, where csv reports will be");
+            toolTip1.SetToolTip(this.txtJustALabel1, "Any thing you like, I don't care that~");
+            toolTip1.SetToolTip(this.txtJustALabel2, "Any thing you like, I don't care that~");
+            toolTip1.SetToolTip(this.btnDownloadResults, "Download result from selected VM's result");
+            toolTip1.SetToolTip(this.btnOpenRoot, "Open root directory, where csv reports will be");
 
-            toolTip1.SetToolTip(this.btnEmptyLocalResults, @"Empty local results from local folder: results");
-            toolTip1.SetToolTip(this.btnGenerateReports, @"Generate csv report base on local results");
+            toolTip1.SetToolTip(this.btnEmptyLocalResults, "Empty local results, either r1 or r2 base on which tab you are at");
+            toolTip1.SetToolTip(this.btnGenerateReports, "Generate csv report from local results(r1, or r2), and Good Luck~");
 
-            toolTip1.SetToolTip(this.btnOpenBat, @"Open bat file base on selected result in list");
-            toolTip1.SetToolTip(this.btnOpenTest, @"Open test file base on selected result in list");
-            toolTip1.SetToolTip(this.btnOpenTestFolder, @"Open test folder file base on selected result in list");
-            toolTip1.SetToolTip(this.btnOpenResult, @"Open result file base on selected result in list");
-            toolTip1.SetToolTip(this.btnOpenSelectedResultFolder, @"Open result folder base on selected result in list");
+            toolTip1.SetToolTip(this.btnOpenBat, "Open bat file base on selected result in list");
+            toolTip1.SetToolTip(this.btnOpenTest, "Open test file base on selected result in list");
+            toolTip1.SetToolTip(this.btnOpenTestFolder, "Open test folder file base on selected result in list");
+            toolTip1.SetToolTip(this.btnOpenResult, "Open result file base on selected result in list");
+            toolTip1.SetToolTip(this.btnOpenSelectedResultFolder, "Open result folder base on selected result in list");
             toolTip1.SetToolTip(this.cheNotepadpp, @"Check it, will open bat/test file using notepad++, otherwise using window's notepad");
 
-            toolTip1.SetToolTip(this.btnCopyTestFolderPath, @"Copy specific test folder path to clipboard base on selected result in list");
+            toolTip1.SetToolTip(this.btnCopyTestFolderPath, "Copy specific test folder path to clipboard base on selected result in list");
 
+            toolTip1.SetToolTip(this.btnOpenRemoteBin, "Open remote bin folder");
+            toolTip1.SetToolTip(this.cheExact1, "For filter to match the whole test name only, not case sensitive");
+            toolTip1.SetToolTip(this.cheExact2, "For filter to match the whole test name only, not case sensitive");
+            toolTip1.SetToolTip(this.btnOpenReport, "Open report file, either " + reportVM1x + " or " + reportVM2x + "\nThe different between " + reportVM1+ " and " +reportVM1x + " is: 1st one has only 1 side, and the 2nd one has more where same tests having same parent will be on the same row" );
+
+            toolTip1.SetToolTip(this.txtFilter1, "Type in the name you want to search, then press ENTER or click Go button, not case sensitive");
+            toolTip1.SetToolTip(this.txtFilter2, "Type in the name you want to search, then press ENTER or click Go button, not case sensitive");
+            toolTip1.SetToolTip(this.btnFilterGo1, "Search base on filter input, pressing ENTER while focusing on input box does the same thing");
+            toolTip1.SetToolTip(this.btnFilterGo2, "Search base on filter input, pressing ENTER while focusing on input box does the same thing");
+
+            toolTip1.SetToolTip(this.btnFilterNext1, "Find next one if applicable, will get enabled after clicking Go button or pressing ENTER on input box");
+            toolTip1.SetToolTip(this.btnFilterNext2, "Find next one if applicable, will get enabled after clicking Go button or pressing ENTER on input box");
+            toolTip1.SetToolTip(this.btnFilterPrevious2, "Find previous one if applicable, will get enabled after clicking Go button or pressing ENTER on input box if match found");
+            toolTip1.SetToolTip(this.btnFilterPrevious1, "Find previous one if applicable, will get enabled after clicking Go button or pressing ENTER on input box if match found");
+            toolTip1.SetToolTip(this.btnCopyStat, "Copy statistics to clipboard");
+            toolTip1.SetToolTip(this.txtRemoteRoof1, "Path to the VM's Roof folder. (Double-click on input box to open the specific folder)");
+            toolTip1.SetToolTip(this.txtRemoteRoof2, "Path to the VM's Roof folder. (Double-click on input box to open the specific folder)");
+            toolTip1.SetToolTip(this.comFeature1, "Select the feature under remote Roof folder, like RDM");
+            toolTip1.SetToolTip(this.comFeature2, "Select the feature under remote Roof folder, like RDM");
+            toolTip1.SetToolTip(this.txtRemoteTests1, "The path where to download results to local, normally the remote result folder, under Roof. However, you can change it to other folder manually");
+            toolTip1.SetToolTip(this.txtRemoteTests2, "The path where to download results to local, normally the remote result folder, under Roof. However, you can change it to other folder manually");
+            toolTip1.SetToolTip(this.txtRemoteBin1, "Path to remote bin folder under roof, needed for finding parent of tests in generating csv");
+            toolTip1.SetToolTip(this.txtRemoteBin2, "Path to remote bin folder under roof, needed for finding parent of tests in generating csv");
+            toolTip1.SetToolTip(this.txtRemoteTests1, "Path to remote test folder under roof, needed in generating csv");
+            toolTip1.SetToolTip(this.txtRemoteTests2, "Path to remote test folder under roof, needed in generating csv");
+            toolTip1.SetToolTip(this.lbxResults1, "List of results, double-click on item to open the specific result htm file in local result folder");
+            toolTip1.SetToolTip(this.lbxResults2, "List of results, double-click on item to open the specific result htm file in local result folder");
             toolTip1.Active = false;
         }
         private void btnEmptyLocalResults_Click(object sender, EventArgs e)
@@ -365,29 +393,18 @@ namespace xReporter
                 {
                     case 0:
                         rpath = txtRemoteResults1.Text;
-                        lpath = localResults1;
-                        fromFolderName = txtRemoteResultsFrom1.Text;
-                        toFolderName = txtRemoteResultsTo1.Text;
-                        
+                        lpath = localResults1;                        
                         break;
                     case 1:
                         rpath = txtRemoteResults2.Text;
                         lpath = localResults2;
-                        fromFolderName = txtRemoteResultsFrom2.Text;
-                        toFolderName = txtRemoteResultsTo2.Text;
-                        
                         break;
                     default: break;
                 }
 
                 if (fromFolderName != "" && !Directory.Exists(rpath + "\\" + fromFolderName)) throw new Exception("Invalid input for \"Result From\": " + fromFolderName);
                 if (toFolderName != "" && !Directory.Exists(rpath + "\\" + toFolderName)) throw new Exception("Invalid input for \"Result To\": "+ toFolderName);
-
-                fts[tabIndex].init();
-                if (fromFolderName != "") fts[tabIndex].setFrom(MyLib.getFileTime(rpath, fromFolderName, true));
-                if (toFolderName != "") fts[tabIndex].setTo(MyLib.getFileTime(rpath, toFolderName,false));
-                if (fts[tabIndex].hasFrom && fts[tabIndex].hasTo && fts[tabIndex].to.CompareTo(fts[tabIndex].from) < 0) { throw new Exception("Time of \"To\" shouldn't be earlier than \"From\""); }
-                
+                                
 
                 if (!Directory.Exists(lpath)) { createLocalResultFolder(tabIndex); Thread.Sleep(100); }
                 if (Directory.Exists(rpath))
@@ -819,8 +836,7 @@ namespace xReporter
         {
             //isRunning = true;
             string[] args = (string[])e.Argument;
-            if (!fts[tabIndex].hasTo && !fts[tabIndex].hasFrom) { MyLib.CopyAll(args[0], args[1]); }
-            else { MyLib.CopyAll(args[0], args[1], fts[tabIndex]); }
+            MyLib.CopyAll(args[0], args[1]);
         }
         private void bw_emptyResults_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
@@ -1498,8 +1514,8 @@ namespace xReporter
                         if (currentFiltedIndex1 >= 0)
                         {
                             lbxResults1.SelectedIndex = currentFiltedIndex1;
-                            lbFilterFound1.Visible = true;
-                            bwShowHideSignal = 2; // 2 for found
+                            //lbFilterFound1.Visible = true;
+                            //bwShowHideSignal = 2; // 2 for found
                             //bw_showHide.RunWorkerAsync();
                         }
 
@@ -1556,72 +1572,6 @@ namespace xReporter
                 default: break;
             }
             
-            /*
-            string tname = "";
-            
-            try
-            {
-                switch (tabIndex)
-                {
-                    case 0:
-                        currentFiltedIndex1 = -1;
-                        tname = txtFilter1.Text;
-                        if(tname.Length <= 0) throw new Exception("Error: name is empty");
-                        if(lbxResults1.Items.Count <=0 ) throw new Exception("Error: list is empty");
-                        
-                        for (int i = 0; i < lbxResults1.Items.Count; i++ )
-                        {
-                            if (i == 0) MessageBox.Show(lbxResults1.Items[i].ToString());
-                            if (lbxResults1.Items[i].ToString().EndsWith(" | "+tname)) { currentFiltedIndex1 = i; break; }
-                        }
-
-                        if (currentFiltedIndex1 >= 0)
-                        {
-                            lbxResults1.SelectedIndex = currentFiltedIndex1;
-                            lbFilterFound1.Visible = true;
-                            bwShowHideSignal = 2; // 2 for found
-                            bw_showHide.RunWorkerAsync();
-                        }
-                        else
-                        {
-                            lbFilterNotFound1.Visible = true;
-                            bwShowHideSignal = -2; // -2 for not_found
-                            bw_showHide.RunWorkerAsync();
-                        }
-                        break;
-                    case 1:
-                        currentFiltedIndex2 = -1;
-                        tname = txtFilter2.Text;
-                        if(tname.Length <= 0) throw new Exception("Error: name is empty");
-                        if(lbxResults2.Items.Count <=0 ) throw new Exception("Error: list is empty");
-             
-                        for (int i = 0; i < lbxResults2.Items.Count; i++ )
-                        {
-                            if (lbxResults2.Items[i].ToString() == tname) { currentFiltedIndex2 = i; break; }
-                        }
-
-                        if (currentFiltedIndex2 >= 0)
-                        {
-                            lbFilterFound2.Visible = true;
-                            lbxResults2.SelectedIndex = currentFiltedIndex2;
-                            bwShowHideSignal = 2; // 2 for found
-                            bw_showHide.RunWorkerAsync();
-                        }
-                        else
-                        {
-                            lbFilterNotFound2.Visible = true;
-                            bwShowHideSignal = -2; // -2 for not_found
-                            bw_showHide.RunWorkerAsync();
-                        }
-                        break;
-                        
-                    default: break;
-                }
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }*/
         }
 
         private void btnFilterGo_Click(object sender, EventArgs e)
@@ -1712,8 +1662,6 @@ namespace xReporter
             {
                 MessageBox.Show(ex.Message);
             }
-            
-
         }
 
         private void txtFilter_TextChanged(object sender, EventArgs e)
@@ -1726,42 +1674,6 @@ namespace xReporter
 
             }
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //FileInfo fi = new FileInfo(@"s:\Documents\Visual Studio 2015\Projects\xReporter-master\xReporter\bin\Debug\results1\RDM47739_PR00_CreateFolder_20170224231159021\Result_RDM47739_PR00_CreateFolder.htm");
-            //  20170224231159021
-            //  20170224231236
-            //MessageBox.Show("ToString:" + fi.LastWriteTime.ToString("yyyyMMddHHmmss"));
-
-            //string ts = MyLib.getTimeStampFrom(@"s:\Documents\Visual Studio 2015\Projects\xReporter-master\xReporter\bin\Debug\results1\RDM47739_PR00_CreateFolder_20170224231159021\Result_RDM47739_PR00_CreateFolder.htm", false);
-            //MessageBox.Show("ts:" + ts);
-
-            //string ts2 = MyLib.getTimeStampFrom(@"f", true);
-            //MessageBox.Show("ts2:" + ts2);
-            // now use getTimeStampFrom to get lastWriteTime, and use lastWriteTime for downloading results
-
-            // from/to both have inputs 
-            /*
-            string from = MyLib.getTimeStampFrom(txtResultsFrom1.Text, true);
-            string to = MyLib.getTimeStampFrom(txtResultsTo1.Text, true);
-            MessageBox.Show("from=" + from + " , to=" + to);
-
-            long lFrom = 0; long.TryParse(from,out lFrom);
-            long lTo=0; long.TryParse(to,out lTo);
-            MessageBox.Show("lfrom=" + lFrom.ToString() + " , lto=" + lTo.ToString()+" ,  is lFrom < lTo " + (lTo > lFrom));
-            */
-            // containerPath is remote results folder path, like: x:\Roof\results
-            // targetFolderName is like: RDM72831_PR00_CreateFolder_20170307112524043
-            DateTime fromTime = MyLib.getFileTime(txtRemoteResults1.Text, txtRemoteResultsFrom1.Text, true);
-            DateTime toTime = MyLib.getFileTime(txtRemoteResults1.Text, txtRemoteResultsTo1.Text, false);
-            MessageBox.Show(toTime.CompareTo(fromTime).ToString());
-
-        }
-
-
-
-
 
     }
 }

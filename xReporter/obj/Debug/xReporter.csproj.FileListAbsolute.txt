@@ -25,3 +25,12 @@ s:\Documents\Visual Studio 2015\Projects\xReporter-master\xReporter\obj\Debug\xR
 s:\Documents\Visual Studio 2015\Projects\xReporter-master\xReporter\obj\Debug\xReporter.csproj.GenerateResource.Cache
 s:\Documents\Visual Studio 2015\Projects\xReporter-master\xReporter\obj\Debug\xReporter.exe
 s:\Documents\Visual Studio 2015\Projects\xReporter-master\xReporter\obj\Debug\xReporter.pdb
+s:\Documents\Visual Studio 2015\Projects\xReporter-master(V3.1 FINAL)\xReporter\bin\Debug\xReporter.exe.config
+s:\Documents\Visual Studio 2015\Projects\xReporter-master(V3.1 FINAL)\xReporter\obj\Debug\xReporter.exe
+s:\Documents\Visual Studio 2015\Projects\xReporter-master(V3.1 FINAL)\xReporter\obj\Debug\xReporter.pdb
+s:\Documents\Visual Studio 2015\Projects\xReporter-master(V3.1 FINAL)\xReporter\bin\Debug\xReporter.exe
+s:\Documents\Visual Studio 2015\Projects\xReporter-master(V3.1 FINAL)\xReporter\bin\Debug\xReporter.pdb
+s:\Documents\Visual Studio 2015\Projects\xReporter-master(V3.1 FINAL)\xReporter\obj\Debug\xReporter.csprojResolveAssemblyReference.cache
+s:\Documents\Visual Studio 2015\Projects\xReporter-master(V3.1 FINAL)\xReporter\obj\Debug\xReporter.xReporter.resources
+s:\Documents\Visual Studio 2015\Projects\xReporter-master(V3.1 FINAL)\xReporter\obj\Debug\xReporter.Properties.Resources.resources
+s:\Documents\Visual Studio 2015\Projects\xReporter-master(V3.1 FINAL)\xReporter\obj\Debug\xReporter.csproj.GenerateResource.Cache

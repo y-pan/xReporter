@@ -33,116 +33,7 @@ namespace xReporter
         public static void CreateFolder(string path) {
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
         }
-        public static bool PathIsFolder(string path, string folder) {
-            string[] array = path.Split('\\');
-            if(array.Last() == folder) { return true; }
-            else { return false; }
-        }
-        public static bool PathIsFolder(string path, string folder, string parentFolderName)
-        {
-            string[] array = path.Split('\\');
-            if (array.Last() == folder && array[array.Length - 2] == parentFolderName) { return true; }
-            else { return false; }
-        }
-        public static bool PathHasSubFolder(string path, string subfolder) {
 
-            return false;
-        }
-        public static void DirectoryCopy(string sourceDirName, string destDirName)
-        {
-            // Get the subdirectories for the specified directory.
-            DirectoryInfo dir = new DirectoryInfo(sourceDirName);
-
-            /*if (!dir.Exists)
-            {
-                throw new DirectoryNotFoundException(
-                    "Source directory does not exist or could not be found: "
-                    + sourceDirName);
-            }*/
-
-            DirectoryInfo[] dirs = dir.GetDirectories();
-            // If the destination directory doesn't exist, create it.
-            /*if (!Directory.Exists(destDirName))
-            {
-                Directory.CreateDirectory(destDirName);
-            }*/
-
-            // Get the files in the directory and copy them to the new location.
-            FileInfo[] files = dir.GetFiles();
-            foreach (FileInfo file in files)
-            {
-                string temppath = Path.Combine(destDirName, file.Name);
-                file.CopyTo(temppath, false);
-            }
-
-            // If copying subdirectories, copy them and their contents to new location.
-
-            foreach (DirectoryInfo subdir in dirs)
-            {
-                string temppath = Path.Combine(destDirName, subdir.Name);
-                DirectoryCopy(subdir.FullName, temppath);
-            }
-
-        }
-
-
-        public static void CopyAll(string sourcePath, string destPath) { 
-            //Now Create all of the directories
-
-            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
-            {
-                Directory.CreateDirectory(dirPath.Replace(sourcePath, destPath));
-            }
-                
-            //Copy all the files & Replaces any files with the same name
-            foreach (string newPath in Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories))
-            { File.Copy(newPath, newPath.Replace(sourcePath, destPath), true); }
-
-        }
-
-
-        public static void CopyAll(string sourcePath, string destPath, FromToDT ft)
-        {
-            //Now Create all of the directories
-            bool isOk = false;
-            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
-            {
-                Directory.CreateDirectory(dirPath.Replace(sourcePath, destPath));
-            }
-
-            DirectoryInfo di = new DirectoryInfo(sourcePath);
-
-            if (ft.hasFrom && !ft.hasTo)
-            {                
-                foreach (var f in di.GetFiles("*", SearchOption.AllDirectories))
-                {
-                    if (f.CreationTime.CompareTo(ft.from) >= 0) { File.Copy(f.FullName, f.FullName.Replace(sourcePath, destPath), true); }
-                }
-
-                //foreach (string newPath in Directory.GetFiles(sourcePath, "*.htm", SearchOption.AllDirectories))
-                //{ File.Copy(newPath, newPath.Replace(sourcePath, destPath), true); }
-            }
-            else if (!ft.hasFrom && ft.hasTo)
-            {
-                foreach (var f in di.GetFiles("*", SearchOption.AllDirectories))
-                {
-                    if (f.LastWriteTime.CompareTo(ft.to) <= 0) { File.Copy(f.FullName, f.FullName.Replace(sourcePath, destPath), true); }
-                }
-            }
-            else if (ft.hasFrom && ft.hasTo)
-            {
-                foreach (var f in di.GetFiles("*", SearchOption.AllDirectories))
-                {
-                    DateTime to = ft.to;
-                    DateTime fr = ft.from;
-                    DateTime now = f.LastWriteTime;
-                    isOk = (f.CreationTime.CompareTo(ft.from) >= 0 && f.LastWriteTime.CompareTo(ft.to) <= 0);
-                    if (f.CreationTime.CompareTo(ft.from) >= 0 && f.LastWriteTime.CompareTo(ft.to) <= 0) { File.Copy(f.FullName, f.FullName.Replace(sourcePath, destPath), true); }
-                }
-            }
-            //Copy all the files & Replaces any files with the same name
-            
-        }
 
         public static DateTime getFileTime(string containerPath, string targetFolderName, bool isFrom)
         {
@@ -261,35 +152,6 @@ namespace xReporter
             return name;
         }
 
-
-        // not in use , put it in main
-        public static void GenerateCSV(List<string> namelist,List<string> fullnamelist, string csvPath)
-        {
-            int count = fullnamelist.Count;
-            if (count <= 0) { return; }
-
-            if (File.Exists(csvPath)) { File.Delete(csvPath); }
-            File.WriteAllText(csvPath,"Child,Status,StepsExecuted,PassVal,FailVal,Time\n");
-            //Defect82111_TC7_AdHierCKNodeCKLeaf,PASSED,112,15,0,198.15
-            for (int i = 0; i<count; i++)
-            {
-                string child = namelist[i];
-                string data = MyLib.GetData(fullnamelist[i]);
-                File.AppendAllText(csvPath, child +","+data + "\n");
-                
-            }
-
-        }
-        public static bool CheckPass(string data)
-        {   // data is like: Defect82111_TC7_AdHierCKNodeCKLeaf,PASSED,112,15,0,198.15
-            string[] arr = data.Split(',');
-            bool isPass = false;
-            if(arr.Length == 6 && arr[1] == "PASSED")
-            {
-                isPass = true;
-            }
-            return isPass;
-        }
         public static string dumpBatComment(string target)
         {
             string[] dumpPtns = new string[] { @"^\s*rem\s+.*$", @"\s+rem\s+.*$", @"^\s*::.*$", @"\s+::.*$" };
@@ -301,6 +163,21 @@ namespace xReporter
         {
             string batFormat = @"^\s*CALL.*Roof[.]bat\s+.*";
             return Regex.IsMatch(target, batFormat, RegexOptions.IgnoreCase);
+        }
+
+        public static void CopyAll(string sourcePath, string destPath)
+        {
+            //Now Create all of the directories
+
+            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            {
+                Directory.CreateDirectory(dirPath.Replace(sourcePath, destPath));
+            }
+
+            //Copy all the files & Replaces any files with the same name
+            foreach (string newPath in Directory.GetFiles(sourcePath, "*", SearchOption.AllDirectories))
+            { File.Copy(newPath, newPath.Replace(sourcePath, destPath), true); }
+
         }
 
         public static string getLastPartInPath(string path)
@@ -316,32 +193,6 @@ namespace xReporter
             if (parts.Length >= 2) return parts[parts.Length - 2];
             else return "";
             
-        }
-        public static string getTimeStampFrom(string name, bool isName=true)
-        {
-
-            string ts;
-            string _name;
-            if (!isName) _name = MyLib.getSecondLastPartInPath(name);
-            else _name = name;
-
-            if (_name.Length <= 17) return "0";
-            //ts = _name.Substring(_name.Length - 17,14);
-            ts = _name.Substring(_name.Length - 17);
-
-            return ts;
-
-        }
-        
-        
-        public static bool PathIsFile(string path, string fileName, string parentName)
-        {
-            if (!File.Exists(path)) { return false; }
-            path = path.Replace("\"", "").Replace("'", "").Trim();
-            string[] parts = path.Split('\\', '/');
-            int len = parts.Length;
-            if (fileName == parts[len - 1] && parentName == parts[len - 2]) { return true; }
-            else { return false; }
         }
 
         public static string replaceVarsInLine(string line, string sourcePath)
@@ -396,5 +247,65 @@ namespace xReporter
             return str1;
 
         }
+
+        /*
+        public static string getTimeStampFrom(string name, bool isFolderName = true)
+        {
+            string ts;
+            string _name;
+            if (!isFolderName) _name = MyLib.getSecondLastPartInPath(name);
+            else _name = name;
+
+            if (_name.Length <= 17) return "0";
+            //ts = _name.Substring(_name.Length - 17,14);
+            ts = _name.Substring(_name.Length - 17);
+
+            return ts;
+
+        }
+        public static bool CheckPass(string data)
+        {   // data is like: Defect82111_TC7_AdHierCKNodeCKLeaf,PASSED,112,15,0,198.15
+            string[] arr = data.Split(',');
+            bool isPass = false;
+            if(arr.Length == 6 && arr[1] == "PASSED")
+            {
+                isPass = true;
+            }
+            return isPass;
+        }
+                 
+        public static void GenerateCSV(List<string> namelist,List<string> fullnamelist, string csvPath)
+        {
+            int count = fullnamelist.Count;
+            if (count <= 0) { return; }
+
+            if (File.Exists(csvPath)) { File.Delete(csvPath); }
+            File.WriteAllText(csvPath,"Child,Status,StepsExecuted,PassVal,FailVal,Time\n");
+            //Defect82111_TC7_AdHierCKNodeCKLeaf,PASSED,112,15,0,198.15
+            for (int i = 0; i<count; i++)
+            {
+                string child = namelist[i];
+                string data = MyLib.GetData(fullnamelist[i]);
+                File.AppendAllText(csvPath, child +","+data + "\n");
+                
+            }
+
+        }
+                 public static bool PathIsFolder(string path, string folder) {
+            string[] array = path.Split('\\');
+            if(array.Last() == folder) { return true; }
+            else { return false; }
+        }
+        public static bool PathIsFolder(string path, string folder, string parentFolderName)
+        {
+            string[] array = path.Split('\\');
+            if (array.Last() == folder && array[array.Length - 2] == parentFolderName) { return true; }
+            else { return false; }
+        }
+        public static bool PathHasSubFolder(string path, string subfolder) {
+
+            return false;
+        }
+         */
     }
 }

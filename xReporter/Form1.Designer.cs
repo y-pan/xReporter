@@ -71,9 +71,7 @@
             this.txtJustALabel2 = new System.Windows.Forms.TextBox();
             this.comFeature2 = new System.Windows.Forms.ComboBox();
             this.txtRemoteTests2 = new System.Windows.Forms.TextBox();
-            this.txtRemoteResultsTo2 = new System.Windows.Forms.TextBox();
             this.txtRemoteRoof2 = new System.Windows.Forms.TextBox();
-            this.txtRemoteResultsFrom2 = new System.Windows.Forms.TextBox();
             this.txtRemoteBin2 = new System.Windows.Forms.TextBox();
             this.txtRemoteResults2 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -81,8 +79,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnSetUIVarsFolder1 = new System.Windows.Forms.Button();
             this.btnRoofPropertiesFolder1 = new System.Windows.Forms.Button();
@@ -99,9 +95,7 @@
             this.btnData1 = new System.Windows.Forms.Button();
             this.comFeature1 = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.txtRemoteResultsTo1 = new System.Windows.Forms.TextBox();
             this.txtRemoteRoof1 = new System.Windows.Forms.TextBox();
-            this.txtRemoteResultsFrom1 = new System.Windows.Forms.TextBox();
             this.txtRemoteBin1 = new System.Windows.Forms.TextBox();
             this.txtRemoteTests1 = new System.Windows.Forms.TextBox();
             this.txtRemoteResults1 = new System.Windows.Forms.TextBox();
@@ -110,8 +104,6 @@
             this.lbRoof1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.tabVMs = new System.Windows.Forms.TabControl();
             this.btnOpenRemoteBin = new System.Windows.Forms.Button();
             this.btnOpenReport = new System.Windows.Forms.Button();
@@ -137,7 +129,6 @@
             this.label16 = new System.Windows.Forms.Label();
             this.lbxResults2 = new System.Windows.Forms.ListBox();
             this.btnCopyStat = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.tabPage2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabVMs.SuspendLayout();
@@ -151,7 +142,7 @@
             this.btnGenerateReports.BackColor = System.Drawing.SystemColors.Control;
             this.btnGenerateReports.Image = ((System.Drawing.Image)(resources.GetObject("btnGenerateReports.Image")));
             this.btnGenerateReports.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnGenerateReports.Location = new System.Drawing.Point(12, 397);
+            this.btnGenerateReports.Location = new System.Drawing.Point(10, 397);
             this.btnGenerateReports.Name = "btnGenerateReports";
             this.btnGenerateReports.Size = new System.Drawing.Size(187, 45);
             this.btnGenerateReports.TabIndex = 13;
@@ -167,7 +158,7 @@
             this.btnEmptyLocalResults.ForeColor = System.Drawing.Color.Red;
             this.btnEmptyLocalResults.Image = ((System.Drawing.Image)(resources.GetObject("btnEmptyLocalResults.Image")));
             this.btnEmptyLocalResults.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnEmptyLocalResults.Location = new System.Drawing.Point(12, 448);
+            this.btnEmptyLocalResults.Location = new System.Drawing.Point(10, 448);
             this.btnEmptyLocalResults.Name = "btnEmptyLocalResults";
             this.btnEmptyLocalResults.Size = new System.Drawing.Size(290, 45);
             this.btnEmptyLocalResults.TabIndex = 13;
@@ -181,7 +172,7 @@
             this.btnDownloadResults.ForeColor = System.Drawing.Color.Black;
             this.btnDownloadResults.Image = ((System.Drawing.Image)(resources.GetObject("btnDownloadResults.Image")));
             this.btnDownloadResults.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDownloadResults.Location = new System.Drawing.Point(12, 343);
+            this.btnDownloadResults.Location = new System.Drawing.Point(10, 343);
             this.btnDownloadResults.Name = "btnDownloadResults";
             this.btnDownloadResults.Size = new System.Drawing.Size(187, 45);
             this.btnDownloadResults.TabIndex = 18;
@@ -196,7 +187,7 @@
             this.btnOpenLocalResultContainer.ForeColor = System.Drawing.Color.Black;
             this.btnOpenLocalResultContainer.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenLocalResultContainer.Image")));
             this.btnOpenLocalResultContainer.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOpenLocalResultContainer.Location = new System.Drawing.Point(199, 342);
+            this.btnOpenLocalResultContainer.Location = new System.Drawing.Point(197, 343);
             this.btnOpenLocalResultContainer.Name = "btnOpenLocalResultContainer";
             this.btnOpenLocalResultContainer.Size = new System.Drawing.Size(103, 45);
             this.btnOpenLocalResultContainer.TabIndex = 14;
@@ -220,7 +211,7 @@
             // lbStat
             // 
             this.lbStat.AutoSize = true;
-            this.lbStat.Location = new System.Drawing.Point(1014, 576);
+            this.lbStat.Location = new System.Drawing.Point(1012, 576);
             this.lbStat.Name = "lbStat";
             this.lbStat.Size = new System.Drawing.Size(43, 20);
             this.lbStat.TabIndex = 23;
@@ -232,7 +223,7 @@
             this.cheFailedOnly.Checked = true;
             this.cheFailedOnly.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cheFailedOnly.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cheFailedOnly.Location = new System.Drawing.Point(983, 342);
+            this.cheFailedOnly.Location = new System.Drawing.Point(978, 342);
             this.cheFailedOnly.Name = "cheFailedOnly";
             this.cheFailedOnly.Size = new System.Drawing.Size(105, 21);
             this.cheFailedOnly.TabIndex = 24;
@@ -242,12 +233,17 @@
             // 
             // toolTip1
             // 
+            this.toolTip1.AutomaticDelay = 200;
+            this.toolTip1.AutoPopDelay = 10000;
+            this.toolTip1.BackColor = System.Drawing.SystemColors.Highlight;
+            this.toolTip1.InitialDelay = 200;
+            this.toolTip1.ReshowDelay = 40;
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
             // lbInfo
             // 
             this.lbInfo.AutoSize = true;
-            this.lbInfo.Location = new System.Drawing.Point(14, 504);
+            this.lbInfo.Location = new System.Drawing.Point(12, 504);
             this.lbInfo.Name = "lbInfo";
             this.lbInfo.Size = new System.Drawing.Size(45, 20);
             this.lbInfo.TabIndex = 17;
@@ -257,7 +253,7 @@
             // 
             this.cheEnableTooltip.AutoSize = true;
             this.cheEnableTooltip.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(110)))), ((int)(((byte)(110)))));
-            this.cheEnableTooltip.Location = new System.Drawing.Point(15, 562);
+            this.cheEnableTooltip.Location = new System.Drawing.Point(13, 627);
             this.cheEnableTooltip.Name = "cheEnableTooltip";
             this.cheEnableTooltip.Size = new System.Drawing.Size(136, 24);
             this.cheEnableTooltip.TabIndex = 26;
@@ -271,7 +267,7 @@
             this.btnOpenBat.ForeColor = System.Drawing.Color.Black;
             this.btnOpenBat.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenBat.Image")));
             this.btnOpenBat.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOpenBat.Location = new System.Drawing.Point(980, 375);
+            this.btnOpenBat.Location = new System.Drawing.Point(978, 375);
             this.btnOpenBat.Name = "btnOpenBat";
             this.btnOpenBat.Size = new System.Drawing.Size(125, 45);
             this.btnOpenBat.TabIndex = 27;
@@ -286,7 +282,7 @@
             this.cheNotepadpp.Checked = true;
             this.cheNotepadpp.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cheNotepadpp.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cheNotepadpp.Location = new System.Drawing.Point(1092, 342);
+            this.cheNotepadpp.Location = new System.Drawing.Point(1093, 342);
             this.cheNotepadpp.Name = "cheNotepadpp";
             this.cheNotepadpp.Size = new System.Drawing.Size(104, 21);
             this.cheNotepadpp.TabIndex = 28;
@@ -297,7 +293,7 @@
             // 
             this.btnOpenSelectedResultFolder.BackColor = System.Drawing.Color.Transparent;
             this.btnOpenSelectedResultFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenSelectedResultFolder.Image")));
-            this.btnOpenSelectedResultFolder.Location = new System.Drawing.Point(1104, 426);
+            this.btnOpenSelectedResultFolder.Location = new System.Drawing.Point(1102, 426);
             this.btnOpenSelectedResultFolder.Name = "btnOpenSelectedResultFolder";
             this.btnOpenSelectedResultFolder.Size = new System.Drawing.Size(52, 45);
             this.btnOpenSelectedResultFolder.TabIndex = 29;
@@ -310,7 +306,7 @@
             this.btnOpenTest.ForeColor = System.Drawing.Color.Black;
             this.btnOpenTest.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenTest.Image")));
             this.btnOpenTest.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOpenTest.Location = new System.Drawing.Point(980, 477);
+            this.btnOpenTest.Location = new System.Drawing.Point(978, 477);
             this.btnOpenTest.Name = "btnOpenTest";
             this.btnOpenTest.Size = new System.Drawing.Size(125, 45);
             this.btnOpenTest.TabIndex = 30;
@@ -323,7 +319,7 @@
             // 
             this.btnOpenTestFolder.BackColor = System.Drawing.Color.Transparent;
             this.btnOpenTestFolder.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenTestFolder.Image")));
-            this.btnOpenTestFolder.Location = new System.Drawing.Point(1104, 477);
+            this.btnOpenTestFolder.Location = new System.Drawing.Point(1102, 477);
             this.btnOpenTestFolder.Name = "btnOpenTestFolder";
             this.btnOpenTestFolder.Size = new System.Drawing.Size(52, 45);
             this.btnOpenTestFolder.TabIndex = 31;
@@ -337,7 +333,7 @@
             this.btnOpenResult.ForeColor = System.Drawing.Color.Black;
             this.btnOpenResult.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenResult.Image")));
             this.btnOpenResult.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnOpenResult.Location = new System.Drawing.Point(980, 426);
+            this.btnOpenResult.Location = new System.Drawing.Point(978, 426);
             this.btnOpenResult.Name = "btnOpenResult";
             this.btnOpenResult.Size = new System.Drawing.Size(125, 45);
             this.btnOpenResult.TabIndex = 33;
@@ -351,7 +347,7 @@
             this.btnOpenRoot.BackColor = System.Drawing.SystemColors.Control;
             this.btnOpenRoot.ForeColor = System.Drawing.Color.Black;
             this.btnOpenRoot.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenRoot.Image")));
-            this.btnOpenRoot.Location = new System.Drawing.Point(250, 397);
+            this.btnOpenRoot.Location = new System.Drawing.Point(248, 397);
             this.btnOpenRoot.Name = "btnOpenRoot";
             this.btnOpenRoot.Size = new System.Drawing.Size(52, 45);
             this.btnOpenRoot.TabIndex = 34;
@@ -366,7 +362,7 @@
             // progressBar
             // 
             this.progressBar.Enabled = false;
-            this.progressBar.Location = new System.Drawing.Point(12, 527);
+            this.progressBar.Location = new System.Drawing.Point(10, 527);
             this.progressBar.MarqueeAnimationSpeed = 40;
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(290, 22);
@@ -387,7 +383,7 @@
             // btnCopyTestFolderPath
             // 
             this.btnCopyTestFolderPath.Image = ((System.Drawing.Image)(resources.GetObject("btnCopyTestFolderPath.Image")));
-            this.btnCopyTestFolderPath.Location = new System.Drawing.Point(1155, 477);
+            this.btnCopyTestFolderPath.Location = new System.Drawing.Point(1153, 477);
             this.btnCopyTestFolderPath.Name = "btnCopyTestFolderPath";
             this.btnCopyTestFolderPath.Size = new System.Drawing.Size(40, 45);
             this.btnCopyTestFolderPath.TabIndex = 36;
@@ -403,7 +399,7 @@
             // 
             this.lbCopied.AutoSize = true;
             this.lbCopied.ForeColor = System.Drawing.Color.Blue;
-            this.lbCopied.Location = new System.Drawing.Point(1067, 541);
+            this.lbCopied.Location = new System.Drawing.Point(1065, 541);
             this.lbCopied.Name = "lbCopied";
             this.lbCopied.Size = new System.Drawing.Size(63, 20);
             this.lbCopied.TabIndex = 37;
@@ -428,9 +424,7 @@
             this.tabPage2.Controls.Add(this.txtJustALabel2);
             this.tabPage2.Controls.Add(this.comFeature2);
             this.tabPage2.Controls.Add(this.txtRemoteTests2);
-            this.tabPage2.Controls.Add(this.txtRemoteResultsTo2);
             this.tabPage2.Controls.Add(this.txtRemoteRoof2);
-            this.tabPage2.Controls.Add(this.txtRemoteResultsFrom2);
             this.tabPage2.Controls.Add(this.txtRemoteBin2);
             this.tabPage2.Controls.Add(this.txtRemoteResults2);
             this.tabPage2.Controls.Add(this.label13);
@@ -438,8 +432,6 @@
             this.tabPage2.Controls.Add(this.label7);
             this.tabPage2.Controls.Add(this.label11);
             this.tabPage2.Controls.Add(this.label8);
-            this.tabPage2.Controls.Add(this.label10);
-            this.tabPage2.Controls.Add(this.label9);
             this.tabPage2.Location = new System.Drawing.Point(4, 29);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -453,7 +445,7 @@
             this.btnSetUIVarsFolder2.BackColor = System.Drawing.SystemColors.Control;
             this.btnSetUIVarsFolder2.ForeColor = System.Drawing.Color.Black;
             this.btnSetUIVarsFolder2.Image = ((System.Drawing.Image)(resources.GetObject("btnSetUIVarsFolder2.Image")));
-            this.btnSetUIVarsFolder2.Location = new System.Drawing.Point(1130, 196);
+            this.btnSetUIVarsFolder2.Location = new System.Drawing.Point(1128, 196);
             this.btnSetUIVarsFolder2.Name = "btnSetUIVarsFolder2";
             this.btnSetUIVarsFolder2.Size = new System.Drawing.Size(52, 61);
             this.btnSetUIVarsFolder2.TabIndex = 54;
@@ -466,7 +458,7 @@
             this.btnRoofPropertiesFolder2.BackColor = System.Drawing.SystemColors.Control;
             this.btnRoofPropertiesFolder2.ForeColor = System.Drawing.Color.Black;
             this.btnRoofPropertiesFolder2.Image = ((System.Drawing.Image)(resources.GetObject("btnRoofPropertiesFolder2.Image")));
-            this.btnRoofPropertiesFolder2.Location = new System.Drawing.Point(1130, 132);
+            this.btnRoofPropertiesFolder2.Location = new System.Drawing.Point(1128, 132);
             this.btnRoofPropertiesFolder2.Name = "btnRoofPropertiesFolder2";
             this.btnRoofPropertiesFolder2.Size = new System.Drawing.Size(52, 61);
             this.btnRoofPropertiesFolder2.TabIndex = 51;
@@ -480,7 +472,7 @@
             this.btnSetUIVars2.ForeColor = System.Drawing.Color.Black;
             this.btnSetUIVars2.Image = ((System.Drawing.Image)(resources.GetObject("btnSetUIVars2.Image")));
             this.btnSetUIVars2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSetUIVars2.Location = new System.Drawing.Point(944, 196);
+            this.btnSetUIVars2.Location = new System.Drawing.Point(942, 196);
             this.btnSetUIVars2.Name = "btnSetUIVars2";
             this.btnSetUIVars2.Size = new System.Drawing.Size(187, 61);
             this.btnSetUIVars2.TabIndex = 53;
@@ -495,7 +487,7 @@
             this.btnRoofProperties2.ForeColor = System.Drawing.Color.Black;
             this.btnRoofProperties2.Image = ((System.Drawing.Image)(resources.GetObject("btnRoofProperties2.Image")));
             this.btnRoofProperties2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnRoofProperties2.Location = new System.Drawing.Point(944, 132);
+            this.btnRoofProperties2.Location = new System.Drawing.Point(942, 132);
             this.btnRoofProperties2.Name = "btnRoofProperties2";
             this.btnRoofProperties2.Size = new System.Drawing.Size(187, 61);
             this.btnRoofProperties2.TabIndex = 52;
@@ -509,7 +501,7 @@
             this.btnCsv2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCsv2.Image = ((System.Drawing.Image)(resources.GetObject("btnCsv2.Image")));
             this.btnCsv2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCsv2.Location = new System.Drawing.Point(784, 132);
+            this.btnCsv2.Location = new System.Drawing.Point(782, 131);
             this.btnCsv2.Name = "btnCsv2";
             this.btnCsv2.Size = new System.Drawing.Size(145, 40);
             this.btnCsv2.TabIndex = 50;
@@ -523,7 +515,7 @@
             this.btnXml2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXml2.Image = ((System.Drawing.Image)(resources.GetObject("btnXml2.Image")));
             this.btnXml2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnXml2.Location = new System.Drawing.Point(784, 172);
+            this.btnXml2.Location = new System.Drawing.Point(782, 171);
             this.btnXml2.Name = "btnXml2";
             this.btnXml2.Size = new System.Drawing.Size(145, 40);
             this.btnXml2.TabIndex = 49;
@@ -537,7 +529,7 @@
             this.btnXmlGold2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXmlGold2.Image = ((System.Drawing.Image)(resources.GetObject("btnXmlGold2.Image")));
             this.btnXmlGold2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnXmlGold2.Location = new System.Drawing.Point(784, 90);
+            this.btnXmlGold2.Location = new System.Drawing.Point(782, 90);
             this.btnXmlGold2.Name = "btnXmlGold2";
             this.btnXmlGold2.Size = new System.Drawing.Size(145, 40);
             this.btnXmlGold2.TabIndex = 48;
@@ -551,7 +543,7 @@
             this.btnDownloads2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDownloads2.Image = ((System.Drawing.Image)(resources.GetObject("btnDownloads2.Image")));
             this.btnDownloads2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDownloads2.Location = new System.Drawing.Point(784, 50);
+            this.btnDownloads2.Location = new System.Drawing.Point(782, 50);
             this.btnDownloads2.Name = "btnDownloads2";
             this.btnDownloads2.Size = new System.Drawing.Size(145, 40);
             this.btnDownloads2.TabIndex = 47;
@@ -565,7 +557,7 @@
             this.btnCsvGold2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCsvGold2.Image = ((System.Drawing.Image)(resources.GetObject("btnCsvGold2.Image")));
             this.btnCsvGold2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCsvGold2.Location = new System.Drawing.Point(784, 10);
+            this.btnCsvGold2.Location = new System.Drawing.Point(782, 10);
             this.btnCsvGold2.Name = "btnCsvGold2";
             this.btnCsvGold2.Size = new System.Drawing.Size(145, 40);
             this.btnCsvGold2.TabIndex = 46;
@@ -578,7 +570,7 @@
             // 
             this.btnImport2.Image = ((System.Drawing.Image)(resources.GetObject("btnImport2.Image")));
             this.btnImport2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnImport2.Location = new System.Drawing.Point(685, 132);
+            this.btnImport2.Location = new System.Drawing.Point(683, 131);
             this.btnImport2.Name = "btnImport2";
             this.btnImport2.Size = new System.Drawing.Size(100, 80);
             this.btnImport2.TabIndex = 45;
@@ -591,7 +583,7 @@
             // 
             this.btnExport2.Image = ((System.Drawing.Image)(resources.GetObject("btnExport2.Image")));
             this.btnExport2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnExport2.Location = new System.Drawing.Point(685, 10);
+            this.btnExport2.Location = new System.Drawing.Point(683, 10);
             this.btnExport2.Name = "btnExport2";
             this.btnExport2.Size = new System.Drawing.Size(100, 120);
             this.btnExport2.TabIndex = 44;
@@ -604,7 +596,7 @@
             // 
             this.btnSql2.Image = ((System.Drawing.Image)(resources.GetObject("btnSql2.Image")));
             this.btnSql2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSql2.Location = new System.Drawing.Point(585, 213);
+            this.btnSql2.Location = new System.Drawing.Point(583, 213);
             this.btnSql2.Name = "btnSql2";
             this.btnSql2.Size = new System.Drawing.Size(100, 46);
             this.btnSql2.TabIndex = 42;
@@ -617,7 +609,7 @@
             // 
             this.btnData2.Image = ((System.Drawing.Image)(resources.GetObject("btnData2.Image")));
             this.btnData2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnData2.Location = new System.Drawing.Point(585, 10);
+            this.btnData2.Location = new System.Drawing.Point(583, 10);
             this.btnData2.Name = "btnData2";
             this.btnData2.Size = new System.Drawing.Size(100, 202);
             this.btnData2.TabIndex = 43;
@@ -628,9 +620,9 @@
             // 
             // txtJustALabel2
             // 
-            this.txtJustALabel2.Location = new System.Drawing.Point(1062, 1);
+            this.txtJustALabel2.Location = new System.Drawing.Point(942, 1);
             this.txtJustALabel2.Name = "txtJustALabel2";
-            this.txtJustALabel2.Size = new System.Drawing.Size(120, 26);
+            this.txtJustALabel2.Size = new System.Drawing.Size(238, 26);
             this.txtJustALabel2.TabIndex = 41;
             // 
             // comFeature2
@@ -638,7 +630,7 @@
             this.comFeature2.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.comFeature2.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comFeature2.FormattingEnabled = true;
-            this.comFeature2.Location = new System.Drawing.Point(122, 47);
+            this.comFeature2.Location = new System.Drawing.Point(120, 65);
             this.comFeature2.Name = "comFeature2";
             this.comFeature2.Size = new System.Drawing.Size(439, 28);
             this.comFeature2.TabIndex = 23;
@@ -647,38 +639,24 @@
             // 
             // txtRemoteTests2
             // 
-            this.txtRemoteTests2.Location = new System.Drawing.Point(122, 121);
+            this.txtRemoteTests2.Location = new System.Drawing.Point(120, 175);
             this.txtRemoteTests2.Name = "txtRemoteTests2";
             this.txtRemoteTests2.Size = new System.Drawing.Size(439, 26);
             this.txtRemoteTests2.TabIndex = 9;
             this.txtRemoteTests2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txt2Open_MouseDoubleClick);
             // 
-            // txtRemoteResultsTo2
-            // 
-            this.txtRemoteResultsTo2.Location = new System.Drawing.Point(122, 229);
-            this.txtRemoteResultsTo2.Name = "txtRemoteResultsTo2";
-            this.txtRemoteResultsTo2.Size = new System.Drawing.Size(439, 26);
-            this.txtRemoteResultsTo2.TabIndex = 7;
-            // 
             // txtRemoteRoof2
             // 
-            this.txtRemoteRoof2.Location = new System.Drawing.Point(122, 11);
+            this.txtRemoteRoof2.Location = new System.Drawing.Point(120, 11);
             this.txtRemoteRoof2.Name = "txtRemoteRoof2";
             this.txtRemoteRoof2.Size = new System.Drawing.Size(439, 26);
             this.txtRemoteRoof2.TabIndex = 3;
             this.txtRemoteRoof2.TextChanged += new System.EventHandler(this.txtRemoteRoof_TextChanged);
             this.txtRemoteRoof2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txt2Open_MouseDoubleClick);
             // 
-            // txtRemoteResultsFrom2
-            // 
-            this.txtRemoteResultsFrom2.Location = new System.Drawing.Point(122, 193);
-            this.txtRemoteResultsFrom2.Name = "txtRemoteResultsFrom2";
-            this.txtRemoteResultsFrom2.Size = new System.Drawing.Size(439, 26);
-            this.txtRemoteResultsFrom2.TabIndex = 7;
-            // 
             // txtRemoteBin2
             // 
-            this.txtRemoteBin2.Location = new System.Drawing.Point(122, 85);
+            this.txtRemoteBin2.Location = new System.Drawing.Point(120, 121);
             this.txtRemoteBin2.Name = "txtRemoteBin2";
             this.txtRemoteBin2.Size = new System.Drawing.Size(439, 26);
             this.txtRemoteBin2.TabIndex = 5;
@@ -686,7 +664,7 @@
             // 
             // txtRemoteResults2
             // 
-            this.txtRemoteResults2.Location = new System.Drawing.Point(122, 157);
+            this.txtRemoteResults2.Location = new System.Drawing.Point(120, 229);
             this.txtRemoteResults2.Name = "txtRemoteResults2";
             this.txtRemoteResults2.Size = new System.Drawing.Size(439, 26);
             this.txtRemoteResults2.TabIndex = 7;
@@ -695,7 +673,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(36, 50);
+            this.label13.Location = new System.Drawing.Point(34, 69);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(73, 20);
             this.label13.TabIndex = 17;
@@ -704,7 +682,7 @@
             // lbRoof2
             // 
             this.lbRoof2.AutoSize = true;
-            this.lbRoof2.Location = new System.Drawing.Point(57, 14);
+            this.lbRoof2.Location = new System.Drawing.Point(55, 14);
             this.lbRoof2.Name = "lbRoof2";
             this.lbRoof2.Size = new System.Drawing.Size(52, 20);
             this.lbRoof2.TabIndex = 15;
@@ -713,7 +691,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(53, 122);
+            this.label7.Location = new System.Drawing.Point(51, 178);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(56, 20);
             this.label7.TabIndex = 16;
@@ -722,7 +700,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(69, 86);
+            this.label11.Location = new System.Drawing.Point(67, 124);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(40, 20);
             this.label11.TabIndex = 16;
@@ -731,29 +709,11 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(38, 158);
+            this.label8.Location = new System.Drawing.Point(36, 232);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(71, 20);
             this.label8.TabIndex = 16;
             this.label8.Text = "Results :";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(5, 194);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(104, 20);
-            this.label10.TabIndex = 16;
-            this.label10.Text = "Result From :";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(24, 230);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(85, 20);
-            this.label9.TabIndex = 16;
-            this.label9.Text = "Result To :";
             // 
             // tabPage1
             // 
@@ -772,9 +732,7 @@
             this.tabPage1.Controls.Add(this.btnData1);
             this.tabPage1.Controls.Add(this.comFeature1);
             this.tabPage1.Controls.Add(this.label14);
-            this.tabPage1.Controls.Add(this.txtRemoteResultsTo1);
             this.tabPage1.Controls.Add(this.txtRemoteRoof1);
-            this.tabPage1.Controls.Add(this.txtRemoteResultsFrom1);
             this.tabPage1.Controls.Add(this.txtRemoteBin1);
             this.tabPage1.Controls.Add(this.txtRemoteTests1);
             this.tabPage1.Controls.Add(this.txtRemoteResults1);
@@ -783,8 +741,6 @@
             this.tabPage1.Controls.Add(this.lbRoof1);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -798,7 +754,7 @@
             this.btnSetUIVarsFolder1.BackColor = System.Drawing.SystemColors.Control;
             this.btnSetUIVarsFolder1.ForeColor = System.Drawing.Color.Black;
             this.btnSetUIVarsFolder1.Image = ((System.Drawing.Image)(resources.GetObject("btnSetUIVarsFolder1.Image")));
-            this.btnSetUIVarsFolder1.Location = new System.Drawing.Point(1130, 196);
+            this.btnSetUIVarsFolder1.Location = new System.Drawing.Point(1128, 196);
             this.btnSetUIVarsFolder1.Name = "btnSetUIVarsFolder1";
             this.btnSetUIVarsFolder1.Size = new System.Drawing.Size(52, 61);
             this.btnSetUIVarsFolder1.TabIndex = 40;
@@ -811,7 +767,7 @@
             this.btnRoofPropertiesFolder1.BackColor = System.Drawing.SystemColors.Control;
             this.btnRoofPropertiesFolder1.ForeColor = System.Drawing.Color.Black;
             this.btnRoofPropertiesFolder1.Image = ((System.Drawing.Image)(resources.GetObject("btnRoofPropertiesFolder1.Image")));
-            this.btnRoofPropertiesFolder1.Location = new System.Drawing.Point(1130, 132);
+            this.btnRoofPropertiesFolder1.Location = new System.Drawing.Point(1128, 132);
             this.btnRoofPropertiesFolder1.Name = "btnRoofPropertiesFolder1";
             this.btnRoofPropertiesFolder1.Size = new System.Drawing.Size(52, 61);
             this.btnRoofPropertiesFolder1.TabIndex = 38;
@@ -825,7 +781,7 @@
             this.btnSetUIVars1.ForeColor = System.Drawing.Color.Black;
             this.btnSetUIVars1.Image = ((System.Drawing.Image)(resources.GetObject("btnSetUIVars1.Image")));
             this.btnSetUIVars1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSetUIVars1.Location = new System.Drawing.Point(944, 196);
+            this.btnSetUIVars1.Location = new System.Drawing.Point(942, 196);
             this.btnSetUIVars1.Name = "btnSetUIVars1";
             this.btnSetUIVars1.Size = new System.Drawing.Size(187, 61);
             this.btnSetUIVars1.TabIndex = 39;
@@ -840,7 +796,7 @@
             this.btnRoofProperties1.ForeColor = System.Drawing.Color.Black;
             this.btnRoofProperties1.Image = ((System.Drawing.Image)(resources.GetObject("btnRoofProperties1.Image")));
             this.btnRoofProperties1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnRoofProperties1.Location = new System.Drawing.Point(944, 132);
+            this.btnRoofProperties1.Location = new System.Drawing.Point(942, 132);
             this.btnRoofProperties1.Name = "btnRoofProperties1";
             this.btnRoofProperties1.Size = new System.Drawing.Size(187, 61);
             this.btnRoofProperties1.TabIndex = 38;
@@ -854,7 +810,7 @@
             this.btnCsv1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCsv1.Image = ((System.Drawing.Image)(resources.GetObject("btnCsv1.Image")));
             this.btnCsv1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCsv1.Location = new System.Drawing.Point(784, 132);
+            this.btnCsv1.Location = new System.Drawing.Point(782, 131);
             this.btnCsv1.Name = "btnCsv1";
             this.btnCsv1.Size = new System.Drawing.Size(145, 40);
             this.btnCsv1.TabIndex = 30;
@@ -868,7 +824,7 @@
             this.btnXml1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXml1.Image = ((System.Drawing.Image)(resources.GetObject("btnXml1.Image")));
             this.btnXml1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnXml1.Location = new System.Drawing.Point(784, 172);
+            this.btnXml1.Location = new System.Drawing.Point(782, 171);
             this.btnXml1.Name = "btnXml1";
             this.btnXml1.Size = new System.Drawing.Size(145, 40);
             this.btnXml1.TabIndex = 29;
@@ -882,7 +838,7 @@
             this.btnXmlGold1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXmlGold1.Image = ((System.Drawing.Image)(resources.GetObject("btnXmlGold1.Image")));
             this.btnXmlGold1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnXmlGold1.Location = new System.Drawing.Point(784, 90);
+            this.btnXmlGold1.Location = new System.Drawing.Point(782, 90);
             this.btnXmlGold1.Name = "btnXmlGold1";
             this.btnXmlGold1.Size = new System.Drawing.Size(145, 40);
             this.btnXmlGold1.TabIndex = 28;
@@ -896,7 +852,7 @@
             this.btnDownloads1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDownloads1.Image = ((System.Drawing.Image)(resources.GetObject("btnDownloads1.Image")));
             this.btnDownloads1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnDownloads1.Location = new System.Drawing.Point(784, 50);
+            this.btnDownloads1.Location = new System.Drawing.Point(782, 50);
             this.btnDownloads1.Name = "btnDownloads1";
             this.btnDownloads1.Size = new System.Drawing.Size(145, 40);
             this.btnDownloads1.TabIndex = 27;
@@ -910,7 +866,7 @@
             this.btnCsvGold1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCsvGold1.Image = ((System.Drawing.Image)(resources.GetObject("btnCsvGold1.Image")));
             this.btnCsvGold1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnCsvGold1.Location = new System.Drawing.Point(784, 10);
+            this.btnCsvGold1.Location = new System.Drawing.Point(782, 10);
             this.btnCsvGold1.Name = "btnCsvGold1";
             this.btnCsvGold1.Size = new System.Drawing.Size(145, 40);
             this.btnCsvGold1.TabIndex = 26;
@@ -923,7 +879,7 @@
             // 
             this.btnImport1.Image = ((System.Drawing.Image)(resources.GetObject("btnImport1.Image")));
             this.btnImport1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnImport1.Location = new System.Drawing.Point(685, 132);
+            this.btnImport1.Location = new System.Drawing.Point(683, 131);
             this.btnImport1.Name = "btnImport1";
             this.btnImport1.Size = new System.Drawing.Size(100, 80);
             this.btnImport1.TabIndex = 25;
@@ -936,7 +892,7 @@
             // 
             this.btnExport1.Image = ((System.Drawing.Image)(resources.GetObject("btnExport1.Image")));
             this.btnExport1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnExport1.Location = new System.Drawing.Point(685, 10);
+            this.btnExport1.Location = new System.Drawing.Point(683, 10);
             this.btnExport1.Name = "btnExport1";
             this.btnExport1.Size = new System.Drawing.Size(100, 120);
             this.btnExport1.TabIndex = 24;
@@ -949,7 +905,7 @@
             // 
             this.btnSql1.Image = ((System.Drawing.Image)(resources.GetObject("btnSql1.Image")));
             this.btnSql1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSql1.Location = new System.Drawing.Point(585, 213);
+            this.btnSql1.Location = new System.Drawing.Point(583, 213);
             this.btnSql1.Name = "btnSql1";
             this.btnSql1.Size = new System.Drawing.Size(100, 46);
             this.btnSql1.TabIndex = 23;
@@ -962,7 +918,7 @@
             // 
             this.btnData1.Image = ((System.Drawing.Image)(resources.GetObject("btnData1.Image")));
             this.btnData1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnData1.Location = new System.Drawing.Point(585, 10);
+            this.btnData1.Location = new System.Drawing.Point(583, 10);
             this.btnData1.Name = "btnData1";
             this.btnData1.Size = new System.Drawing.Size(100, 202);
             this.btnData1.TabIndex = 23;
@@ -976,7 +932,7 @@
             this.comFeature1.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.comFeature1.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comFeature1.FormattingEnabled = true;
-            this.comFeature1.Location = new System.Drawing.Point(122, 47);
+            this.comFeature1.Location = new System.Drawing.Point(120, 65);
             this.comFeature1.Name = "comFeature1";
             this.comFeature1.Size = new System.Drawing.Size(439, 28);
             this.comFeature1.TabIndex = 22;
@@ -986,22 +942,15 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(36, 50);
+            this.label14.Location = new System.Drawing.Point(34, 69);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(73, 20);
             this.label14.TabIndex = 20;
             this.label14.Text = "Feature :";
             // 
-            // txtRemoteResultsTo1
-            // 
-            this.txtRemoteResultsTo1.Location = new System.Drawing.Point(122, 229);
-            this.txtRemoteResultsTo1.Name = "txtRemoteResultsTo1";
-            this.txtRemoteResultsTo1.Size = new System.Drawing.Size(439, 26);
-            this.txtRemoteResultsTo1.TabIndex = 7;
-            // 
             // txtRemoteRoof1
             // 
-            this.txtRemoteRoof1.Location = new System.Drawing.Point(122, 11);
+            this.txtRemoteRoof1.Location = new System.Drawing.Point(120, 11);
             this.txtRemoteRoof1.Name = "txtRemoteRoof1";
             this.txtRemoteRoof1.Size = new System.Drawing.Size(439, 26);
             this.txtRemoteRoof1.TabIndex = 3;
@@ -1009,16 +958,9 @@
             this.txtRemoteRoof1.TextChanged += new System.EventHandler(this.txtRemoteRoof_TextChanged);
             this.txtRemoteRoof1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txt2Open_MouseDoubleClick);
             // 
-            // txtRemoteResultsFrom1
-            // 
-            this.txtRemoteResultsFrom1.Location = new System.Drawing.Point(122, 193);
-            this.txtRemoteResultsFrom1.Name = "txtRemoteResultsFrom1";
-            this.txtRemoteResultsFrom1.Size = new System.Drawing.Size(439, 26);
-            this.txtRemoteResultsFrom1.TabIndex = 7;
-            // 
             // txtRemoteBin1
             // 
-            this.txtRemoteBin1.Location = new System.Drawing.Point(122, 85);
+            this.txtRemoteBin1.Location = new System.Drawing.Point(120, 121);
             this.txtRemoteBin1.Name = "txtRemoteBin1";
             this.txtRemoteBin1.Size = new System.Drawing.Size(439, 26);
             this.txtRemoteBin1.TabIndex = 5;
@@ -1026,7 +968,7 @@
             // 
             // txtRemoteTests1
             // 
-            this.txtRemoteTests1.Location = new System.Drawing.Point(122, 121);
+            this.txtRemoteTests1.Location = new System.Drawing.Point(120, 175);
             this.txtRemoteTests1.Name = "txtRemoteTests1";
             this.txtRemoteTests1.Size = new System.Drawing.Size(439, 26);
             this.txtRemoteTests1.TabIndex = 9;
@@ -1034,7 +976,7 @@
             // 
             // txtRemoteResults1
             // 
-            this.txtRemoteResults1.Location = new System.Drawing.Point(122, 157);
+            this.txtRemoteResults1.Location = new System.Drawing.Point(120, 229);
             this.txtRemoteResults1.Name = "txtRemoteResults1";
             this.txtRemoteResults1.Size = new System.Drawing.Size(439, 26);
             this.txtRemoteResults1.TabIndex = 7;
@@ -1042,15 +984,15 @@
             // 
             // txtJustALabel1
             // 
-            this.txtJustALabel1.Location = new System.Drawing.Point(1062, 2);
+            this.txtJustALabel1.Location = new System.Drawing.Point(942, 2);
             this.txtJustALabel1.Name = "txtJustALabel1";
-            this.txtJustALabel1.Size = new System.Drawing.Size(120, 26);
+            this.txtJustALabel1.Size = new System.Drawing.Size(238, 26);
             this.txtJustALabel1.TabIndex = 21;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(53, 122);
+            this.label3.Location = new System.Drawing.Point(51, 178);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 20);
             this.label3.TabIndex = 16;
@@ -1059,7 +1001,7 @@
             // lbRoof1
             // 
             this.lbRoof1.AutoSize = true;
-            this.lbRoof1.Location = new System.Drawing.Point(57, 14);
+            this.lbRoof1.Location = new System.Drawing.Point(55, 14);
             this.lbRoof1.Name = "lbRoof1";
             this.lbRoof1.Size = new System.Drawing.Size(52, 20);
             this.lbRoof1.TabIndex = 15;
@@ -1068,7 +1010,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(38, 158);
+            this.label4.Location = new System.Drawing.Point(36, 232);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(71, 20);
             this.label4.TabIndex = 16;
@@ -1077,35 +1019,17 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(69, 86);
+            this.label2.Location = new System.Drawing.Point(67, 124);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 20);
             this.label2.TabIndex = 16;
             this.label2.Text = "Bin :";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(24, 230);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(85, 20);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "Result To :";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(5, 194);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(104, 20);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "Result From :";
-            // 
             // tabVMs
             // 
             this.tabVMs.Controls.Add(this.tabPage1);
             this.tabVMs.Controls.Add(this.tabPage2);
-            this.tabVMs.Location = new System.Drawing.Point(12, 12);
+            this.tabVMs.Location = new System.Drawing.Point(10, 12);
             this.tabVMs.Name = "tabVMs";
             this.tabVMs.SelectedIndex = 0;
             this.tabVMs.Size = new System.Drawing.Size(1195, 303);
@@ -1116,7 +1040,7 @@
             // 
             this.btnOpenRemoteBin.BackColor = System.Drawing.Color.Transparent;
             this.btnOpenRemoteBin.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenRemoteBin.Image")));
-            this.btnOpenRemoteBin.Location = new System.Drawing.Point(1104, 375);
+            this.btnOpenRemoteBin.Location = new System.Drawing.Point(1102, 375);
             this.btnOpenRemoteBin.Name = "btnOpenRemoteBin";
             this.btnOpenRemoteBin.Size = new System.Drawing.Size(52, 45);
             this.btnOpenRemoteBin.TabIndex = 42;
@@ -1129,7 +1053,7 @@
             this.btnOpenReport.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.btnOpenReport.ForeColor = System.Drawing.Color.Black;
             this.btnOpenReport.Image = ((System.Drawing.Image)(resources.GetObject("btnOpenReport.Image")));
-            this.btnOpenReport.Location = new System.Drawing.Point(199, 397);
+            this.btnOpenReport.Location = new System.Drawing.Point(197, 397);
             this.btnOpenReport.Name = "btnOpenReport";
             this.btnOpenReport.Size = new System.Drawing.Size(52, 45);
             this.btnOpenReport.TabIndex = 43;
@@ -1146,7 +1070,7 @@
             // 
             this.tabLists.Controls.Add(this.tabList1);
             this.tabLists.Controls.Add(this.tabList2);
-            this.tabLists.Location = new System.Drawing.Point(306, 321);
+            this.tabLists.Location = new System.Drawing.Point(304, 321);
             this.tabLists.Name = "tabLists";
             this.tabLists.SelectedIndex = 0;
             this.tabLists.Size = new System.Drawing.Size(671, 334);
@@ -1176,7 +1100,7 @@
             // 
             this.cheExact1.AutoSize = true;
             this.cheExact1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cheExact1.Location = new System.Drawing.Point(567, 267);
+            this.cheExact1.Location = new System.Drawing.Point(572, 262);
             this.cheExact1.Name = "cheExact1";
             this.cheExact1.Size = new System.Drawing.Size(68, 21);
             this.cheExact1.TabIndex = 46;
@@ -1187,7 +1111,7 @@
             // 
             this.lbFilterFound1.AutoSize = true;
             this.lbFilterFound1.ForeColor = System.Drawing.Color.Blue;
-            this.lbFilterFound1.Location = new System.Drawing.Point(378, 265);
+            this.lbFilterFound1.Location = new System.Drawing.Point(383, 262);
             this.lbFilterFound1.Name = "lbFilterFound1";
             this.lbFilterFound1.Size = new System.Drawing.Size(48, 20);
             this.lbFilterFound1.TabIndex = 60;
@@ -1198,7 +1122,7 @@
             // 
             this.lbFilterNotFound1.AutoSize = true;
             this.lbFilterNotFound1.ForeColor = System.Drawing.Color.Red;
-            this.lbFilterNotFound1.Location = new System.Drawing.Point(378, 265);
+            this.lbFilterNotFound1.Location = new System.Drawing.Point(383, 262);
             this.lbFilterNotFound1.Name = "lbFilterNotFound1";
             this.lbFilterNotFound1.Size = new System.Drawing.Size(81, 20);
             this.lbFilterNotFound1.TabIndex = 59;
@@ -1209,7 +1133,7 @@
             // 
             this.btnFilterPrevious1.BackColor = System.Drawing.Color.Transparent;
             this.btnFilterPrevious1.Enabled = false;
-            this.btnFilterPrevious1.Location = new System.Drawing.Point(465, 258);
+            this.btnFilterPrevious1.Location = new System.Drawing.Point(470, 254);
             this.btnFilterPrevious1.Name = "btnFilterPrevious1";
             this.btnFilterPrevious1.Size = new System.Drawing.Size(40, 36);
             this.btnFilterPrevious1.TabIndex = 50;
@@ -1221,7 +1145,7 @@
             // 
             this.btnFilterNext1.BackColor = System.Drawing.Color.Transparent;
             this.btnFilterNext1.Enabled = false;
-            this.btnFilterNext1.Location = new System.Drawing.Point(511, 258);
+            this.btnFilterNext1.Location = new System.Drawing.Point(516, 254);
             this.btnFilterNext1.Name = "btnFilterNext1";
             this.btnFilterNext1.Size = new System.Drawing.Size(40, 36);
             this.btnFilterNext1.TabIndex = 49;
@@ -1232,7 +1156,7 @@
             // btnFilterGo1
             // 
             this.btnFilterGo1.BackColor = System.Drawing.Color.Transparent;
-            this.btnFilterGo1.Location = new System.Drawing.Point(323, 257);
+            this.btnFilterGo1.Location = new System.Drawing.Point(328, 254);
             this.btnFilterGo1.Name = "btnFilterGo1";
             this.btnFilterGo1.Size = new System.Drawing.Size(52, 36);
             this.btnFilterGo1.TabIndex = 48;
@@ -1242,7 +1166,7 @@
             // 
             // txtFilter1
             // 
-            this.txtFilter1.Location = new System.Drawing.Point(49, 262);
+            this.txtFilter1.Location = new System.Drawing.Point(54, 259);
             this.txtFilter1.Name = "txtFilter1";
             this.txtFilter1.Size = new System.Drawing.Size(270, 26);
             this.txtFilter1.TabIndex = 47;
@@ -1252,7 +1176,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(0, 265);
+            this.label1.Location = new System.Drawing.Point(5, 262);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(48, 20);
             this.label1.TabIndex = 46;
@@ -1281,7 +1205,7 @@
             // 
             this.cheExact2.AutoSize = true;
             this.cheExact2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cheExact2.Location = new System.Drawing.Point(567, 266);
+            this.cheExact2.Location = new System.Drawing.Point(572, 262);
             this.cheExact2.Name = "cheExact2";
             this.cheExact2.Size = new System.Drawing.Size(68, 21);
             this.cheExact2.TabIndex = 59;
@@ -1292,7 +1216,7 @@
             // 
             this.lbFilterFound2.AutoSize = true;
             this.lbFilterFound2.ForeColor = System.Drawing.Color.Blue;
-            this.lbFilterFound2.Location = new System.Drawing.Point(377, 267);
+            this.lbFilterFound2.Location = new System.Drawing.Point(383, 262);
             this.lbFilterFound2.Name = "lbFilterFound2";
             this.lbFilterFound2.Size = new System.Drawing.Size(48, 20);
             this.lbFilterFound2.TabIndex = 58;
@@ -1303,7 +1227,7 @@
             // 
             this.lbFilterNotFound2.AutoSize = true;
             this.lbFilterNotFound2.ForeColor = System.Drawing.Color.Red;
-            this.lbFilterNotFound2.Location = new System.Drawing.Point(377, 267);
+            this.lbFilterNotFound2.Location = new System.Drawing.Point(383, 262);
             this.lbFilterNotFound2.Name = "lbFilterNotFound2";
             this.lbFilterNotFound2.Size = new System.Drawing.Size(81, 20);
             this.lbFilterNotFound2.TabIndex = 46;
@@ -1314,7 +1238,7 @@
             // 
             this.btnFilterPrevious2.BackColor = System.Drawing.Color.Transparent;
             this.btnFilterPrevious2.Enabled = false;
-            this.btnFilterPrevious2.Location = new System.Drawing.Point(473, 257);
+            this.btnFilterPrevious2.Location = new System.Drawing.Point(470, 254);
             this.btnFilterPrevious2.Name = "btnFilterPrevious2";
             this.btnFilterPrevious2.Size = new System.Drawing.Size(40, 36);
             this.btnFilterPrevious2.TabIndex = 56;
@@ -1326,7 +1250,7 @@
             // 
             this.btnFilterNext2.BackColor = System.Drawing.Color.Transparent;
             this.btnFilterNext2.Enabled = false;
-            this.btnFilterNext2.Location = new System.Drawing.Point(519, 257);
+            this.btnFilterNext2.Location = new System.Drawing.Point(516, 254);
             this.btnFilterNext2.Name = "btnFilterNext2";
             this.btnFilterNext2.Size = new System.Drawing.Size(40, 36);
             this.btnFilterNext2.TabIndex = 55;
@@ -1337,7 +1261,7 @@
             // btnFilterGo2
             // 
             this.btnFilterGo2.BackColor = System.Drawing.Color.Transparent;
-            this.btnFilterGo2.Location = new System.Drawing.Point(323, 257);
+            this.btnFilterGo2.Location = new System.Drawing.Point(328, 254);
             this.btnFilterGo2.Name = "btnFilterGo2";
             this.btnFilterGo2.Size = new System.Drawing.Size(52, 36);
             this.btnFilterGo2.TabIndex = 54;
@@ -1347,7 +1271,7 @@
             // 
             // txtFilter2
             // 
-            this.txtFilter2.Location = new System.Drawing.Point(49, 262);
+            this.txtFilter2.Location = new System.Drawing.Point(54, 259);
             this.txtFilter2.Name = "txtFilter2";
             this.txtFilter2.Size = new System.Drawing.Size(270, 26);
             this.txtFilter2.TabIndex = 53;
@@ -1357,7 +1281,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(0, 265);
+            this.label16.Location = new System.Drawing.Point(5, 262);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(48, 20);
             this.label16.TabIndex = 52;
@@ -1379,22 +1303,12 @@
             // btnCopyStat
             // 
             this.btnCopyStat.Image = ((System.Drawing.Image)(resources.GetObject("btnCopyStat.Image")));
-            this.btnCopyStat.Location = new System.Drawing.Point(981, 566);
+            this.btnCopyStat.Location = new System.Drawing.Point(979, 566);
             this.btnCopyStat.Name = "btnCopyStat";
             this.btnCopyStat.Size = new System.Drawing.Size(34, 40);
             this.btnCopyStat.TabIndex = 45;
             this.btnCopyStat.UseVisualStyleBackColor = true;
             this.btnCopyStat.Click += new System.EventHandler(this.btnCopyStat_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(1128, 617);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 45);
-            this.button1.TabIndex = 46;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // xReporter
             // 
@@ -1402,7 +1316,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(1206, 663);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnCopyStat);
             this.Controls.Add(this.lbCopied);
             this.Controls.Add(this.tabLists);
@@ -1473,9 +1386,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ComboBox comFeature2;
         private System.Windows.Forms.TextBox txtRemoteTests2;
-        private System.Windows.Forms.TextBox txtRemoteResultsTo2;
         private System.Windows.Forms.TextBox txtRemoteRoof2;
-        private System.Windows.Forms.TextBox txtRemoteResultsFrom2;
         private System.Windows.Forms.TextBox txtRemoteBin2;
         private System.Windows.Forms.TextBox txtRemoteResults2;
         private System.Windows.Forms.Label label13;
@@ -1483,15 +1394,11 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button btnData1;
         private System.Windows.Forms.ComboBox comFeature1;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox txtRemoteResultsTo1;
         private System.Windows.Forms.TextBox txtRemoteRoof1;
-        private System.Windows.Forms.TextBox txtRemoteResultsFrom1;
         private System.Windows.Forms.TextBox txtRemoteBin1;
         private System.Windows.Forms.TextBox txtRemoteTests1;
         private System.Windows.Forms.TextBox txtRemoteResults1;
@@ -1499,8 +1406,6 @@
         private System.Windows.Forms.Label lbRoof1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TabControl tabVMs;
         private System.Windows.Forms.Button btnCsv1;
         private System.Windows.Forms.Button btnXml1;
@@ -1553,7 +1458,6 @@
         private System.Windows.Forms.Label lbFilterFound2;
         private System.Windows.Forms.CheckBox cheExact1;
         private System.Windows.Forms.CheckBox cheExact2;
-        private System.Windows.Forms.Button button1;
     }
 }
 
