@@ -235,7 +235,7 @@
             // 
             this.toolTip1.AutomaticDelay = 200;
             this.toolTip1.AutoPopDelay = 10000;
-            this.toolTip1.BackColor = System.Drawing.SystemColors.Highlight;
+            this.toolTip1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.toolTip1.InitialDelay = 200;
             this.toolTip1.ReshowDelay = 40;
             this.toolTip1.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
@@ -954,7 +954,7 @@
             this.txtRemoteRoof1.Name = "txtRemoteRoof1";
             this.txtRemoteRoof1.Size = new System.Drawing.Size(439, 26);
             this.txtRemoteRoof1.TabIndex = 3;
-            this.txtRemoteRoof1.Text = "s:\\Documents\\rlogger\\Roof";
+            this.txtRemoteRoof1.Text = "x:\\Roof";
             this.txtRemoteRoof1.TextChanged += new System.EventHandler(this.txtRemoteRoof_TextChanged);
             this.txtRemoteRoof1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.txt2Open_MouseDoubleClick);
             // 
